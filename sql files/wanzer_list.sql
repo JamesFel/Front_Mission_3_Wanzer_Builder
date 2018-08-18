@@ -1,0 +1,1 @@
+create table if not exists wanzer_list(machine text primary key);

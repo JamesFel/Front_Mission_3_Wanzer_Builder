@@ -1,0 +1,1 @@
+create table if not exists damage_reduction_upgrade_progression(lvl int primary key, multiplier int);

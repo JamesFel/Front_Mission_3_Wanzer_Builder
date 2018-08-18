@@ -1,0 +1,67 @@
+name,weapon_type,wgt,dmg,cost
+Bone Buster,fist,22,76,100
+Fear Fist,fist,26,91,200
+Mk10 Fist,fist,30,109,300
+Mk12 Fist,fist,35,130,400
+Big Buster,fist,35,130,400
+Fatal Buster,fist,34,156,500
+Cleave Axe,baton,21,67,200
+Venus,baton,30,100,500
+Mk9 Baton,baton,25,80,300
+Mk13 Baton,baton,29,96,400
+Sharp Spike,spike,20,63,140
+Heavy Spike,spike,23,75,260
+Mk18 Spike,spike,28,90,400
+Mk22 Spike,spike,32,108,500
+Last Strike,spike,37,129,700
+Heavy Weight,fist,,70,
+Attack Fist,fist,,130,
+Max Weight,fist,,130,
+Mk20 Fist,fist,,156,
+Riot Baton,baton,,50,
+War Hammer,baton,,56,
+Odin M98,shotgun,42,12,140
+SPPG 14,shotgun,50,14,260
+Chongdu 2,shotgun,59,16,500
+Chongta 3,shotgun,69,19,660
+Desoto M300,shotgun,80,22,780
+Kodo SN990,m.gun,48,11,160
+DGS-25,m.gun,56,13,240
+Mingda 2,m.gun,65,15,460
+Huida 3,m.gun,78,18,620
+Nissai 90MF,m.gun,78,18,620
+Arc Barrel4,m.gun,91,21,800
+Nissai 30,m.gun,,8,
+Achin 51,m.gun,,11,
+Shunda 4,m.gun,,15,
+Shunda 4,m.gun,,21,
+Beckwood M9,m.gun,,21,
+Franbar FF,rifle,45,58,120
+Mk9 Sniper,rifle,53,69,200
+Laoxing 6,rifle,62,82,460
+Laohu 3,rifle,73,98,600
+Scarab F2,rifle,73,98,600
+Mk11 Sniper,rifle,84,117,780
+Barcam RR,rifle,,82,
+Einband,rifle,,98,
+Heat Stream,flame thrower,51,17,100
+Huoliu 1,flame thrower,60,20,200
+Huosai 2,flame thrower,70,24,460
+Huoyao 3,flame thrower,81,28,660
+Hot Gazel,flame thrower,93,33,780
+Quill,missile,81,73,200
+Wagtail2,missile,96,87,380
+Yunsheng34,missile,109,104,460
+Zhiniao50,missile,124,124,660
+Nightingale,missile,123,124,660
+Bjariger,missile,137,145,900
+Canary 2,missile,,60,
+Houoj 22,missile,,,
+Miner AT,missile,,107,
+Drozel,missile,,124,
+Wanzerfaust,grenade,92,62,260
+Type 10GR,grenade,109,74,400
+Type 13GR,grenade,124,88,600
+Type 14GR,grenade,140,105,800
+Faust GGR,grenade,156,126,1000
+Hvy P-Gun,beam,,250,
