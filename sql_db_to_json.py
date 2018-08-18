@@ -20,7 +20,8 @@ def main():
     all_tables = {}
     cursor = connection.cursor()
 
-    for table in cursor.execute("SELECT name FROM sqlite_master WHERE type='table';"):
+    for table in cursor.execute("SELECT name FROM sqlite_master WHERE type='table';").fetchall():
+        print(table)
         cursor.execute("select * from " + table["name"])
         all_tables[table["name"]] = cursor.fetchall()
 
