@@ -1,6 +1,7 @@
 // class definition for the body class (for wanzer bodies).
 
-function Body(name, cost, weight, hp_pattern, skill, power, def_c_per_upgrade, num_def_c_upgrades=0){
+function Body(name, cost, weight, hp_pattern, skill, power, def_c_per_upgrade, num_def_c_upgrades=0)
+{
     MachinePart.call(name, cost, weight, hp, skill);
     this.power = power;
     this.def_c_per_upgrade = def_c_per_upgrade;
@@ -10,7 +11,7 @@ function Body(name, cost, weight, hp_pattern, skill, power, def_c_per_upgrade, n
 Body.prototype = Object.create(MachinePart.prototype);
 Body.prototype.constructor = Body;
 
-Body.prototype.def_c = function(){return this.def_c_per_upgrade * this.num_def_c_upgrades}
+Body.prototype.def_c = function(){return this.def_c_per_upgrade * this.num_def_c_upgrades;}
 
 Body.prototype.incrementDefC = function()
 {
