@@ -1,8 +1,8 @@
 // class definition for machine part class.
 
-function MachinePart(name, cost, weight, hp_pattern, skill){
+function MachinePart(name, cost, weight, hp_upgrade_pattern, skill){
     EquippableItem.call(name, cost, weight);
-    this.hp_pattern = hp_upgrade_pattern;
+    this.hp_upgrade_pattern = hp_upgrade_pattern;
     this.num_hp_upgrades = 0;
     this.skill = skill;
 }
