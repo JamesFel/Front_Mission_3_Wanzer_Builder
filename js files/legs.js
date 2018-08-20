@@ -20,9 +20,9 @@ function Legs(name, cost, weight, hp, skill, evade_level_1, boost_pattern, dash_
 Legs.prototype = Object.create(MachinePart.prototype);
 Legs.prototype.constructor = Legs;
 
-Legs.prototype.evade = function(){return round(this.evade_pattern[this.num_evade_upgrades] * this.evade_level_1)}
-Legs.prototype.boost = function(){return this.boost_pattern[this.num_bd_upgrades]}
-Legs.prototype.dash = function(){return this.dash_pattern[this.num_bd_upgrades]}
+Legs.prototype.evade = function(){return round(this.evade_pattern[this.num_evade_upgrades] * this.evade_level_1);}
+Legs.prototype.boost = function(){return this.boost_pattern[this.num_bd_upgrades];}
+Legs.prototype.dash = function(){return this.dash_pattern[this.num_bd_upgrades];}
 
 Legs.prototype.incrementEv = function()
 {
