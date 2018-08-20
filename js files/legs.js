@@ -17,27 +17,61 @@ function Legs(name, cost, weight, hp, skill, evade_level_1, boost_pattern, dash_
     this.numLegs = numLegs;
     this.hp_upgrade_costs = [100, 80, 120, 150, 180, 210, 240, 280]
     this.edb_upgrade_costs = [0, 160, 240, 320, 400]
+}
 
-    get evade(){return round(this.evade_pattern[this.num_evade_upgrades] * this.evade_level_1);}
-    get boost(){return this.boost_pattern[this.num_bd_upgrades];}
-    get dash(){return this.dash_pattern[this.num_bd_upgrades];}
+Legs.prototype = Object.create(MachinePart.prototype);
+Legs.prototype.constructor = Legs;
 
-    set upgradeHP()
+
+Object.defineProperty(Legs, 'evade',
+{
+    get: function()
+    {
+        return round(this.evade_pattern[this.num_evade_upgrades] * this.evade_level_1);
+    }
+})
+
+Object.defineProperty(Legs,'boost',
+{
+    get: function()
+    {
+        return this.boost_pattern[this.num_bd_upgrades];
+    }
+})
+
+Object.defineProperty(Legs, 'dash',
+{
+    get: function()
+    {
+        return this.dash_pattern[this.num_bd_upgrades];
+    }
+})
+
+Object.defineProperty(Legs, 'upgradeHP',
+{
+    set: function()
     {
         if(this.incrementHP)
         {
             this.adjustCost(this.hp_upgrade_costs[this.num_hp_upgrades])
         }
     }
-    set downgradeHP()
+})
+
+Object.defineProperty(Legs, 'downgradeHP',
+{
+    set: function()
     {
        if(this.decrementHP)
        {
           this.adjustCost(-1 * this.hp_upgrade_costs[this.num_hp_upgrades + 1])
        }
     }
+})
 
-    set incrementEv()
+Object.defineProperty(Legs, 'incrementEv',
+{
+    set: function()
     {
         if (this.num_evade_upgrades < this.evade_pattern.length - 1)
         {
@@ -45,8 +79,11 @@ function Legs(name, cost, weight, hp, skill, evade_level_1, boost_pattern, dash_
             this.adjustCost(this.edb_upgrade_costs[this.num_evade_upgrades]);
         }
     }
+})
 
-    set decrementEv()
+Object.defineProperty(Legs, 'decrementEv',
+{
+    set: function()
     {
         if (this.num_evade_upgrades > 0)
         {
@@ -54,8 +91,11 @@ function Legs(name, cost, weight, hp, skill, evade_level_1, boost_pattern, dash_
             this.adjustCost(-1 * this.edb_upgrade_costs[this.num_evade_upgrades +1]);
         }
     }
+})
 
-    set incrementBD()
+Object.defineProperty(Legs, 'incrementBD',
+{
+    set: function()
     {
         if (this.num_bd_upgrades < this.boost_pattern.length - 1)
         {
@@ -63,8 +103,11 @@ function Legs(name, cost, weight, hp, skill, evade_level_1, boost_pattern, dash_
             this.adjustCost(this.edb_upgrade_costs[this.num_bd_upgrades]);
         }
     }
+})
 
-    set decrementBD()
+Object.defineProperty(Legs, 'decrementBD',
+{
+    set: function()
     {
         if (this.num_bd_upgrades > 0)
         {
@@ -72,7 +115,4 @@ function Legs(name, cost, weight, hp, skill, evade_level_1, boost_pattern, dash_
             this.adjustCost(this.edb_upgrade_costs[-1 * this.num_bd_upgrades + 1]);
         }
     }
-}
-
-Legs.prototype = Object.create(MachinePart.prototype);
-Legs.prototype.constructor = Legs;
+})
