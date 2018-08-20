@@ -1,11 +1,11 @@
 name,wgt,capacity,power,cost,battle_e,battle_a,shop_e,shop_a
-BX002,10,4,,140,,,,
+BX002,10,4,,140,,,,9
 Mk3 Pack,10,4,,140,,,,
 Mk6 Pack,30,6,,300,,,,
 Rucksack-L,30,6,,300,,,,
 BX056,30,6,,300,,,,
 BX090,50,8,,400,,,,
-BPT3A,10,,30,200,,,,
+BPT3A,10,,30,200,,,,9
 Mk5 E-Pack,10,,30,200,,,,
 Mk7 E-Pack,20,,60,400,,,,
 Placid,20,,60,400,,,,

@@ -1,6 +1,6 @@
-name,wgt,AP,durability,DR,cost,battlee,battlea,shope,shopa
-Mk6 Shield,18,2,4,50,100,,,,
-SN-100G,24,2,6,50,160,,,,
+name,wgt,AP,durability,DR,cost,battlee,battlea,shop_e,shop_a
+Mk6 Shield,18,2,4,50,100,,,,9
+SN-100G,24,2,6,50,160,,,,9
 Buckler,22,2,4,70,200,,,,
 Hvy Shield,28,2,6,70,300,,,,
 Mk10 Shield,28,2,6,70,300,,,,

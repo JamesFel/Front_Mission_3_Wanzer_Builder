@@ -5,7 +5,7 @@ function HandWeapon(name, cost, weight, dmg, apCost, acc, rangeMin, rangeMax, we
     this.numHits = numHits;
     this.accLoss = accLoss;
     this.totalDmg = this.dmg * this.numHits;
-    this.avgDmg = this.totalDmg * this.acc * this.accLoss * (this.rangeMax - this.rangeMin)/2
+    this.avgDmg = this.totalDmg * (this.acc - this.accLoss * (this.rangeMax - this.rangeMin)/2)/100
 }
 
 HandWeapon.prototype = Object.create(Weapon.prototype);
