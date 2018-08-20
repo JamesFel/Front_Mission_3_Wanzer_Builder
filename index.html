@@ -24,20 +24,29 @@
 
     <script>
         var testWeapon = new HandWeapon("Test Weapon", 100, 20, 10, 3, 80, 1, 5, "Test", "B", 3, 3);
-        console.log(testWeapon.name)
-        console.log(testWeapon.cost)
     </script>
     <script>
         var testWanzer = new Legs("Test Wanzer", 120, 40, [200, 210], "Not Failing", 8, [1,2,3,4], [5,6,7,8], 3, 0,
               num_evade_upgrades=1, num_bd_upgrades=2);
+        console("original name, cost, hp")
         console.log(testWanzer.name)
         console.log(testWanzer.cost)
+        console.log(testWanzer.hp)
+
         testWanzer.incrementHP
+        console.log("cost and hp incremented")
         console.log(testWanzer.cost)
+        console.log(testWanzer.hp)
+
         testWanzer.incrementHP
+        console.log("cost and hp incremented")
         console.log(testWanzer.cost)
+        console.log(testWanzer.hp)
+
         testWanzer.decrementHP
+        console.log("cost and hp decremented")
         console.log(testWanzer.cost)
+        console.log(testWanzer.hp)
     </script>
 </body>
 </html>
