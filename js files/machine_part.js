@@ -12,7 +12,7 @@ MachinePart.prototype.constructor = MachinePart;
 
 MachinePart.prototype.adjustCost = function(amount){if(this.cost + amount > 0){this.cost += amount}}
 
-MachinePart.prototype.hp = function(){return hp_upgrade_pattern[num_hp_upgrades];}
+MachinePart.prototype.hp = function(){return this.hp_upgrade_pattern[this.num_hp_upgrades];}
 
 MachinePart.prototype.incrementHP = function()
 {
