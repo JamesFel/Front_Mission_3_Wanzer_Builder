@@ -2,7 +2,7 @@
 
 function EquippableItem(name, cost, weight)
 {
-    Item.call(name, cost);
+    Item.call(this, name, cost);
     this.weight = weight;
 }
 

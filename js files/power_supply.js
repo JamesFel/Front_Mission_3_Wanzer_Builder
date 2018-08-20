@@ -1,7 +1,7 @@
 // class definition for power supply class.
 
 function PowerSupply(name, cost, weight, bpType, power){
-    Backpack.call(name, cost, weight, bpType);
+    Backpack.call(this, name, cost, weight, bpType);
     this.power = power;
 }
 

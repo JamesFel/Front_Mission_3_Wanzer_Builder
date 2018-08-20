@@ -2,7 +2,7 @@
 
 function Body(name, cost, weight, hp_pattern, skill, power, def_c_per_upgrade, num_def_c_upgrades=0)
 {
-    MachinePart.call(name, cost, weight, hp, skill);
+    MachinePart.call(this, name, cost, weight, hp, skill);
     this.power = power;
     this.def_c_per_upgrade = def_c_per_upgrade;
     this.num_def_c_upgrades = num_def_c_upgrades;

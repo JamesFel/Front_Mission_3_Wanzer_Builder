@@ -2,7 +2,7 @@
 
 function HandWeapon(name, cost, weight, dmg, apCost, acc, rangeMin, rangeMax, weaponType, dmgType, numHits, accLoss)
 {
-    Weapon.call(name, cost, weight, dmg, apCost, acc, rangeMin, rangeMax, weaponType, dmgType);
+    Weapon.call(this, name, cost, weight, dmg, apCost, acc, rangeMin, rangeMax, weaponType, dmgType);
     this.numHits = numHits;
     this.accLoss = accLoss;
     this.totalDmg = this.dmg * this.numHits;

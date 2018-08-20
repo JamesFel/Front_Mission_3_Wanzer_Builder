@@ -3,7 +3,7 @@
 function Legs(name, cost, weight, hp, skill, evade_level_1, boost_pattern, dash_pattern, move, numLegs,
               num_evade_upgrades=0, num_bd_upgrades=0)
 {
-    MachinePart.call(name, cost, weight, hp, skill);
+    MachinePart.call(this, name, cost, weight, hp, skill);
 
     this.evade_pattern = [1.0, 2.4, 4.0, 5.9]
     this.evade_level_1 = evade_level_1;
