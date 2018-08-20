@@ -1,5 +1,5 @@
 // class definition for Item class
-"use strict";
+// "use strict";
 function Item(name, cost)
 {
     this.name = name;
