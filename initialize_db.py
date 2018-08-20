@@ -33,6 +33,7 @@ def load_table(table_name, values_as_delimited_string, cur, delim=','):
     values = values_as_delimited_string.split(delim)
     qMarks = "?,"*len(values)
     qMarks = qMarks[:-1]
+    # stmt = "insert or fail into {table} values({values});".format(
     stmt = "insert or replace into {table} values({values});".format(
         table=table_name,
         values=qMarks)

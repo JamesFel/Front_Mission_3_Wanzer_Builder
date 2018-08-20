@@ -10,20 +10,24 @@ function MachinePart(name, cost, weight, hp_upgrade_pattern, skill){
 MachinePart.prototype = Object.create(EquippableItem.prototype);
 MachinePart.prototype.constructor = MachinePart;
 
+MachinePart.prototype.adjustCost = function(amount){if(this.cost + amount > 0){this.cost += amount}}
+
 MachinePart.prototype.hp = function(){return hp_upgrade_pattern[num_hp_upgrades];}
 
 MachinePart.prototype.incrementHP = function()
 {
-    if (num_hp_upgrades < hp_upgrade_pattern.length - 1)
+    if (this.num_hp_upgrades < this.hp_upgrade_pattern.length - 1)
     {
-        num_hp_upgrades++;
+        this.num_hp_upgrades++;
+        return true
     }
 }
 
 MachinePart.prototype.decrementHP = function()
 {
-    if (num_hp_upgrades > 0)
+    if (this.num_hp_upgrades > 0)
     {
-        num_hp_upgrades--;
+        this.num_hp_upgrades--;
+        return true
     }
 }

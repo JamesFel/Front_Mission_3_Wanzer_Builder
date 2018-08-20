@@ -15,6 +15,8 @@ function Legs(name, cost, weight, hp, skill, evade_level_1, boost_pattern, dash_
 
     this.move = move;
     this.numLegs = numLegs;
+    this.hp_upgrade_costs = [100, 80, 120, 150, 180, 210, 240, 280]
+    this.edb_upgrade_costs = [0, 160, 240, 320, 400]
 }
 
 Legs.prototype = Object.create(MachinePart.prototype);
@@ -24,11 +26,27 @@ Legs.prototype.evade = function(){return round(this.evade_pattern[this.num_evade
 Legs.prototype.boost = function(){return this.boost_pattern[this.num_bd_upgrades];}
 Legs.prototype.dash = function(){return this.dash_pattern[this.num_bd_upgrades];}
 
+Legs.prototype.upgradeHP()
+{
+    if(this.incrementHP)
+    {
+        this.adjustCost(this.hp_upgrade_costs[this.num_hp_upgrades])
+    }
+}
+Legs.prototype.downgradeHP()
+{
+   if(this.decrementHP)
+   {
+      this.adjustCost(-1 * this.hp_upgrade_costs[this.num_hp_upgrades + 1])
+   }
+}
+
 Legs.prototype.incrementEv = function()
 {
     if (this.num_evade_upgrades < this.evade_pattern.length - 1)
     {
         this.num_evade_upgrades++;
+        this.adjustCost(this.edb_upgrade_costs[this.num_evade_upgrades]);
     }
 }
 
@@ -37,6 +55,7 @@ Legs.prototype.decrementEv = function()
     if (this.num_evade_upgrades > 0)
     {
         this.num_evade_upgrades--;
+        this.adjustCost(-1 * this.edb_upgrade_costs[this.num_evade_upgrades +1]);
     }
 }
 
@@ -45,6 +64,7 @@ Legs.prototype.incrementBD = function()
     if (this.num_bd_upgrades < this.boost_pattern.length - 1)
     {
         this.num_bd_upgrades++;
+        this.adjustCost(this.edb_upgrade_costs[this.num_bd_upgrades]);
     }
 }
 
@@ -53,5 +73,6 @@ Legs.prototype.decrementBD = function()
     if (this.num_bd_upgrades > 0)
     {
         this.num_bd_upgrades--;
+        this.adjustCost(this.edb_upgrade_costs[-1 * this.num_bd_upgrades + 1]);
     }
 }
