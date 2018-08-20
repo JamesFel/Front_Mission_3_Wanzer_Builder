@@ -11,7 +11,7 @@ ShoulderWeapon.prototype.constructor = ShoulderWeapon;
 
 ShoulderWeapon.prototype.addItem = function(item){if (this.contents.length < this.capacity){this.contents.push(item)}}
 ShoulderWeapon.prototype.removeItem = function(item)
-(
+{
     if (!Array.prototype.indexOf) // for compatibility with older versions of IE.
     {
         Array.prototype.indexOf = function(elt /*, from*/)
@@ -40,4 +40,4 @@ ShoulderWeapon.prototype.removeItem = function(item)
 
         if (index > -1) {this.contents.splice(index, 1);}
     }
-)
+}
