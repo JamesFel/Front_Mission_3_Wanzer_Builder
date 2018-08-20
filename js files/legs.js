@@ -26,7 +26,7 @@ Legs.prototype.dash = function(){return this.dash_pattern[this.num_bd_upgrades]}
 
 Legs.prototype.incrementEv = function()
 {
-    if this.num_evade_upgrades < this.evade_pattern.length - 1
+    if (this.num_evade_upgrades < this.evade_pattern.length - 1)
     {
         this.num_evade_upgrades++;
     }
@@ -34,7 +34,7 @@ Legs.prototype.incrementEv = function()
 
 Legs.prototype.decrementEv = function()
 {
-    if this.num_evade_upgrades > 0
+    if (this.num_evade_upgrades > 0)
     {
         this.num_evade_upgrades--;
     }
@@ -42,7 +42,7 @@ Legs.prototype.decrementEv = function()
 
 Legs.prototype.incrementBD = function()
 {
-    if this.num_bd_upgrades < this.boost_pattern.length - 1
+    if (this.num_bd_upgrades < this.boost_pattern.length - 1)
     {
         this.num_bd_upgrades++;
     }
@@ -50,7 +50,7 @@ Legs.prototype.incrementBD = function()
 
 Legs.prototype.decrementBD = function()
 {
-    if this.num_bd_upgrades > 0
+    if (this.num_bd_upgrades > 0)
     {
         this.num_bd_upgrades--;
     }

@@ -14,7 +14,7 @@ Body.prototype.def_c = function(){return this.def_c_per_upgrade * this.num_def_c
 
 Body.prototype.incrementDefC = function()
 {
-    if this.num_def_c_upgrades < 4
+    if (this.num_def_c_upgrades < 4)
     {
         this.num_def_c_upgrades++;
     }
@@ -22,7 +22,7 @@ Body.prototype.incrementDefC = function()
 
 Body.prototype.decrementHP = function()
 {
-    if this.num_hp_upgrades > 0
+    if (this.num_hp_upgrades > 0)
     {
         this.num_hp_upgrades--;
     }
