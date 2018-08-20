@@ -14,14 +14,14 @@ Arm.prototype.constructor = Arm;
 
 Arm.prototype.acc = function(){return this.acc_pattern[this.num_acc_upgrades];}
 
-Arm.prototype.upgradeHP()
+Arm.prototype.upgradeHP = function()
 {
     if(this.incrementHP)
     {
         this.adjustCost(this.hp_upgrade_costs[this.num_hp_upgrades])
     }
 }
-Arm.prototype.downgradeHP()
+Arm.prototype.downgradeHP = function()
 {
    if(this.decrementHP)
    {

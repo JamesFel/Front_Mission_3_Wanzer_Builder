@@ -15,14 +15,14 @@ Body.prototype.constructor = Body;
 
 Body.prototype.def_c = function(){return this.def_c_per_upgrade * this.num_def_c_upgrades;}
 
-Body.prototype.upgradeHP()
+Body.prototype.upgradeHP = function()
 {
     if(this.incrementHP)
     {
         this.adjustCost(this.hp_upgrade_costs[this.num_hp_upgrades])
     }
 }
-Body.prototype.downgradeHP()
+Body.prototype.downgradeHP = function()
 {
    if(this.decrementHP)
    {

@@ -26,14 +26,14 @@ Legs.prototype.evade = function(){return round(this.evade_pattern[this.num_evade
 Legs.prototype.boost = function(){return this.boost_pattern[this.num_bd_upgrades];}
 Legs.prototype.dash = function(){return this.dash_pattern[this.num_bd_upgrades];}
 
-Legs.prototype.upgradeHP()
+Legs.prototype.upgradeHP = function()
 {
     if(this.incrementHP)
     {
         this.adjustCost(this.hp_upgrade_costs[this.num_hp_upgrades])
     }
 }
-Legs.prototype.downgradeHP()
+Legs.prototype.downgradeHP = function()
 {
    if(this.decrementHP)
    {
