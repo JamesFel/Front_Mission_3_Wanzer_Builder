@@ -23,96 +23,69 @@ Legs.prototype = Object.create(MachinePart.prototype);
 Legs.prototype.constructor = Legs;
 
 
-Object.defineProperty(Legs, 'evade',
+Legs.prototype.evade = function()
 {
-    get: function()
-    {
-        return round(this.evade_pattern[this.num_evade_upgrades] * this.evade_level_1);
-    }
-})
+    return Math.round(this.evade_pattern[this.num_evade_upgrades] * this.evade_level_1);
+}
 
-Object.defineProperty(Legs,'boost',
+Legs.prototype.boost = function()
 {
-    get: function()
-    {
-        return this.boost_pattern[this.num_bd_upgrades];
-    }
-})
+    return this.boost_pattern[this.num_bd_upgrades];
+}
 
-Object.defineProperty(Legs, 'dash',
+Legs.prototype.dash = function()
 {
-    get: function()
-    {
-        return this.dash_pattern[this.num_bd_upgrades];
-    }
-})
+    return this.dash_pattern[this.num_bd_upgrades];
+}
 
-Object.defineProperty(Legs, 'upgradeHP',
+Legs.prototype.upgradeHP = function()
 {
-    set: function()
+    if(this.incrementHP())
     {
-        if(this.incrementHP)
-        {
-            this.adjustCost(this.hp_upgrade_costs[this.num_hp_upgrades])
-        }
+        this.adjustCost(this.hp_upgrade_costs[this.num_hp_upgrades])
     }
-})
+}
 
-Object.defineProperty(Legs, 'downgradeHP',
+Legs.prototype.downgradeHP = function()
 {
-    set: function()
-    {
-       if(this.decrementHP)
-       {
-          this.adjustCost(-1 * this.hp_upgrade_costs[this.num_hp_upgrades + 1])
-       }
+   if(this.decrementHP())
+   {
+      this.adjustCost(-1 * this.hp_upgrade_costs[this.num_hp_upgrades + 1])
     }
-})
+}
 
-Object.defineProperty(Legs, 'incrementEv',
+Legs.prototype.incrementEv = function()
 {
-    set: function()
+    if (this.num_evade_upgrades < this.evade_pattern.length - 1)
     {
-        if (this.num_evade_upgrades < this.evade_pattern.length - 1)
-        {
-            this.num_evade_upgrades++;
-            this.adjustCost(this.edb_upgrade_costs[this.num_evade_upgrades]);
-        }
+        this.num_evade_upgrades++;
+        this.adjustCost(this.edb_upgrade_costs[this.num_evade_upgrades]);
     }
-})
+}
 
-Object.defineProperty(Legs, 'decrementEv',
+Legs.prototype.decrementEv = function()
 {
-    set: function()
+    if (this.num_evade_upgrades > 0)
     {
-        if (this.num_evade_upgrades > 0)
-        {
-            this.num_evade_upgrades--;
-            this.adjustCost(-1 * this.edb_upgrade_costs[this.num_evade_upgrades +1]);
-        }
+        this.num_evade_upgrades--;
+        this.adjustCost(-1 * this.edb_upgrade_costs[this.num_evade_upgrades +1]);
     }
-})
+}
 
-Object.defineProperty(Legs, 'incrementBD',
+Legs.prototype.incrementBD = function()
 {
-    set: function()
+    if (this.num_bd_upgrades < this.boost_pattern.length - 1)
     {
-        if (this.num_bd_upgrades < this.boost_pattern.length - 1)
-        {
-            this.num_bd_upgrades++;
-            this.adjustCost(this.edb_upgrade_costs[this.num_bd_upgrades]);
-        }
+        this.num_bd_upgrades++;
+        this.adjustCost(this.edb_upgrade_costs[this.num_bd_upgrades]);
     }
-})
+}
 
-Object.defineProperty(Legs, 'decrementBD',
+Legs.prototype.decrementBD = function()
 {
-    set: function()
+    if (this.num_bd_upgrades > 0)
     {
-        if (this.num_bd_upgrades > 0)
-        {
-            this.num_bd_upgrades--;
-            this.adjustCost(this.edb_upgrade_costs[-1 * this.num_bd_upgrades + 1]);
-        }
+        this.num_bd_upgrades--;
+        this.adjustCost(this.edb_upgrade_costs[-1 * this.num_bd_upgrades + 1]);
     }
-})
+}

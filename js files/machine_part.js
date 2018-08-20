@@ -11,36 +11,32 @@ function MachinePart(name, cost, weight, hp_upgrade_pattern, skill)
 MachinePart.prototype = Object.create(EquippableItem.prototype);
 MachinePart.prototype.constructor = MachinePart;
 
-Object.defineProperty(MachinePart.prototype, 'adjustCost',
+MachinePart.prototype.adjustCost = function(amount)
 {
-    set: function(amount){if(this.cost + amount > 0){this.cost += amount}}
-});
+    if(this.cost + amount > 0){this.cost += amount}
+}
 
-Object.defineProperty(MachinePart.prototype, 'hp',
+MachinePart.prototype.hp = function()
 {
-    get: function(){return this.hp_upgrade_pattern[this.num_hp_upgrades];}
-})
+    return this.hp_upgrade_pattern[this.num_hp_upgrades];
+}
 
-Object.defineProperty(MachinePart.prototype, 'incrementHP',
+MachinePart.prototype.incrementHP = function()
 {
-    set: function()
+    if (this.num_hp_upgrades < this.hp_upgrade_pattern.length - 1)
     {
-        if (this.num_hp_upgrades < this.hp_upgrade_pattern.length - 1)
-        {
-            this.num_hp_upgrades++;
-            return true;
-        }
+        this.num_hp_upgrades++;
+        return true;
     }
-})
+    return false;
+}
 
-Object.defineProperty(MachinePart.prototype, 'decrementHP',
+MachinePart.prototype.decrementHP = function()
 {
-    set: function()
+    if (this.num_hp_upgrades > 0)
     {
-        if (this.num_hp_upgrades > 0)
-        {
-            this.num_hp_upgrades--;
-            return true;
-        }
+        this.num_hp_upgrades--;
+        return true;
     }
-})
+    return false;
+}
