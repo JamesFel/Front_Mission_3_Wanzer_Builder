@@ -12,18 +12,21 @@ function Arm(name, cost, weight, hp_pattern, skill, acc_pattern, num_acc_upgrade
 Arm.prototype = Object.create(MachinePart.prototype);
 Arm.prototype.constructor = Arm;
 
-Arm.prototype.acc = function(){return this.acc_pattern[this.num_acc_upgrades];}
+Arm.prototype.acc = function()
+{
+    return this.acc_pattern[this.num_acc_upgrades];
+}
 
 Arm.prototype.upgradeHP = function()
 {
-    if(this.incrementHP)
+    if(this.incrementHP())
     {
         this.adjustCost(this.hp_upgrade_costs[this.num_hp_upgrades])
     }
 }
 Arm.prototype.downgradeHP = function()
 {
-   if(this.decrementHP)
+   if(this.decrementHP())
    {
       this.adjustCost(-1 * this.hp_upgrade_costs[this.num_hp_upgrades + 1])
    }

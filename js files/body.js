@@ -13,18 +13,21 @@ function Body(name, cost, weight, hp_pattern, skill, power, def_c_per_upgrade, n
 Body.prototype = Object.create(MachinePart.prototype);
 Body.prototype.constructor = Body;
 
-Body.prototype.def_c = function(){return this.def_c_per_upgrade * this.num_def_c_upgrades;}
+Body.prototype.def_c = function()
+{
+    return this.def_c_per_upgrade * this.num_def_c_upgrades;
+}
 
 Body.prototype.upgradeHP = function()
 {
-    if(this.incrementHP)
+    if(this.incrementHP())
     {
         this.adjustCost(this.hp_upgrade_costs[this.num_hp_upgrades])
     }
 }
 Body.prototype.downgradeHP = function()
 {
-   if(this.decrementHP)
+   if(this.decrementHP())
    {
       this.adjustCost(-1 * this.hp_upgrade_costs[this.num_hp_upgrades + 1])
    }
