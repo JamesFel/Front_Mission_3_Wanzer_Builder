@@ -26,40 +26,18 @@
 
     <script>
         "use strict"
-        function makeAJAXCall(methodType, url, callback)
+
+        var db
+        var request = new XMLHttpRequest();
+        request.open('GET', "front_mission_3_data.json");
+        request.responseType = 'json';
+        request.onloadend = function()
         {
-            var xhr = new XMLHttpRequest();
-            xhr.open(methodType, url);
-            xhr.onreadystatechange = function()
-            {
-                if (xhr.readyState === 4)
-                {
-                    if (xhr.state === 200)
-                    {
-                        callback(xhr.response);
-                    }
-                    else
-                    {
-                        console.log("error in processing the request");
-                    }
-                }
-                else
-                {
-                    //console.log("waiting for the response to come");
-                }
-            }
-            xhr.send();
-            console.log("request sent to the server");
+            db = request.response;
+            let currentWanzerLeg = newLegs(db, "Genie");
+            document.getElementById("body").innerHTML = JSON.stringify(currentWanzerLeg, null, 4);
         }
-
-        function jsonLoaded(db)
-        {
-            var testWanzer = newLegs(db, "Genie");
-            document.getElementById("body").innerHTML = JSON.stringify(testWanzer);
-        }
-
-        makeAJAXCall('GET', "front_mission_3_data.json", jsonLoaded);
-
+        request.send()
     </script>
 
 </body>
