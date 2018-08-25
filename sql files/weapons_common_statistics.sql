@@ -1,5 +1,5 @@
 create table if not exists weapons_common_statistics(
-    weapon_type text,
+    weapon_type text primary key,
     weapon_skill text,
     dmg_type text,
     acc int,
@@ -8,6 +8,5 @@ create table if not exists weapons_common_statistics(
     ap int,
     range_min int,
     range_max int,
-    num_hits int,
-    primary key(weapon_type, num_hits)
+    num_hits int
 );

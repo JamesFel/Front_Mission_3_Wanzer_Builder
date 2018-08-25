@@ -96,32 +96,19 @@ newShield = function(db, shd)
 
 newHandWeapon = function(db, weapon)
 {
-    var numHitsTable= {
-        "shotgun": '12',
-        "m.gun": '10',
-        "flame thrower1": '4',
-        "flame thrower2": '7',
-        "flame thrower3": '11'
-    };
-
     let name = weapon;
     let cost = db["weapons"][weapon][4];
     let weight = db["weapons"][weapon][2];
     let dmg = db["weapons"][weapon][3];
     let weaponType = db["weapons"][weapon][1]
-    let numHits = numHitsTable[weaponType]
 
-    if (numHits === undefined)
-    {
-        numHits = 1
-    }
-
-    let apCost = db["weapons_common_statistics"][weaponType + numHits][6];
-    let acc = db["weapons_common_statistics"][weaponType + numHits][3];
-    let rangeMin = db["weapons_common_statistics"][weaponType + numHits][7];
-    let rangeMax = db["weapons_common_statistics"][weaponType + numHits][8];
-    let dmgType = db["weapons_common_statistics"][weaponType + numHits][2];
-    let accLoss = db["weapons_common_statistics"][weaponType + numHits][4];
+    let numHits = db["weapons_common_statistics"][weaponType][9];
+    let apCost = db["weapons_common_statistics"][weaponType][6];
+    let acc = db["weapons_common_statistics"][weaponType][3];
+    let rangeMin = db["weapons_common_statistics"][weaponType][7];
+    let rangeMax = db["weapons_common_statistics"][weaponType][8];
+    let dmgType = db["weapons_common_statistics"][weaponType][2];
+    let accLoss = db["weapons_common_statistics"][weaponType][4];
 
     return new HandWeapon(name, cost, weight, dmg, apCost, acc, rangeMin, rangeMax, weaponType, dmgType, numHits, accLoss);
 }

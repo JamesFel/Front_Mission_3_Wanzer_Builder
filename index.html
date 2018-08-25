@@ -51,7 +51,7 @@
 
 <!-----------------------------------------------Sources--------------------------------------------------------------->
         <div class="emma-or-alisa" title="Did you go with Ryogo when you were given the choice? Yes: Emma, No: Alisa">
-            <label>Emma or Alisa
+            <label for="ea-select">Emma or Alisa
                 <select id="ea-select" onchange="resetAll()">  <!-- TODO: implement resetAll() -->
                     <option value=0>Emma</option>
                     <option value=1 selected="selected">Alisa</option>
@@ -60,26 +60,26 @@
         </div>
 
         <div class="mission-counter">
-            <label>Last Mission Won:
-                <input type="number" id="mission" min="1" max="70" step="1" value="9">
+            <label for="mission">Last Mission Won:
+                <input type="number" id="mission" min="1" max="70" step="1" value="9" onchange="updateDropdownLists()">
             </label>
         </div>
 
         <div class="include-stolen" title="Include wanzers that you could, theoretically, have stolen by this point">
-            <label>Include potentially stolen wanzers?
+            <label for="steal">Include potentially stolen wanzers?
                 <input type="checkbox" id="steal">
             </label>
         </div>
 
         <div class="base-ap" title="AP if in an un-upgraded wanzer">
-            <label>Base AP:
+            <label for="total-ap">Base AP:
                 <input type="number" id="total-ap" min="12" max="30" step="1" value="12">
             </label>
         </div>
 
         <div class="current-ap"
              title="AP if all selected upgrades were active. If less than 12, you've got too many upgrades.">
-                 <label>Battle AP:
+                 <label for="battle-ap">Battle AP:
                      <input type="number" id="battle-ap" min="12" max="30" step="1" value="12">
                  </label>
         </div>
@@ -94,7 +94,7 @@
 
 <!-------------------------------------------Equipment selection------------------------------------------------------->
         <div class="wanzer-body">
-            <label>Select Body:
+            <label for="body-selector">Select Body:
                 <select id="body-selector"
                     onchange="updateBodyField()">  <!-- TODO: implement updateBodyField() -->
                 </select>
@@ -102,7 +102,7 @@
         </div>
 
         <div class="left-arm">
-            <label>Select Left Arm:
+            <label for="left-arm-selector">Select Left Arm:
                 <select id="left-arm-selector"
                     onchange="updateLeftArmField()">  <!-- TODO: implement function-->
                 </select>
@@ -110,7 +110,7 @@
         </div>
 
         <div class="right-arm">
-            <label>Select Right Arm:
+            <label for="right-arm-selector">Select Right Arm:
                 <select id="right-arm-selector"
                     onchange="updateRightArmField()">  <!-- TODO: implement function -->
                 </select>
@@ -118,23 +118,37 @@
         </div>
 
         <div class="wanzer-legs">
-            <label>Select Legs:
+            <label for="wanzer-legs-selector">Select Legs:
                 <select id="wanzer-legs-selector"
                     onchange="updateLegsField()">  <!-- TODO: implement function -->
                 </select>
             </label>
         </div>
 
-        <div class="left-hand"> <!-- TODO: implement shield option -->
-            <label>Select Left-hand Weapon:
+        <div class="left-hand">
+            <label for="left-shield">
+                <select id="left-shield">
+                    <option value="s">Shield</option>
+                    <option value="w">Weapon</option>
+                </select>
+            </label>
+
+            <label for="left-hand-selector">Select Left-hand:
                 <select id="left-hand-selector"
                     onchange="updateLeftHandField()">  <!-- TODO: implement function -->
                 </select>
             </label>
         </div>
 
-        <div class="right-hand">  <!-- TODO: implement shield option -->
-            <label>Select Right-hand Weapon:
+        <div class="right-hand">
+            <label for="right-shield">
+                <select id="right-shield">
+                    <option value="s">Shield</option>
+                    <option value="w">Weapon</option>
+                </select>
+            </label>
+
+            <label for="right-hand-selector">Select Right-hand:
                 <select id="right-hand-selector"
                     onchange="updateRightHandField()">  <!-- TODO: implement function -->
                 </select>
@@ -142,7 +156,7 @@
         </div>
 
         <div class="left-shoulder">
-            <label>Select Left-shoulder Weapon:
+            <label for="left-shoulder-selector">Select Left-shoulder Weapon:
                 <select id="left-shoulder-selector"
                     onchange="updateLeftShoulderField()">  <!-- TODO: implement function -->
                 </select>
@@ -150,15 +164,22 @@
         </div>
 
         <div class="right-shoulder">
-            <label>Select Right-shoulder Weapon:
+            <label for="right-shoulder-selector">Select Right-shoulder Weapon:
                 <select id="right-shoulder-selector"
                     onchange="updateRightShoulderField()">  <!-- TODO: implement function -->
                 </select>
             </label>
         </div>
 
-        <div class="worn-backpack">  <!-- TODO: implement carrier/power supply checkbox -->
-            <label>Select Backpack:
+        <div class="worn-backpack">
+            <label for="capacity-power">Type
+                <select id="capacity-power">
+                    <option value="p">power</option>
+                    <option value="c">capacity</option>
+                </select>
+            </label>
+
+            <label for="backpack-selector">Select Backpack:
                 <select id="backpack-selector"
                     onchange="updateBackpackField()">  <!-- TODO: implement function -->
                 </select>
@@ -201,7 +222,7 @@
             shoulderWeaponList = [],
             shieldList = [],
             backpackListP = [],
-            backpackListB = [];
+            backpackListC = [];
 
         var request = new XMLHttpRequest();
         request.open('GET', "front_mission_3_data.json");

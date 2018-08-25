@@ -6,8 +6,6 @@ shotgun,shotgun,I,75,2,,3,1,3,12
 m.gun,m.gun,P,80,10,,5,1,4,10
 rifle,rifle,P,75,2,,4,1,6,1
 flame thrower,flame thrower,F,60,0,,4,1,2,4
-flame thrower,flame thrower,F,60,0,,7,1,2,7
-flame thrower,flame thrower,F,60,0,,11,1,2,11
 missile,missile,F,80,0,6,10,3,9,1
 grenade,grenade,F,60,0,4,12,3,6,1
 beam,beam,N,90,,,15,1,9,1

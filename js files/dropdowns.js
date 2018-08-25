@@ -1,9 +1,10 @@
 replaceOptions = function (list_of_options, selector_id)
 {
+    "use strict"
 	let dropdown = document.getElementById(selector_id);
 	removeOptions(dropdown);
 	dropdown.options[0] = new Option('-----------');
-	for(i=0; i < list_of_options.length; i++)
+	for(let i=0; i < list_of_options.length; i++)
 	{
 	    dropdown.options[i+1] = new Option(list_of_options[i]);
 	}
@@ -11,54 +12,43 @@ replaceOptions = function (list_of_options, selector_id)
 
 removeOptions = function(dropdown)
 {
-    for(i = dropdown.options.length - 1 ; i >= 0 ; i--)
+    "use strict"
+    for(let i = dropdown.options.length - 1 ; i >= 0 ; i--)
     {
         dropdown.remove(i);
     }
 }
 
-updateDropdownList = function ()
+populateList = function(db, mission_num, key, offset, ea, listToFill, exclude=null, eOffset=0)
 {
-    let ea = document.getElementById("ea-select");
-    let steal = document.getElementById("steal").checked;
-    let mission_num = document.getElementById("mission").value;
-
-    //resetting the arrays
-    wanzerList.length = 0;
-    handWeaponList.length = 0;
-    shoulderWeaponList.length = 0;
-    shieldList.length = 0;
-    backpackListP.length = 0;
-    backpackListB.length = 0;
-
-    for (machine in db["machine_acquisition"])
+    for (secondaryKey in db[key])
     {
-        let shop = machine[3 + ea]
-        let rob = machine[1 + ea]
+        let item = db[key][secondaryKey]
+        let rob = item[offset + ea]
+        let shop = item[offset + 2 + ea]
+
         if (
             (shop > 0 && shop <= mission_num) ||
             (steal && rob > 0 && rob <= mission_num)
             )
         {
-            wanzerList.push(machine[0])
+            if(exclude === null || !(item[eOffset] in exclude))
+            {
+                listToFill.push(item[0])
+            }
         }
     }
+}
 
-    for (weapon in db["weapons"])
-    {
-        //fill in, make sure to add weapons and shoulder weapons to different lists
-    }
-
-    for (shield in db["shields"])
-    {
-        //fill in
-    }
-
-    for (backpack in db["backpacks"])
-    {
-        //fill in, make sure to add baskets and power supplies to different lists
-    }
-
+updateDropdownLists = function ()
+{
+    "use strict"
+    let ea = parseInt(document.getElementById("ea-select").value);
+    let steal = document.getElementById("steal").checked;
+    let mission_num = document.getElementById("mission").value;
+    let shoulderWeaponSelectorIdList = ["left-shoulder-selector","right-shoulder-selector"]
+    let handWeaponsSelectorIdList = []
+    let shieldSelectorIdList = []
     let wanzerPartsSelectorIdList = [
         "body-selector",
         "left-arm-selector",
@@ -66,35 +56,67 @@ updateDropdownList = function ()
         "wanzer-legs-selector",
     ]
 
-    let handWeaponsSelectorIdList = ["right-hand-selector", "left-hand-selector"]
-    let shoulderWeaponSelectorIdList = ["left-shoulder-selector","worn-backpack-selector"]
+    //resetting the arrays
+    wanzerList.length = 0;
+    handWeaponList.length = 0;
+    shoulderWeaponList.length = 0;
+    shieldList.length = 0;
+    backpackListP.length = 0;
+    backpackListC.length = 0;
+    let handWeaponTypes = ["fist", "baton", "flame thrower", "m.gun", "rifle", "shotgun", "spike"]
 
-    for(i=0; i < wanzerPartsSelectorIdList.length; i++)
+    if (document.getElementById("right-shield") == 'w')
+    {
+        handWeaponsSelectorIdList.push("right-hand-selector")
+    }
+    else
+    {
+        shieldSelectorIdList.push("right-hand-selector")
+    }
+
+    if (document.getElementById("left-shield") == 'w')
+    {
+        handWeaponsSelectorIdList.push("left-hand-selector")
+    }
+    else
+    {
+        shieldSelectorIdList.push("left-hand-selector")
+    }
+
+    populateList(db, mission_num, "machine_acquisition", 1, ea, wanzerList);
+    populateList(db, mission_num, "shields", 6, ea, shieldList)
+    populateList(db, mission_num, "weapons", 5, ea, handWeaponList, ["grenade", "missile"], 1)
+    populateList(db, mission_num, "weapons", 5, ea, shoulderWeaponList, handWeaponTypes, 1)
+    populateList(db, mission_num, "backpacks", 5, ea, backpackListP,[4, 6, 8], 2)
+    populateList(db, mission_num, "backpacks", 5, ea, backpackListC, [30, 60, 90], 3)
+
+    for(let i=0; i < wanzerPartsSelectorIdList.length; i++)
     {
         replaceOptions(wanzerList, wanzerPartsSelectorIdList[i])
     }
 
-    for(i=0; i < handWeaponsSelectorIdList.length; i++)
+    for(let i=0; i < handWeaponsSelectorIdList.length; i++)
     {
         replaceOptions(handWeaponList, handWeaponsSelectorIdList[i])
     }
 
-    for(i=0; i < shoulderWeaponSelectorIdList.length; i++)
+    for(let i=0; i < shoulderWeaponSelectorIdList.length; i++)
     {
-        replaceOptions(shoulderWeaponList, shoulderWeaponsSelectorIdList[i])
+        replaceOptions(shoulderWeaponList, shoulderWeaponSelectorIdList[i])
     }
 
-    //for(i=0; i < handWeaponsSelectorIdList.length; i++)
-    //{
-        //replaceOptions(shieldList, handWeaponsSelectorIdList[i])
-    //}
+    for(let i=0; i < shieldSelectorIdList.length; i++)
+    {
+        replaceOptions(shieldList, shieldSelectorIdList[i])
+    }
 
-    //if(???)
-    //{
+    if(document.getElementById("capacity-power").value == "p")
+    {
         replaceOptions(backpackListP, "backpack-selector")
-    //}
-    //else
-    //{
-    //    replaceOptions(backpackListB, "backpack-selector")
-    //}
+    }
+    else
+    {
+        replaceOptions(backpackListC, "backpack-selector")
+    }
+
 }
