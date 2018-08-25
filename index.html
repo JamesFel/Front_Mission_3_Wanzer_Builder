@@ -1,22 +1,180 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
     <meta charset="UTF-8">
-    <title>Test</title>
+<style>
+    .emma-or-alisa {grid-area: ea;}
+    .mission-counter {grid-area: mission}
+    .include-stolen {grid-area: stolen}
+    .base-ap {grid-area: tAP}
+    .current-ap {grid-area: bAP}
+    .stat-info-box {grid-area: stats;}
+    .backpack-contents {grid-area: contents}
+    .wanzer-body {grid-area: body}
+    .left-arm {grid-area: lArm}
+    .right-arm {grid-area: rArm}
+    .wanzer-legs {grid-area: legs}
+    .left-hand {grid-area: lHand}
+    .right-hand {grid-area: rHand}
+    .left-shoulder {grid-area: lShoulder}
+    .left-shoulder {grid-area: rShoulder}
+    .worn-backpack {grid-area: backpack}
+    .skill-descriptions {grid-area: skills}
+
+    .grid-container
+    {
+        display: grid;
+        grid-template-areas:
+            'ea mission stolen tAP bAP'
+            'stats lShoulder backpack rShoulder skills'
+            'stats lArm body rArm skills'
+            'stats lHand legs rHand skills'
+            'stats contents contents contents contents'
+            'stats contents contents contents contents';
+        grid-gap: 5px;
+        padding: 5px;
+    }
+    .grid-container > div
+    {
+        background-color: rgb(230, 230, 230);
+        text-align: center;
+        padding: 20px 0;
+        font-size: 30px;
+    }
+</style>
 </head>
+
 <body>
     <h1>Front Mission 3 Wanzer Builder</h1>
-    <p>Currently in very, very early alpha.</p>
-    <p id="body">body goes here</p>
-    <p id="left arm">left arm goes here</p>
-    <p id="right arm">right arm goes here</p>
-    <p id="legs">legs go here</p>
-    <p id="left hand">left hand weapon goes here</p>
-    <p id="right hand">right hand weapon goes here</p>
-    <p id="left shoulder">left shoulder weapon goes here</p>
-    <p id="right shoulder">right shoulder weapon goes here</p>
-    <p id="backpack">backpack goes here</p>
+    <p>Currently in very early alpha.</p>
+    <div class="grid-container">
 
+<!-----------------------------------------------Sources--------------------------------------------------------------->
+        <div class="emma-or-alisa" title="Did you go with Ryogo when you were given the choice? Yes: Emma, No: Alisa">
+            <label>Emma or Alisa
+                <select id="ea-select" onchange="resetAll()">  <!-- TODO: implement resetAll() -->
+                    <option value=0>Emma</option>
+                    <option value=1 selected="selected">Alisa</option>
+                </select>
+            </label>
+        </div>
+
+        <div class="mission-counter">
+            <label>Last Mission Won:
+                <input type="number" id="mission" min="1" max="70" step="1" value="9">
+            </label>
+        </div>
+
+        <div class="include-stolen" title="Include wanzers that you could, theoretically, have stolen by this point">
+            <label>Include potentially stolen wanzers?
+                <input type="checkbox" id="steal">
+            </label>
+        </div>
+
+        <div class="base-ap" title="AP if in an un-upgraded wanzer">
+            <label>Base AP:
+                <input type="number" id="total-ap" min="12" max="30" step="1" value="12">
+            </label>
+        </div>
+
+        <div class="current-ap"
+             title="AP if all selected upgrades were active. If less than 12, you've got too many upgrades.">
+                 <label>Battle AP:
+                     <input type="number" id="battle-ap" min="12" max="30" step="1" value="12">
+                 </label>
+        </div>
+
+<!---------------------------------------------Stat Info Box----------------------------------------------------------->
+        <div class="stat-info-box">stat info box goes here</div>
+
+<!-------------------------------------------Backpack contents--------------------------------------------------------->
+        <div class="backpack-contents">
+            <p>backpack container goes here if I decide to include it and a backpack of the appropriate type is equipped.</p>
+        </div>
+
+<!-------------------------------------------Equipment selection------------------------------------------------------->
+        <div class="wanzer-body">
+            <label>Select Body:
+                <select id="body-selector"
+                    onchange="updateBodyField()">  <!-- TODO: implement updateBodyField() -->
+                </select>
+            </label>
+        </div>
+
+        <div class="left-arm">
+            <label>Select Left Arm:
+                <select id="left-arm-selector"
+                    onchange="updateLeftArmField()">  <!-- TODO: implement function-->
+                </select>
+            </label>
+        </div>
+
+        <div class="right-arm">
+            <label>Select Right Arm:
+                <select id="right-arm-selector"
+                    onchange="updateRightArmField()">  <!-- TODO: implement function -->
+                </select>
+            </label>
+        </div>
+
+        <div class="wanzer-legs">
+            <label>Select Legs:
+                <select id="wanzer-legs-selector"
+                    onchange="updateLegsField()">  <!-- TODO: implement function -->
+                </select>
+            </label>
+        </div>
+
+        <div class="left-hand"> <!-- TODO: implement shield option -->
+            <label>Select Left-hand Weapon:
+                <select id="left-hand-selector"
+                    onchange="updateLeftHandField()">  <!-- TODO: implement function -->
+                </select>
+            </label>
+        </div>
+
+        <div class="right-hand">  <!-- TODO: implement shield option -->
+            <label>Select Right-hand Weapon:
+                <select id="right-hand-selector"
+                    onchange="updateRightHandField()">  <!-- TODO: implement function -->
+                </select>
+            </label>
+        </div>
+
+        <div class="left-shoulder">
+            <label>Select Left-shoulder Weapon:
+                <select id="left-shoulder-selector"
+                    onchange="updateLeftShoulderField()">  <!-- TODO: implement function -->
+                </select>
+            </label>
+        </div>
+
+        <div class="right-shoulder">
+            <label>Select Right-shoulder Weapon:
+                <select id="right-shoulder-selector"
+                    onchange="updateRightShoulderField()">  <!-- TODO: implement function -->
+                </select>
+            </label>
+        </div>
+
+        <div class="worn-backpack">  <!-- TODO: implement carrier/power supply checkbox -->
+            <label>Select Backpack:
+                <select id="backpack-selector"
+                    onchange="updateBackpackField()">  <!-- TODO: implement function -->
+                </select>
+            </label>
+        </div>
+
+<!-- ------------------------------------------------Skills------------------------------------------------------------>
+        <div class="skill-descriptions">
+            <div id="body skill">body skill goes here</div>
+            <div id="left arm skill">left arm skill goes here</div>
+            <div id="right arm skill">right arm skill goes here</div>
+            <div id="legs skill">legs skill goes here</div>
+        </div>
+    </div>
+
+<!-- ------------------------------------------------Script files------------------------------------------------------>
     <script src="js files/item.js"></script>
     <script src="js files/equippable_item.js"></script>
     <script src="js files/machine_part.js"></script>
@@ -31,31 +189,27 @@
     <script src="js files/power_supply.js"></script>
     <script src="js files/basket.js"></script>
     <script src="js files/json_queries.js"></script>
+    <script src="js files/dropdowns.js"></script>
 
+<!-----------------------------------------------Main()---------------------------------------------------------------->
     <script>
         "use strict"
 
-        var db;
+        var db,
+            wanzerList = [],
+            handWeaponList = [],
+            shoulderWeaponList = [],
+            shieldList = [],
+            backpackListP = [],
+            backpackListB = [];
+
         var request = new XMLHttpRequest();
         request.open('GET', "front_mission_3_data.json");
         request.responseType = 'json';
         request.onloadend = function()
         {
             db = request.response;
-            //document.getElementById("body").innerHTML = JSON.stringify(newBody(db, "Zenislev"), null, 4);
-            document.getElementById("left arm").innerHTML = JSON.stringify(newArm(db, "Zenislev"), null, 4);
-            //document.getElementById("right arm").innerHTML = JSON.stringify(newArm(db, "Genie"), null, 4);
-            //document.getElementById("legs").innerHTML = JSON.stringify(newLegs(db, "Kasel M2"), null, 4);
-            //document.getElementById("right hand").innerHTML = JSON.stringify(newHandWeapon(db, "Odin M98"), null, 4);
-            //document.getElementById("left hand").innerHTML = JSON.stringify(newShield(db, "Mk6 Shield"), null, 4);
-            //document.getElementById("left shoulder").innerHTML = JSON.stringify(newShoulderWeapon(db, "Quill"), null, 4);
-            //document.getElementById("backpack").innerHTML = JSON.stringify(newBasket(db, "BX002"), null, 4);
-
-            var tempArm = newArm(db, "Zenislev");
-            tempArm.upgradeHP();
-            document.getElementById("right arm").innerHTML = JSON.stringify(tempArm.hp(), null, 4);
-
-
+            updateDropdownLists();
         }
         request.send()
     </script>
