@@ -6,7 +6,7 @@ function Weapon(name, cost, weight, dmg, apCost, acc, rangeMin, rangeMax, weapon
     this.dmg = dmg;
     this.apCost = apCost;
     this.acc = acc;
-    this.rangeMin = rangeMax;
+    this.rangeMin = rangeMin;
     this.rangeMax = rangeMax;
     this.weaponType = weaponType;
     this.dmgType = dmgType;

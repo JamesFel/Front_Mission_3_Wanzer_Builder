@@ -4,8 +4,8 @@ CREATE TABLE IF NOT EXISTS backpacks(
     capacity int,
     pwr int,
     price int,
-    battle_e text,
-    battle_a text,
-    shop_e text,
-    shop_a text
+    battle_e int,
+    battle_a int,
+    shop_e int,
+    shop_a int
     );

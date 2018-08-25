@@ -1,6 +1,7 @@
 // class definition for shield class.
 
-function Shield(name, cost, weight, dmgReduction, durability){
+function Shield(name, cost, weight, dmgReduction, durability)
+{
     EquippableItem.call(this, name, cost, weight);
     this.dmgReduction = dmgReduction;
     this.durability = durability;

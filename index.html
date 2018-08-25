@@ -7,7 +7,15 @@
 <body>
     <h1>Front Mission 3 Wanzer Builder</h1>
     <p>Currently in very, very early alpha.</p>
-    <p id="body">you shouldn't see this</p>
+    <p id="body">body goes here</p>
+    <p id="left arm">left arm goes here</p>
+    <p id="right arm">right arm goes here</p>
+    <p id="legs">legs go here</p>
+    <p id="left hand">left hand weapon goes here</p>
+    <p id="right hand">right hand weapon goes here</p>
+    <p id="left shoulder">left shoulder weapon goes here</p>
+    <p id="right shoulder">right shoulder weapon goes here</p>
+    <p id="backpack">backpack goes here</p>
 
     <script src="js files/item.js"></script>
     <script src="js files/equippable_item.js"></script>
@@ -27,15 +35,27 @@
     <script>
         "use strict"
 
-        var db
+        var db;
         var request = new XMLHttpRequest();
         request.open('GET', "front_mission_3_data.json");
         request.responseType = 'json';
         request.onloadend = function()
         {
             db = request.response;
-            let currentWanzerLeg = newLegs(db, "Genie");
-            document.getElementById("body").innerHTML = JSON.stringify(currentWanzerLeg, null, 4);
+            //document.getElementById("body").innerHTML = JSON.stringify(newBody(db, "Zenislev"), null, 4);
+            document.getElementById("left arm").innerHTML = JSON.stringify(newArm(db, "Zenislev"), null, 4);
+            //document.getElementById("right arm").innerHTML = JSON.stringify(newArm(db, "Genie"), null, 4);
+            //document.getElementById("legs").innerHTML = JSON.stringify(newLegs(db, "Kasel M2"), null, 4);
+            //document.getElementById("right hand").innerHTML = JSON.stringify(newHandWeapon(db, "Odin M98"), null, 4);
+            //document.getElementById("left hand").innerHTML = JSON.stringify(newShield(db, "Mk6 Shield"), null, 4);
+            //document.getElementById("left shoulder").innerHTML = JSON.stringify(newShoulderWeapon(db, "Quill"), null, 4);
+            //document.getElementById("backpack").innerHTML = JSON.stringify(newBasket(db, "BX002"), null, 4);
+
+            var tempArm = newArm(db, "Zenislev");
+            tempArm.upgradeHP();
+            document.getElementById("right arm").innerHTML = JSON.stringify(tempArm.hp(), null, 4);
+
+
         }
         request.send()
     </script>

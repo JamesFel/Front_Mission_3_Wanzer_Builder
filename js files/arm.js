@@ -2,7 +2,7 @@
 
 function Arm(name, cost, weight, hp_pattern, skill, acc_pattern, num_acc_upgrades = 0)
 {
-    MachinePart.call(name, cost, weight, hp_pattern, skill);
+    MachinePart.call(this, name, cost, weight, hp_pattern, skill);
     this.acc_pattern = acc_pattern;
     this.num_acc_upgrades = num_acc_upgrades;
     this.hp_upgrade_costs = [100, , 50, 70, 90, 110, 130, 150, 170]

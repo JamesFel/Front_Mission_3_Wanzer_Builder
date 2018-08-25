@@ -1,16 +1,23 @@
 // class definition for basket class.
 
-function Basket(name, cost, weight, bpType, capacity){
-    Backpack.call(name, cost, weight, bpType);
+function Basket(name, cost, weight, bpType, capacity)
+{
+    Backpack.call(this, name, cost, weight, bpType);
     this.capacity = capacity;
     this.contents = [];  // to store up to capacity number of Items in backpack
 }
 
-ShoulderWeapon.prototype = Object.create(Weapon.prototype);
-ShoulderWeapon.prototype.constructor = ShoulderWeapon;
+Basket.prototype = Object.create(Backpack.prototype);
+Basket.prototype.constructor = Basket;
 
-ShoulderWeapon.prototype.addItem = function(item){if (this.contents.length < this.capacity){this.contents.push(item)}}
-ShoulderWeapon.prototype.removeItem = function(item)
+Basket.prototype.addItem = function(item)
+{
+    if (this.contents.length < this.capacity)
+    {
+        this.contents.push(item);
+    }
+}
+Basket.prototype.removeItem = function(item)
 {
     if (!Array.prototype.indexOf) // for compatibility with older versions of IE.
     {
