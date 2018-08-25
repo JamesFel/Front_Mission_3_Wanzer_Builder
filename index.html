@@ -52,9 +52,9 @@
 <!-----------------------------------------------Sources--------------------------------------------------------------->
         <div class="emma-or-alisa" title="Did you go with Ryogo when you were given the choice? Yes: Emma, No: Alisa">
             <label for="ea-select">Emma or Alisa
-                <select id="ea-select" onchange="resetAll()">  <!-- TODO: implement resetAll() -->
+                <select id="ea-select" onchange="updateDropdownLists()">  <!-- TODO: implement resetAll() -->
                     <option value=0>Emma</option>
-                    <option value=1 selected="selected">Alisa</option>
+                    <option value=1>Alisa</option>
                 </select>
             </label>
         </div>
@@ -67,7 +67,7 @@
 
         <div class="include-stolen" title="Include wanzers that you could, theoretically, have stolen by this point">
             <label for="steal">Include potentially stolen wanzers?
-                <input type="checkbox" id="steal">
+                <input type="checkbox" id="steal" onchange="updateDropdownLists()">
             </label>
         </div>
 
@@ -126,12 +126,10 @@
         </div>
 
         <div class="left-hand">
-            <label for="left-shield">
-                <select id="left-shield">
-                    <option value="s">Shield</option>
-                    <option value="w">Weapon</option>
-                </select>
-            </label>
+            <select id="left-shield" onchange="updateHandList('left')">
+                <option value="s">Shield</option>
+                <option value="w">Weapon</option>
+            </select>
 
             <label for="left-hand-selector">Select Left-hand:
                 <select id="left-hand-selector"
@@ -141,12 +139,10 @@
         </div>
 
         <div class="right-hand">
-            <label for="right-shield">
-                <select id="right-shield">
-                    <option value="s">Shield</option>
-                    <option value="w">Weapon</option>
-                </select>
-            </label>
+            <select id="right-shield" onchange="updateHandList('right')">
+                <option value="s">Shield</option>
+                <option value="w">Weapon</option>
+            </select>
 
             <label for="right-hand-selector">Select Right-hand:
                 <select id="right-hand-selector"
