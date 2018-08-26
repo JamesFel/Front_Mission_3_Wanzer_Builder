@@ -41,12 +41,13 @@
         padding: 20px 0;
         font-size: 30px;
     }
+    th {text-align:left;}
 </style>
 </head>
 
 <body>
     <h1>Front Mission 3 Wanzer Builder</h1>
-    <p>Currently in very early alpha.</p>
+    <p>Currently in early alpha.</p>
     <div class="grid-container">
 
 <!-----------------------------------------------Sources--------------------------------------------------------------->
@@ -54,7 +55,7 @@
             <label for="ea-select">Emma or Alisa
                 <select id="ea-select" onchange="updateDropdownLists()">  <!-- TODO: implement resetAll() -->
                     <option value=0>Emma</option>
-                    <option value=1>Alisa</option>
+                    <option value=1 selected>Alisa</option>
                 </select>
             </label>
         </div>
@@ -85,20 +86,66 @@
         </div>
 
 <!---------------------------------------------Stat Info Box----------------------------------------------------------->
-        <div class="stat-info-box">stat info box goes here</div>
+        <div class="stat-info-box">
+            <label>Total Cost:<input id="total-cost" type="number" readonly></label>
+            stat info box goes here
+        </div>
 
 <!-------------------------------------------Backpack contents--------------------------------------------------------->
         <div class="backpack-contents">
-            <p>backpack container goes here if I decide to include it and a backpack of the appropriate type is equipped.</p>
+            <p>backpack container goes here if I decide to include it
+                and a backpack of the appropriate type is equipped.</p>
         </div>
 
 <!-------------------------------------------Equipment selection------------------------------------------------------->
         <div class="wanzer-body">
             <label for="body-selector">Select Body:
                 <select id="body-selector"
-                    onchange="updateBodyField()">  <!-- TODO: implement updateBodyField() -->
+                    onchange="updateBodyField()">
                 </select>
             </label>
+            <table style="width:100%">
+                <tr>
+                    <th>HP</th>
+                    <td id='body-hp'>0</td>
+                    <th>Def-C</th>
+                    <td id='def-c'>0</td>
+                </tr>
+                <tr>
+                    <th>Weight</th>
+                    <td id='body-wgt'>0</td>
+                    <th>Power</th>
+                    <td id="body-power">0</td>
+                </tr>
+                <tr>
+                    <th>Hp Upgrades</th>
+                    <td>
+                        <input
+                            id="body-hp-upgrades"
+                            type="number"
+                            min="0"
+                            max="7"
+                            value="0"
+                            onchange="updateHP('body')">
+                    </td>
+                    <th>Def-C Upgrades</th>
+                    <td>
+                        <input
+                            id="body-def-c-upgrades"
+                            type="number"
+                            min="0"
+                            max="4"
+                            value="0"
+                            onchange="updateDefC()">
+                    </td>
+                </tr>
+                <tr>
+                    <th>Skill</th>
+                    <td id="body-skill"></td>
+                    <th>Cost</th>
+                    <td id="body-cost"></td>
+                </tr>
+            </table>
         </div>
 
         <div class="left-arm">
@@ -207,6 +254,7 @@
     <script src="js files/basket.js"></script>
     <script src="js files/json_queries.js"></script>
     <script src="js files/dropdowns.js"></script>
+    <script src="js files/update_fields.js"></script>
 
 <!-----------------------------------------------Main()---------------------------------------------------------------->
     <script>
@@ -218,7 +266,18 @@
             shoulderWeaponList = [],
             shieldList = [],
             backpackListP = [],
-            backpackListC = [];
+            backpackListC = [],
+            currentSelections = {
+                "left-shoulder": null,
+                "right-shoulder": null,
+                "body": null,
+                "left-arm": null,
+                "right-arm": null,
+                "wanzer-legs": null,
+                "backpack": null,
+                "right-hand": null,
+                "left-hand": null
+            };
 
         var request = new XMLHttpRequest();
         request.open('GET', "front_mission_3_data.json");

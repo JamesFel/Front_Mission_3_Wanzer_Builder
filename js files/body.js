@@ -42,11 +42,11 @@ Body.prototype.incrementDefC = function()
     }
 }
 
-Body.prototype.decrementHP = function()
+Body.prototype.decrementDefC = function()
 {
     if (this.num_hp_upgrades > 0)
     {
-        this.num_hp_upgrades--;
+        this.num_def_c_upgrades--;
         this.adjustCost(-1 * this.def_c_upgrade_costs[this.num_def_c_upgrades + 1]);
     }
 }

@@ -84,7 +84,7 @@ updateSelection = function(selectorIdList, replacementList, previousSelections)
     }
 }
 
-updateDropdownLists = function ()
+updateDropdownLists = function ()  //TODO: Change this so that it clears away info from entries that are no longer valid.
 {
     "use strict"
     let ea = parseInt(document.getElementById("ea-select").value);

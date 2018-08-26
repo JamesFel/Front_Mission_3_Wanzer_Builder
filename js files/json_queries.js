@@ -9,17 +9,26 @@ newBody = function(db, machine, oldBody=null)
     let def_c_per_upgrade= db["wanzer_body"][machine][12];
     let num_def_c_upgrades = 0;
 
-    for (i=1; i<9; i++)
+    for (let i=1; i<9; i++)
     {
         hp_pattern.push(db["wanzer_body"][machine][i]);
     }
 
-    if (oldBody !== null)
+    let tempBod = new  Body(name, cost, weight, hp_pattern, skill, power, def_c_per_upgrade, num_def_c_upgrades);
+    if (oldBody != null)
     {
-        num_def_c_upgrades = oldBody.num_def_c_per_upgrades;
+        for(let i = 0; i < oldBody.num_def_c_upgrades; i++)
+        {
+            tempBod.incrementDefC();
+        }
+
+        for(let i = 0; i < oldBody.num_hp_upgrades; i++)
+        {
+            tempBod.upgradeHP();
+        }
     }
 
-    return new  Body(name, cost, weight, hp_pattern, skill, power, def_c_per_upgrade, num_def_c_upgrades);
+    return tempBod;
 }
 
 
@@ -33,22 +42,32 @@ newArm = function(db, machine, oldArm=null)
     let acc_pattern = [];
     let num_acc_upgrades = 0;
 
-    for (i=1; i<9; i++)
+    for (let i = 1; i<9; i++)
     {
         hp_upgrade_pattern.push(db["wanzer_arms"][machine][i]);
     }
 
-    for (i=10; i<15; i++)
+    for (let i = 10; i<15; i++)
     {
         acc_pattern.push(db["wanzer_arms"][machine][i]);
     }
 
+    tempArm = new Arm(name, cost, weight, hp_upgrade_pattern, skill, acc_pattern, num_acc_upgrades);
+
     if (oldArm !== null)
     {
-        num_acc_upgrades = oldArm.num_acc_upgrades;
+        for(let i = 0; i< oldArm.num_acc_upgrades; i++)
+        {
+            tempArm.incrementAcc()
+        }
+
+        for(let i = 0; i < oldArm.num_hp_upgrades; i++)
+        {
+            tempArm.upgradeHP()
+        }
     }
 
-    return new Arm(name, cost, weight, hp_upgrade_pattern, skill, acc_pattern, num_acc_upgrades);
+    return tempArm;
 }
 
 
@@ -72,13 +91,28 @@ newLegs = function(db, machine, oldLeg=null)
         hp_upgrade_pattern.push(db["wanzer_legs"][machine][i]);
     }
 
+    let tempLeg = new Legs(name, cost, weight, hp_upgrade_pattern, skill, evade_level_1,
+              boost_pattern, dash_pattern, move, numLegs, num_evade_upgrades, num_bd_upgrades);
+
     if (oldLeg !== null)
     {
-        num_evade_upgrades = oldLeg.num_evade_upgrades;
-        num_bd_upgrades = oldLeg.num_bd_upgrades;
+        for( let i = 0; i < oldLeg.num_evade_upgrades; i++)
+        {
+            tempLeg.incrementEv()
+        }
+
+        for( let i = 0; i < oldLeg.num_bd_upgrades; i++)
+        {
+            tempLeg.incrementBD();
+        }
+
+        for( let i = 0; i < oldLeg.num_hp_upgrades; i++)
+        {
+            tempLeg.upgradeHP();
+        }
     }
-    return new Legs(name, cost, weight, hp_upgrade_pattern, skill, evade_level_1,
-              boost_pattern, dash_pattern, move, numLegs, num_evade_upgrades, num_bd_upgrades)
+
+    return tempLeg;
 }
 
 
