@@ -79,8 +79,8 @@ newLegs = function(db, machine, oldLeg=null)
     let hp_upgrade_pattern = [];
     let skill = db["wanzer_legs"][machine][11];
     let evade_level_1 = db["wanzer_legs"][machine][12];
-    let boost_pattern = db["boost_upgrade_patterns"][db["wanzer_legs"][machine][13]];
-    let dash_pattern = db["dash_upgrade_patterns"][db["wanzer_legs"][machine][14]];
+    let boost_pattern = db["boost_upgrade_patterns"][db["wanzer_legs"][machine][13]].slice(1);
+    let dash_pattern = db["dash_upgrade_patterns"][db["wanzer_legs"][machine][14]].slice(1);
     let move = db["wanzer_legs"][machine][10];
     let numLegs = db["wanzer_legs"][machine][15];
     let num_evade_upgrades = 0;

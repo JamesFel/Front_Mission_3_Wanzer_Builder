@@ -7,7 +7,6 @@
     .mission-counter {grid-area: mission}
     .include-stolen {grid-area: stolen}
     .base-ap {grid-area: tAP}
-    .current-ap {grid-area: bAP}
     .stat-info-box {grid-area: stats;}
     .backpack-contents {grid-area: contents}
     .wanzer-body {grid-area: body}
@@ -25,7 +24,7 @@
     {
         display: grid;
         grid-template-areas:
-            'ea mission stolen tAP bAP'
+            'ea mission stolen tAP skills'
             'stats lShoulder backpack rShoulder skills'
             'stats lArm body rArm skills'
             'stats lHand legs rHand skills'
@@ -41,13 +40,25 @@
         padding: 20px 0;
         font-size: 30px;
     }
-    th {text-align:left;}
+
+    th {text-align: left;}
+
+    td {text-align: right;}
+
+    table
+    {
+        width: 100%
+        height: 100%
+        border-collapse: separate;
+        border-spacing: 5px 1rem;
+    }
+
 </style>
 </head>
 
 <body>
     <h1>Front Mission 3 Wanzer Builder</h1>
-    <p>Currently in early alpha.</p>
+    <p>Currently in alpha.</p>
     <div class="grid-container">
 
 <!-----------------------------------------------Sources--------------------------------------------------------------->
@@ -78,17 +89,67 @@
             </label>
         </div>
 
-        <div class="current-ap"
-             title="AP if all selected upgrades were active. If less than 12, you've got too many upgrades.">
-                 <label for="battle-ap">Battle AP:
-                     <input type="number" id="battle-ap" min="12" max="30" step="1" value="12">
-                 </label>
-        </div>
-
 <!---------------------------------------------Stat Info Box----------------------------------------------------------->
         <div class="stat-info-box">
-            <label>Total Cost:<input id="total-cost" type="number" readonly></label>
-            stat info box goes here
+            <table>
+                <tr>
+                    <th>Battle AP</th>
+                    <td id="battle-ap">0</td>
+                </tr>
+                <tr>
+                    <th>Total Power:</th>
+                    <td id="total-power">0</td>
+                </tr>
+                <tr>
+                    <th>Total Weight:</th>
+                    <td id="total-weight">0</td>
+                </tr>
+
+                <tr>
+                    <th>Unused Power:</th>
+                    <td id="unused-power">0</td>
+                </tr>
+
+                <tr>
+                    <th>Def-C:</th>
+                    <td id="stats-def-c">0</td>
+                </tr>
+
+                <tr>
+                    <th id="stats-left-label">L. Acc:</th>
+                    <td id="stats-left-data">0</td>
+                </tr>
+
+                <tr>
+                    <th id="stats-right-label">R. Acc:</th>
+                    <td id="stats-right-data">0</td>
+                </tr>
+
+                <tr>
+                    <th>Move:</th>
+                    <td id="stats-move">0</td>
+                </tr>
+
+                <tr>
+                    <th>Evade:</th>
+                    <td id="stats-evade">0</td>
+                </tr>
+
+                <tr>
+                    <th>Boost:</th>
+                    <td id="stats-boost">0</td>
+                </tr>
+
+                <tr>
+                    <th>Dash:</th>
+                    <td id="stats-dash">0</td>
+                </tr>
+
+                <tr>
+                    <th>Total Cost:</th>
+                    <td id="total-cost">0</td>
+                </tr>
+            </table>
         </div>
 
 <!-------------------------------------------Backpack contents--------------------------------------------------------->
@@ -104,7 +165,7 @@
                     onchange="updateBodyField()">
                 </select>
             </label>
-            <table style="width:100%">
+            <table>
                 <tr>
                     <th>HP</th>
                     <td id='body-hp'>0</td>
@@ -151,17 +212,99 @@
         <div class="left-arm">
             <label for="left-arm-selector">Select Left Arm:
                 <select id="left-arm-selector"
-                    onchange="updateLeftArmField()">  <!-- TODO: implement function-->
+                    onchange="updateArmField('left')">
                 </select>
             </label>
+
+            <table>
+                <tr>
+                    <th>HP</th>
+                    <td id='left-arm-hp'>0</td>
+                    <th>Acc</th>
+                    <td id='left-arm-acc'>0</td>
+                </tr>
+                <tr>
+                    <th>Weight</th>
+                    <td id='left-arm-wgt'>0</td>
+                </tr>
+                <tr>
+                    <th>Hp Upgrades</th>
+                    <td>
+                        <input
+                            id="left-arm-hp-upgrades"
+                            type="number"
+                            min="0"
+                            max="7"
+                            value="0"
+                            onchange="updateHP('left-arm')">
+                    </td>
+                    <th>Acc Upgrades</th>
+                    <td>
+                        <input
+                            id="left-arm-acc-upgrades"
+                            type="number"
+                            min="0"
+                            max="4"
+                            value="0"
+                            onchange="updateAcc('left')">
+                    </td>
+                </tr>
+                <tr>
+                    <th>Skill</th>
+                    <td id="left-arm-skill"></td>
+                    <th>Cost</th>
+                    <td id="left-arm-cost"></td>
+                </tr>
+            </table>
         </div>
 
         <div class="right-arm">
             <label for="right-arm-selector">Select Right Arm:
                 <select id="right-arm-selector"
-                    onchange="updateRightArmField()">  <!-- TODO: implement function -->
+                    onchange="updateArmField('right')">
                 </select>
             </label>
+
+            <table>
+                <tr>
+                    <th>HP</th>
+                    <td id='right-arm-hp'>0</td>
+                    <th>Acc</th>
+                    <td id='right-arm-acc'>0</td>
+                </tr>
+                <tr>
+                    <th>Weight</th>
+                    <td id='right-arm-wgt'>0</td>
+                </tr>
+                <tr>
+                    <th>Hp Upgrades</th>
+                    <td>
+                        <input
+                            id="right-arm-hp-upgrades"
+                            type="number"
+                            min="0"
+                            max="7"
+                            value="0"
+                            onchange="updateHP('right-arm')">
+                    </td>
+                    <th>Acc Upgrades</th>
+                    <td>
+                        <input
+                            id="right-arm-acc-upgrades"
+                            type="number"
+                            min="0"
+                            max="4"
+                            value="0"
+                            onchange="updateAcc('right')">
+                    </td>
+                </tr>
+                <tr>
+                    <th>Skill</th>
+                    <td id="right-arm-skill"></td>
+                    <th>Cost</th>
+                    <td id="right-arm-cost"></td>
+                </tr>
+            </table>
         </div>
 
         <div class="wanzer-legs">
@@ -170,6 +313,69 @@
                     onchange="updateLegsField()">  <!-- TODO: implement function -->
                 </select>
             </label>
+
+            <table>
+                <tr>
+                    <th>HP</th>
+                    <td id='wanzer-legs-hp'>0</td>
+                    <th>Move</th>
+                    <td id='wanzer-legs-move'>0</td>
+                </tr>
+                <tr>
+                    <th>Weight</th>
+                    <td id='wanzer-legs-wgt'>0</td>
+                    <th>Evade</th>
+                    <td id="wanzer-legs-evade">0</td>
+                </tr>
+                <tr>
+                    <th>Boost</th>
+                    <td id="wanzer-legs-boost">0</td>
+                    <th>Dash</th>
+                    <td id="wanzer-legs-dash">0</td>
+                </tr>
+                <tr>
+                    <th>Type</th>
+                    <td id="wanzer-legs-type">Hover</td>
+                    <th>Hp Upgrades</th>
+                    <td>
+                        <input
+                            id="wanzer-legs-hp-upgrades"
+                            type="number"
+                            min="0"
+                            max="7"
+                            value="0"
+                            onchange="updateHP('wanzer-legs')">
+                    </td>
+                </tr>
+                <tr>
+                    <th>Evade Upgrades</th>
+                    <td>
+                        <input
+                            id="wanzer-legs-evade-upgrades"
+                            type="number"
+                            min="0"
+                            max="4"
+                            value="0"
+                            onchange="updateEvade()">
+                    </td>
+                    <th>Boost/Dash Upgrades</th>
+                    <td>
+                        <input
+                            id="wanzer-legs-bd-upgrades"
+                            type="number"
+                            min="0"
+                            max="4"
+                            value="0"
+                            onchange="updateBoostDash()">
+                    </td>
+                </tr>
+                <tr>
+                    <th>Skill</th>
+                    <td id="wanzer-legs-skill"></td>
+                    <th>Cost</th>
+                    <td id="wanzer-legs-cost"></td>
+                </tr>
+            </table>
         </div>
 
         <div class="left-hand">

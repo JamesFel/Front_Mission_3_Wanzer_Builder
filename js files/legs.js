@@ -14,7 +14,15 @@ function Legs(name, cost, weight, hp, skill, evade_level_1, boost_pattern, dash_
     this.num_bd_upgrades = num_bd_upgrades;
 
     this.move = move;
-    this.numLegs = numLegs;
+    let leg_pattern = ["Hover", "2 Legs", "4 Legs"]
+    if(parseInt(numLegs) != NaN)
+    {
+        this.numLegs = leg_pattern[numLegs/2];
+    }
+    else
+    {
+        this.numLegs = numLegs;
+    }
     this.hp_upgrade_costs = [100, 80, 120, 150, 180, 210, 240, 280]
     this.edb_upgrade_costs = [0, 160, 240, 320, 400]
 }
