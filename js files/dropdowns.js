@@ -19,22 +19,22 @@ removeOptions = function(dropdown)
     }
 }
 
-populateList = function(db, mission_num, key, offset, ea, listToFill, exclude=null, eOffset=0)
+populateList = function(db, mission_num, key, offset, ea, steal, listToFill, exclude=null, eOffset=0)
 {
     for (let secondaryKey in db[key])
     {
-        let item = db[key][secondaryKey]
-        let rob = item[offset + ea]
-        let shop = item[offset + 2 + ea]
+        let item = db[key][secondaryKey];
+        let rob = item[offset + ea];
+        let shop = item[offset + 2 + ea];
 
         if (
             (shop > 0 && shop <= mission_num) ||
             (steal && rob > 0 && rob <= mission_num)
             )
         {
-            if(exclude === null || !(item[eOffset] in exclude))
+            if(exclude === null || !(exclude.includes(item[eOffset])))
             {
-                listToFill.push(item[0])
+                listToFill.push(item[0]);
             }
         }
     }
@@ -75,16 +75,19 @@ updateSelection = function(selectorIdList, replacementList, previousSelections)
     "use strict"
     for(let i=0; i < selectorIdList.length; i++)
     {
-        let currentId = selectorIdList[i];
-        replaceOptions(replacementList, currentId)
-        if(currentId in previousSelections && replacementList.includes(previousSelections[currentId]))
+        let currentSelectorId = selectorIdList[i];
+        replaceOptions(replacementList, currentSelectorId)
+
+        if(currentSelectorId in previousSelections &&
+           replacementList.includes(previousSelections[currentSelectorId]))
         {
-            document.getElementById(currentId).value=previousSelections[currentId];
+            document.getElementById(currentSelectorId).value =
+                previousSelections[currentSelectorId];
         }
     }
 }
 
-updateDropdownLists = function ()  //TODO: Change this so that it clears away info from entries that are no longer valid.
+updateDropdownLists = function ()  //TODO: Change this so that it uses currentSelections instead of currentlySelected
 {
     "use strict"
     let ea = parseInt(document.getElementById("ea-select").value);
@@ -108,7 +111,7 @@ updateDropdownLists = function ()  //TODO: Change this so that it clears away in
     shieldList.length = 0;
     backpackListP.length = 0;
     backpackListC.length = 0;
-    let handWeaponTypes = ["fist", "baton", "flame thrower", "m.gun", "rifle", "shotgun", "spike"]
+    let handWeaponTypes = ["fist", "baton", "flame thrower", "m.gun", "rifle", "shotgun", "spike", "beam"]
 
     if (document.getElementById("right-shield") == 'w')
     {
@@ -128,19 +131,20 @@ updateDropdownLists = function ()  //TODO: Change this so that it clears away in
         shieldSelectorIdList.push("left-hand-selector")
     }
 
-    populateList(db, mission_num, "machine_acquisition", 1, ea, wanzerList);
-    populateList(db, mission_num, "shields", 6, ea, shieldList)
-    populateList(db, mission_num, "weapons", 5, ea, handWeaponList, ["grenade", "missile"], 1)
-    populateList(db, mission_num, "weapons", 5, ea, shoulderWeaponList, handWeaponTypes, 1)
-    populateList(db, mission_num, "backpacks", 5, ea, backpackListP,[4, 6, 8], 2)
-    populateList(db, mission_num, "backpacks", 5, ea, backpackListC, [30, 60, 90], 3)
+    populateList(db, mission_num, "machine_acquisition", 1, ea, steal, wanzerList);
+    populateList(db, mission_num, "shields", 6, ea, steal, shieldList)
+    populateList(db, mission_num, "weapons", 5, ea, steal, handWeaponList, ["grenade", "missile"], 1)
+    populateList(db, mission_num, "weapons", 5, ea, steal, shoulderWeaponList, handWeaponTypes, 1)
+    populateList(db, mission_num, "backpacks", 5, ea, steal, backpackListP,[4, 6, 8], 2)
+    populateList(db, mission_num, "backpacks", 5, ea, steal, backpackListC, [30, 60, 90], 3)
 
+    //populating dropdown menus
     updateSelection(wanzerPartsSelectorIdList, wanzerList, currentlySelected);
     updateSelection(handWeaponsSelectorIdList, handWeaponList, currentlySelected);
     updateSelection(shoulderWeaponSelectorIdList, shoulderWeaponList, currentlySelected);
     updateSelection(shieldSelectorIdList, shieldList, currentlySelected);
 
-    if(document.getElementById("capacity-power").value == "p")
+    if(document.getElementById("power-capacity").value == "p")
     {
         updateSelection(["backpack-selector"], backpackListP, currentlySelected);
     }
@@ -161,4 +165,21 @@ updateHandList = function(hand)
     {
         replaceOptions(handWeaponList, hand + "-hand-selector")
     }
+    updateHandField();
+}
+
+updateBackpackList = function()
+{
+    let currentlySelected = checkCurrentSelection();
+    if(document.getElementById("power-capacity").value == "p")
+    {
+        updateSelection(["backpack-selector"], backpackListP, currentlySelected);
+        document.getElementById("power-capacity-label").innerHTML = "Power:";
+    }
+    else
+    {
+        updateSelection(["backpack-selector"], backpackListC, currentlySelected);
+        document.getElementById("power-capacity-label").innerHTML = "Capacity:";
+    }
+    updateBackpackField();
 }

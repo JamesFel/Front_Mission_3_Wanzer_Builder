@@ -49,6 +49,8 @@ def main():
     conn = sqlite3.connect(getcwd() + "\\front_mission_3.db")
     cur = conn.cursor()
     rt = getcwd() + '\\'
+    cur.execute("PRAGMA foreign_keys = ON;")
+
     for rtName in loadOrder:
         if rtName in ('battle_skills', 'machine_acquisition'):
             delim = "|"

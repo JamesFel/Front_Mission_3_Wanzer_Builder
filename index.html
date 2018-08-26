@@ -18,18 +18,22 @@
     .left-shoulder {grid-area: lShoulder}
     .left-shoulder {grid-area: rShoulder}
     .worn-backpack {grid-area: backpack}
-    .skill-descriptions {grid-area: skills}
+    .body-skill-info {grid-area: bSkill}
+    .left-arm-skill-info {grid-area: lSkill}
+    .right-arm-skill-info {grid-area: rSkill}
+    .legs-skill-info {grid-area: fSkill}
 
     .grid-container
     {
         display: grid;
         grid-template-areas:
-            'ea mission stolen tAP skills'
-            'stats lShoulder backpack rShoulder skills'
-            'stats lArm body rArm skills'
-            'stats lHand legs rHand skills'
-            'stats contents contents contents contents'
-            'stats contents contents contents contents';
+            'ea mission stolen tAP'
+            'stats lShoulder backpack rShoulder'
+            'stats lArm body rArm'
+            'stats lHand legs rHand'
+            'bSkill lSkill rSkill fSkill'
+            'contents contents contents contents'
+            'contents contents contents contents';
         grid-gap: 5px;
         padding: 5px;
     }
@@ -41,17 +45,28 @@
         font-size: 30px;
     }
 
-    th {text-align: left;}
-
-    td {text-align: right;}
-
     table
     {
         width: 100%
-        height: 100%
         border-collapse: separate;
-        border-spacing: 5px 1rem;
+        border-spacing: 15px 0;
     }
+
+    th
+    {
+        text-align: left;
+        width: 40%
+    }
+
+    td
+    {
+        text-align: right;
+        min-width: 4ch;
+        white-space: nowrap;
+    }
+
+    select, input{font: inherit;}
+    p {text-align:left;}
 
 </style>
 </head>
@@ -64,7 +79,7 @@
 <!-----------------------------------------------Sources--------------------------------------------------------------->
         <div class="emma-or-alisa" title="Did you go with Ryogo when you were given the choice? Yes: Emma, No: Alisa">
             <label for="ea-select">Emma or Alisa
-                <select id="ea-select" onchange="updateDropdownLists()">  <!-- TODO: implement resetAll() -->
+                <select id="ea-select" onchange="updateDropdownLists()">
                     <option value=0>Emma</option>
                     <option value=1 selected>Alisa</option>
                 </select>
@@ -85,7 +100,15 @@
 
         <div class="base-ap" title="AP if in an un-upgraded wanzer">
             <label for="total-ap">Base AP:
-                <input type="number" id="total-ap" min="12" max="30" step="1" value="12">
+                <input
+                        type="number"
+                        id="total-ap"
+                        min="12"
+                        max="30"
+                        step="1"
+                        value="12"
+                        onchange="updateBattleAP()"
+                >
             </label>
         </div>
 
@@ -94,7 +117,7 @@
             <table>
                 <tr>
                     <th>Battle AP</th>
-                    <td id="battle-ap">0</td>
+                    <td id="battle-ap">12</td>
                 </tr>
                 <tr>
                     <th>Total Power:</th>
@@ -116,13 +139,8 @@
                 </tr>
 
                 <tr>
-                    <th id="stats-left-label">L. Acc:</th>
-                    <td id="stats-left-data">0</td>
-                </tr>
-
-                <tr>
-                    <th id="stats-right-label">R. Acc:</th>
-                    <td id="stats-right-data">0</td>
+                    <th title="Average HP per wanzer part.">Avg HP:</th>
+                    <td id="stats-avg-hp">0</td>
                 </tr>
 
                 <tr>
@@ -133,6 +151,13 @@
                 <tr>
                     <th>Evade:</th>
                     <td id="stats-evade">0</td>
+                </tr>
+
+                <tr>
+                    <th
+                        title="percentage of listed damage that you would generally take when blocking">
+                            Blocked Dmg%</th>
+                    <td id="stats-bdp">0</td>
                 </tr>
 
                 <tr>
@@ -310,7 +335,7 @@
         <div class="wanzer-legs">
             <label for="wanzer-legs-selector">Select Legs:
                 <select id="wanzer-legs-selector"
-                    onchange="updateLegsField()">  <!-- TODO: implement function -->
+                    onchange="updateLegsField()">
                 </select>
             </label>
 
@@ -386,7 +411,7 @@
 
             <label for="left-hand-selector">Select Left-hand:
                 <select id="left-hand-selector"
-                    onchange="updateLeftHandField()">  <!-- TODO: implement function -->
+                    onchange="updateHandField('left')">  <!-- TODO: implement function -->
                 </select>
             </label>
         </div>
@@ -399,7 +424,7 @@
 
             <label for="right-hand-selector">Select Right-hand:
                 <select id="right-hand-selector"
-                    onchange="updateRightHandField()">  <!-- TODO: implement function -->
+                    onchange="updateHandField('right')">  <!-- TODO: implement function -->
                 </select>
             </label>
         </div>
@@ -407,22 +432,88 @@
         <div class="left-shoulder">
             <label for="left-shoulder-selector">Select Left-shoulder Weapon:
                 <select id="left-shoulder-selector"
-                    onchange="updateLeftShoulderField()">  <!-- TODO: implement function -->
+                    onchange="updateShoulderField('left')">
                 </select>
             </label>
+
+            <table>
+                <tr>
+                    <th>Weapon Type:</th>
+                    <td id="left-shoulder-weapon-type">missile</td>
+                    <th>Damage Type:</th>
+                    <td id="left-shoulder-damage-type">F</td>
+                </tr>
+                <tr>
+                    <th>Damage:</th>
+                    <td id="left-shoulder-damage">0</td>
+                    <th>Acc</th>
+                    <td id="left-shoulder-acc">0</td>
+                </tr>
+                <tr>
+                    <th>Range:</th>
+                    <td id="left-shoulder-range">0~0</td>
+                    <th>Ammo:</th>
+                    <td id="left-shoulder-ammo">0</td>
+                </tr>
+                <tr>
+                    <th>AP Cost:</th>
+                    <td id="left-shoulder-ap-cost">0</td>
+                    <th>Weight</th>
+                    <td id="left-shoulder-wgt">0</td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td></td>
+                    <th>Cost:</th>
+                    <td id="left-shoulder-cost">0</td>
+                </tr>
+            </table>
         </div>
 
         <div class="right-shoulder">
             <label for="right-shoulder-selector">Select Right-shoulder Weapon:
                 <select id="right-shoulder-selector"
-                    onchange="updateRightShoulderField()">  <!-- TODO: implement function -->
+                    onchange="updateShoulderField('right')">
                 </select>
             </label>
+            <table>
+                <tr>
+                    <th>Weapon Type:</th>
+                    <td id="right-shoulder-weapon-type">missile</td>
+                    <th>Damage Type:</th>
+                    <td id="right-shoulder-damage-type">F</td>
+                </tr>
+                <tr>
+                    <th>Damage:</th>
+                    <td id="right-shoulder-damage">0</td>
+                    <th>Acc</th>
+                    <td id="right-shoulder-acc">0</td>
+                </tr>
+                <tr>
+                    <th>Range:</th>
+                    <td id="right-shoulder-range">0~0</td>
+                    <th>Ammo:</th>
+                    <td id="right-shoulder-ammo">0</td>
+                </tr>
+                <tr>
+                    <th>AP Cost:</th>
+                    <td id="right-shoulder-ap-cost">0</td>
+                    <th>Weight</th>
+                    <td id="right-shoulder-wgt">0</td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td></td>
+                    <th>Cost:</th>
+                    <td id="right-shoulder-cost">0</td>
+                </tr>
+            </table>
         </div>
 
         <div class="worn-backpack">
-            <label for="capacity-power">Type
-                <select id="capacity-power">
+            <label for="power-capacity">Type
+                <select id="power-capacity"
+                onchange="updateBackpackList()">
                     <option value="p">power</option>
                     <option value="c">capacity</option>
                 </select>
@@ -430,18 +521,24 @@
 
             <label for="backpack-selector">Select Backpack:
                 <select id="backpack-selector"
-                    onchange="updateBackpackField()">  <!-- TODO: implement function -->
+                    onchange="updateBackpackField()">
                 </select>
             </label>
+            <table>
+                <tr>
+                    <th id="power-capacity-label">Power:</th>
+                    <td id="power-capacity-value">0</td>
+                    <th>Weight:</th>
+                    <td id="backpack-weight">0</td>
+                </tr>
+            </table>
         </div>
 
 <!-- ------------------------------------------------Skills------------------------------------------------------------>
-        <div class="skill-descriptions">
-            <div id="body skill">body skill goes here</div>
-            <div id="left arm skill">left arm skill goes here</div>
-            <div id="right arm skill">right arm skill goes here</div>
-            <div id="legs skill">legs skill goes here</div>
-        </div>
+        <div class="body-skill-info">body skill goes here</div>
+        <div class="left-arm-skill-info">left arm skill goes here</div>
+        <div class="right-arm-skill-info">right arm skill goes here</div>
+        <div class="legs-skill-info">legs skill goes here</div>
     </div>
 
 <!-- ------------------------------------------------Script files------------------------------------------------------>

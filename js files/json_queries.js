@@ -1,5 +1,7 @@
 newBody = function(db, machine, oldBody=null)
 {
+    if(machine[0] == '-'){return null;}
+
     let name = machine;
     let cost = db["machine_parts_purchase_and_upgrade_costs"]["BodyHP"][2];
     let weight = db["wanzer_body"][machine][9];
@@ -34,6 +36,8 @@ newBody = function(db, machine, oldBody=null)
 
 newArm = function(db, machine, oldArm=null)
 {
+    if(machine[0] == '-'){return null;}
+
     let name = machine;
     let cost = db["machine_parts_purchase_and_upgrade_costs"]["ArmHP"][2];
     let weight = db["wanzer_arms"][machine][9];
@@ -73,6 +77,8 @@ newArm = function(db, machine, oldArm=null)
 
 newLegs = function(db, machine, oldLeg=null)
 {
+    if(machine[0] == '-'){return null;}
+
     let name = machine;
     let cost = db["machine_parts_purchase_and_upgrade_costs"]["LegsHP"][2];
     let weight = db["wanzer_legs"][machine][9];
@@ -118,6 +124,8 @@ newLegs = function(db, machine, oldLeg=null)
 
 newShield = function(db, shd)
 {
+    if(shd[0] == '-'){return null;}
+
     let name = shd;
     let cost = db["shields"][shd][5];
     let weight = db["shields"][shd][1];
@@ -130,6 +138,8 @@ newShield = function(db, shd)
 
 newHandWeapon = function(db, weapon)
 {
+    if(weapon[0] == '-'){return null;}
+
     let name = weapon;
     let cost = db["weapons"][weapon][4];
     let weight = db["weapons"][weapon][2];
@@ -150,24 +160,28 @@ newHandWeapon = function(db, weapon)
 
 newShoulderWeapon = function(db, weapon)
 {
+    if(weapon[0] == '-'){return null;}
+
     let name = db["weapons"][weapon][0];
     let cost = db["weapons"][weapon][4];
     let weight = db["weapons"][weapon][2];
     let dmg = db["weapons"][weapon][3];
     let weaponType = db["weapons"][weapon][1];
 
-    let apCost = db["weapons_common_statistics"][weaponType+'1'][6];
-    let acc = db["weapons_common_statistics"][weaponType+'1'][3];
-    let rangeMin = db["weapons_common_statistics"][weaponType+'1'][7];
-    let rangeMax = db["weapons_common_statistics"][weaponType+'1'][8];
-    let dmgType = db["weapons_common_statistics"][weaponType+'1'][2];
-    let ammo = db["weapons_common_statistics"][weaponType+'1'][5];
+    let apCost = db["weapons_common_statistics"][weaponType][6];
+    let acc = db["weapons_common_statistics"][weaponType][3];
+    let rangeMin = db["weapons_common_statistics"][weaponType][7];
+    let rangeMax = db["weapons_common_statistics"][weaponType][8];
+    let dmgType = db["weapons_common_statistics"][weaponType][2];
+    let ammo = db["weapons_common_statistics"][weaponType][5];
 
     return new ShoulderWeapon(name, cost, weight, dmg, apCost, acc, rangeMin, rangeMax, weaponType, dmgType, ammo);
 }
 
 newBasket = function(db, bas, oldBasket=null)
 {
+    if(bas[0] == '-'){return null;}
+
     let name = bas;
     let cost  = db["backpacks"][bas][4];;
     let weight = db["backpacks"][bas][1];
@@ -193,6 +207,8 @@ newBasket = function(db, bas, oldBasket=null)
 
 newPowerSupply = function(db, ps)
 {
+    if(ps[0] == '-'){return null;}
+
     let name = ps;
     let cost = db["backpacks"][ps][4];
     let weight = db["backpacks"][ps][1];
