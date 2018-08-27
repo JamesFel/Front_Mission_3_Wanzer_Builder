@@ -5,8 +5,8 @@ function Arm(name, cost, weight, hp_pattern, skill, acc_pattern, num_acc_upgrade
     MachinePart.call(this, name, cost, weight, hp_pattern, skill);
     this.acc_pattern = acc_pattern;
     this.num_acc_upgrades = num_acc_upgrades;
-    this.hp_upgrade_costs = [100, , 50, 70, 90, 110, 130, 150, 170]
-    this.acc_upgrade_costs = [0, 100, 150, 200, 250]
+    this.hp_upgrade_costs = [100, 150, 220, 310, 420, 550, 700, 870]
+    this.acc_upgrade_costs = [0, 100, 250, 450, 700]
 }
 
 Arm.prototype = Object.create(MachinePart.prototype);
@@ -17,35 +17,18 @@ Arm.prototype.acc = function()
     return this.acc_pattern[this.num_acc_upgrades];
 }
 
-Arm.prototype.upgradeHP = function()
+Arm.prototype.setHP = function(num_hp_upgrades)
 {
-    if(this.incrementHP())
-    {
-        this.adjustCost(this.hp_upgrade_costs[this.num_hp_upgrades])
-    }
-}
-Arm.prototype.downgradeHP = function()
-{
-   if(this.decrementHP())
-   {
-      this.adjustCost(-1 * this.hp_upgrade_costs[this.num_hp_upgrades + 1])
-   }
+    this.num_hp_upgrades = Math.min(7, Math.max(0, num_hp_upgrades));
+
+    this.cost = this.hp_upgrade_costs[this.num_hp_upgrades] +
+        this.acc_upgrade_costs[this.num_acc_upgrades];
 }
 
-MachinePart.prototype.incrementAcc = function()
+Arm.prototype.setAcc = function(num_acc_upgrades)
 {
-    if (this.num_acc_upgrades < this.acc_pattern.length - 1)
-    {
-        this.num_acc_upgrades++;
-        this.adjustCost(this.acc_upgrade_costs[this.num_acc_upgrades]);
-    }
-}
+        this.num_acc_upgrades = Math.min(4, Math.max(0, num_acc_upgrades));
 
-MachinePart.prototype.decrementAcc = function()
-{
-    if (this.num_acc_upgrades > 0)
-    {
-        this.num_acc_upgrades--;
-        this.adjustCost(-1 * this.acc_upgrade_costs[this.num_acc_upgrades + 1]);
-    }
+        this.cost = this.hp_upgrade_costs[this.num_hp_upgrades] +
+            this.acc_upgrade_costs[this.num_acc_upgrades];
 }

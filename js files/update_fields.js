@@ -169,6 +169,8 @@ updateSkillInfo = function(part, skill)
 updateBodyField = function()
 {
     "use strict"
+    let residual_hp_upgrades = document.getElementById('body-hp-upgrades').value;
+    let residual_def_c_upgrades = document.getElementById('body-def-c-upgrades').value;
     let currentBody = newBody(db,
                               document.getElementById('body-selector').value,
                               currentSelections['body']
@@ -177,6 +179,8 @@ updateBodyField = function()
 
     if (currentBody != null)
     {
+        currentBody.setHP(residual_hp_upgrades);
+        currentBody.setDefC(residual_def_c_upgrades);
         document.getElementById('body-hp').innerHTML = currentBody.hp();
         document.getElementById('def-c').innerHTML = currentBody.def_c();
         document.getElementById('stats-def-c').innerHTML = currentBody.def_c();
@@ -213,21 +217,11 @@ updateDefC = function()
     let targetValue = validateMinMax(0, 4, 'body-def-c-upgrades');
     if(currentPart == null || targetValue == null){return;}
 
-    let currentValue = currentPart.num_def_c_upgrades;
-
-    for(let i = currentValue; i < targetValue; i++)
-    {
-        currentPart.incrementDefC()
-    }
-
-    for(let i = currentValue; i > targetValue; i--)
-    {
-        currentPart.decrementDefC()
-    }
-
+    currentPart.setDefC(targetValue);
     document.getElementById('def-c').innerHTML = currentPart.def_c();
     document.getElementById('stats-def-c').innerHTML = currentPart.def_c();
     document.getElementById('body-cost').innerHTML = currentPart.cost;
+
     updateCost();
     updateBattleAP();
 }
@@ -236,6 +230,8 @@ updateDefC = function()
 updateArmField = function(side)
 {
     "use strict"
+    let residual_acc_upgrades = document.getElementById(side + '-arm-acc-upgrades').value;
+    let residual_hp_upgrades = document.getElementById(side + '-arm-hp-upgrades').value;
     let currentArm = newArm(db,
                             document.getElementById(side + '-arm-selector').value,
                             currentSelections[side + '-arm-selector']
@@ -244,6 +240,8 @@ updateArmField = function(side)
 
     if(currentArm != null)
     {
+        currentArm.setHP(residual_hp_upgrades);
+        currentArm.setAcc(residual_acc_upgrades);
         document.getElementById(side + '-arm-hp').innerHTML = currentArm.hp();
         document.getElementById(side + '-arm-acc').innerHTML = currentArm.acc();
         document.getElementById(side + '-arm-wgt').innerHTML = currentArm.weight;
@@ -274,20 +272,10 @@ updateAcc = function(side)
     let targetValue = validateMinMax(0, 4, side + '-arm-acc-upgrades')
     if(currentArm == null|| targetValue == null){return;}
 
-    let currentValue = currentArm.num_acc_upgrades;
-
-    for(let i = currentValue; i < targetValue; i++)
-    {
-        currentArm.incrementAcc()
-    }
-
-    for(let i = currentValue; i > targetValue; i--)
-    {
-        currentArm.decrementAcc();
-    }
-
+    currentArm.setAcc(targetValue);
     document.getElementById(side + '-arm-acc').innerHTML = currentArm.acc();
     document.getElementById(side + '-arm-cost').innerHTML = currentArm.cost;
+
     updateCost();
     updateBattleAP();
 }
@@ -296,13 +284,20 @@ updateAcc = function(side)
 updateLegsField = function()
 {
     "use strict"
+    let residual_hp_upgrades = document.getElementById('wanzer-legs-hp-upgrades').value;
+    let residual_evade_upgrades = document.getElementById('wanzer-legs-evade-upgrades').value;
+    let residual_bd_upgrades = document.getElementById('wanzer-legs-bd-upgrades').value;
     let currentLegs = newLegs(db,
                               document.getElementById('wanzer-legs-selector').value,
                               currentSelections['wanzer-legs']
                               );
     currentSelections['wanzer-legs'] = currentLegs;
+
     if(currentLegs != null)
     {
+        currentLegs.setHP(residual_hp_upgrades);
+        currentLegs.setBD(residual_bd_upgrades);
+        currentLegs.setEvade(residual_evade_upgrades);
         document.getElementById('wanzer-legs-hp').innerHTML = currentLegs.hp();
         document.getElementById('wanzer-legs-evade').innerHTML = currentLegs.evade();
         document.getElementById('stats-evade').innerHTML = currentLegs.evade();
@@ -351,21 +346,12 @@ updateEvade = function()
     let targetValue = validateMinMax(0, 4, 'wanzer-legs-evade-upgrades')
 
     if(currentLegs == null || targetValue == null){return;}
-    let currentValue = currentLegs.num_evade_upgrades;
 
-    for(let i = currentValue; i < targetValue; i++)
-    {
-        currentLegs.incrementEv()
-    }
-
-    for(let i = currentValue; i > targetValue; i--)
-    {
-        currentLegs.decrementEv();
-    }
-
+    currentLegs.setEvade(targetValue);
     document.getElementById('wanzer-legs-evade').innerHTML = currentLegs.evade();
     document.getElementById('stats-evade').innerHTML = currentLegs.evade();
     document.getElementById('wanzer-legs-cost').innerHTML = currentLegs.cost;
+
     updateCost();
     updateBattleAP();
     updateBlockedDamagePercent();
@@ -378,23 +364,13 @@ updateBoostDash = function()
     let targetValue = validateMinMax(0, 4, 'wanzer-legs-bd-upgrades');
     if(currentLegs == null || targetValue == null){return;}
 
-    let currentValue = currentLegs.num_bd_upgrades;
-
-    for(let i = currentValue; i < targetValue; i++)
-    {
-        currentLegs.incrementBD()
-    }
-
-    for(let i = currentValue; i > targetValue; i--)
-    {
-        currentLegs.decrementBD();
-    }
-
+    currentLegs.setBD(targetValue);
     document.getElementById('wanzer-legs-boost').innerHTML = currentLegs.boost();
     document.getElementById('stats-boost').innerHTML = currentLegs.boost();
     document.getElementById('wanzer-legs-dash').innerHTML = currentLegs.dash();
     document.getElementById('stats-dash').innerHTML = currentLegs.dash();
     document.getElementById('wanzer-legs-cost').innerHTML = currentLegs.cost;
+
     updateCost();
 }
 
@@ -406,16 +382,7 @@ updateHP = function(part)
     let targetValue = validateMinMax(0, 7, part + '-hp-upgrades');
     if(currentPart == null || targetValue == null) {return;}
 
-    for(let i = currentPart.num_hp_upgrades; i < targetValue; i++)
-    {
-        currentPart.upgradeHP()
-    }
-
-    for(let i = currentPart.num_hp_upgrades; i > targetValue; i--)
-    {
-        currentPart.downgradeHP()
-    }
-
+    currentPart.setHP(targetValue);
     document.getElementById(part + '-hp').innerHTML = currentPart.hp();
     document.getElementById(part + '-cost').innerHTML = currentPart.cost;
 

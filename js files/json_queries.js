@@ -19,15 +19,8 @@ newBody = function(db, machine, oldBody=null)
     let tempBod = new  Body(name, cost, weight, hp_pattern, skill, power, def_c_per_upgrade, num_def_c_upgrades);
     if (oldBody != null)
     {
-        for(let i = 0; i < oldBody.num_def_c_upgrades; i++)
-        {
-            tempBod.incrementDefC();
-        }
-
-        for(let i = 0; i < oldBody.num_hp_upgrades; i++)
-        {
-            tempBod.upgradeHP();
-        }
+        tempBod.setDefC(oldBody.num_def_c_upgrades);
+        tempBod.setHP(oldBody.num_hp_upgrades);
     }
 
     return tempBod;
@@ -60,15 +53,8 @@ newArm = function(db, machine, oldArm=null)
 
     if (oldArm !== null)
     {
-        for(let i = 0; i< oldArm.num_acc_upgrades; i++)
-        {
-            tempArm.incrementAcc()
-        }
-
-        for(let i = 0; i < oldArm.num_hp_upgrades; i++)
-        {
-            tempArm.upgradeHP()
-        }
+        tempArm.setHP(oldArm.hp());
+        tempArm.setAcc(oldArm.acc());
     }
 
     return tempArm;
@@ -102,20 +88,9 @@ newLegs = function(db, machine, oldLeg=null)
 
     if (oldLeg !== null)
     {
-        for( let i = 0; i < oldLeg.num_evade_upgrades; i++)
-        {
-            tempLeg.incrementEv()
-        }
-
-        for( let i = 0; i < oldLeg.num_bd_upgrades; i++)
-        {
-            tempLeg.incrementBD();
-        }
-
-        for( let i = 0; i < oldLeg.num_hp_upgrades; i++)
-        {
-            tempLeg.upgradeHP();
-        }
+        tempLeg.setHP(oldLeg.num_hp_upgrades);
+        tempLeg.setEvade(oldLeg.num_evade_upgrades);
+        tempLeg.setBD(oldLeg.num_bd_upgrades);
     }
 
     return tempLeg;

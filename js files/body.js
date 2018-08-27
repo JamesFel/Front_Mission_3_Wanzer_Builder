@@ -6,8 +6,8 @@ function Body(name, cost, weight, hp_pattern, skill, power, def_c_per_upgrade, n
     this.power = power;
     this.def_c_per_upgrade = def_c_per_upgrade;
     this.num_def_c_upgrades = num_def_c_upgrades;
-    this.hp_upgrade_costs = [240, 120, 170, 220, 270, 320, 360, 410]
-    this.def_c_upgrade_costs = [0, 240, 360, 480, 600]
+    this.hp_upgrade_costs = [240, 360, 530, 1020, 1320, 1240, 1600, 2010]
+    this.def_c_upgrade_costs = [0, 240, 600, 1080, 1680]
 }
 
 Body.prototype = Object.create(MachinePart.prototype);
@@ -18,35 +18,18 @@ Body.prototype.def_c = function()
     return this.def_c_per_upgrade * this.num_def_c_upgrades;
 }
 
-Body.prototype.upgradeHP = function()
+Body.prototype.setHP = function(num_hp_upgrades)
 {
-    if(this.incrementHP())
-    {
-        this.adjustCost(this.hp_upgrade_costs[this.num_hp_upgrades])
-    }
-}
-Body.prototype.downgradeHP = function()
-{
-   if(this.decrementHP())
-   {
-      this.adjustCost(-1 * this.hp_upgrade_costs[this.num_hp_upgrades + 1])
-   }
+    this.num_hp_upgrades = Math.min(7, Math.max(0, num_hp_upgrades));
+
+    this.cost = this.hp_upgrade_costs[this.num_hp_upgrades] +
+        this.def_c_upgrade_costs[this.num_def_c_upgrades];
 }
 
-Body.prototype.incrementDefC = function()
+Body.prototype.setDefC = function(num_def_c_upgrades)
 {
-    if (this.num_def_c_upgrades < 4)
-    {
-        this.num_def_c_upgrades++;
-        this.adjustCost(this.def_c_upgrade_costs[this.num_def_c_upgrades]);
-    }
-}
+        this.num_def_c_upgrades = Math.min(4, Math.max(0, num_def_c_upgrades));
 
-Body.prototype.decrementDefC = function()
-{
-    if (this.num_def_c_upgrades > 0)
-    {
-        this.num_def_c_upgrades--;
-        this.adjustCost(-1 * this.def_c_upgrade_costs[this.num_def_c_upgrades + 1]);
-    }
+        this.cost = this.hp_upgrade_costs[this.num_hp_upgrades] +
+            this.def_c_upgrade_costs[this.num_def_c_upgrades];
 }

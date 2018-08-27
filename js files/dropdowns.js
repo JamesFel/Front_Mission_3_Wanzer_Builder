@@ -33,15 +33,49 @@ replaceOptions = function (list_of_options, selector_id)
 removeOptions = function(dropdown)
 {
     "use strict"
+    let optGroups = dropdown.getElementsByTagName('optgroup');
+    for (let i = optGroups.length - 1; i >= 0; i--)
+    {
+        dropdown.removeChild(optGroups[i]);
+    }
+
     for(let i = dropdown.options.length - 1 ; i >= 0 ; i--)
     {
         dropdown.remove(i);
     }
 }
 
-//--------------------------------------------Update dropdown lists ------------------------------------------------
-populateList = function(db, mission_num, key, offset, ea, steal, listToFill, exclude=null, eOffset=0)
+replaceWeaponOptions = function(list_of_options, selector_id)
 {
+    let selector = document.getElementById(selector_id);
+    removeOptions(selector);
+
+    selector.options[0] = new Option('-----------');
+
+    for(optGroup in list_of_options)
+    {
+        let og = document.createElement('optgroup');
+        og.label = optGroup;
+
+        for(weapon in list_of_options[optGroup])
+        {
+            let child = document.createElement('option');
+            child.value = list_of_options[optGroup][weapon];
+            child.textContent = child.value;
+            og.appendChild(child);
+        }
+        selector.appendChild(og);
+    }
+}
+
+//--------------------------------------------Update dropdown lists ------------------------------------------------
+//use of optGroups requires eOffset to be set to the element
+//    that will determine the optGroups to be created.
+populateList = function(db, mission_num, primaryKey, compare, offset, ea,
+                        steal, listToFill, exclude=null, eOffset=0,
+                        optGroups=false)
+{
+    var key = primaryKey
     for (let secondaryKey in db[key])
     {
         let item = db[key][secondaryKey];
@@ -55,9 +89,35 @@ populateList = function(db, mission_num, key, offset, ea, steal, listToFill, exc
         {
             if(exclude === null || !(exclude.includes(item[eOffset])))
             {
-                listToFill.push(item[0]);
+                if(!(optGroups)) {listToFill.push(item[0]);}
+                else
+                {
+                    if (item[eOffset] in listToFill)
+                    {
+                        listToFill[item[eOffset]].push(item[0]);
+                    }
+                    else
+                    {
+                        listToFill[item[eOffset]] = [item[0]];
+                    }
+                }
             }
         }
+    }
+    if(optGroups)
+    {
+        for(let group in listToFill)
+        {
+            listToFill[group].sort(function(a, b){return db[key][a][compare] - db[key][b][compare]})
+        }
+    }
+    else
+    {
+        listToFill.sort(function(a, b)
+            {
+                if(db[key][a][compare] < db[key][b][compare]){return -1;}
+                else{return 1;}
+            })
     }
 }
 
@@ -91,19 +151,25 @@ checkCurrentSelection = function()
     return response;
 }
 
-updateSelection = function(selectorIdList, replacementList, previousSelections)
+updateSelection = function(selectorIdList, replacementList, previousSelections, weapons=false)
 {
-    "use strict"
     for(let i=0; i < selectorIdList.length; i++)
     {
         let currentSelectorId = selectorIdList[i];
-        replaceOptions(replacementList, currentSelectorId)
+        let selector = document.getElementById(currentSelectorId)
+
+        if(!(weapons)){replaceOptions(replacementList, currentSelectorId);}
+        else{replaceWeaponOptions(replacementList, currentSelectorId);}
 
         if(currentSelectorId in previousSelections &&
            replacementList.includes(previousSelections[currentSelectorId]))
         {
-            document.getElementById(currentSelectorId).value =
-                previousSelections[currentSelectorId];
+            selector.value = previousSelections[currentSelectorId];
+        }
+        else
+        {
+            selector.selectedIndex = 0;
+            selector.onchange();
         }
     }
 }
@@ -128,12 +194,12 @@ updateDropdownLists = function ()  //TODO: Change this so that it uses currentSe
     let currentlySelected = checkCurrentSelection();
 
     //resetting the arrays
-    wanzerList.length = 0;
-    handWeaponList.length = 0;
-    shoulderWeaponList.length = 0;
-    shieldList.length = 0;
-    backpackListP.length = 0;
-    backpackListC.length = 0;
+    wanzerList = [];
+    handWeaponList = [];
+    shoulderWeaponList = [];
+    shieldList = [];
+    backpackListP= [];
+    backpackListC = [];
     let handWeaponTypes = ["fist", "baton", "flame thrower", "m.gun", "rifle", "shotgun", "spike", "beam"]
 
     if (document.getElementById("right-shield").value == 'w')
@@ -154,17 +220,23 @@ updateDropdownLists = function ()  //TODO: Change this so that it uses currentSe
         shieldSelectorIdList.push("left-hand-selector")
     }
 
-    populateList(db, mission_num, "machine_acquisition", 1, ea, steal, wanzerList);
-    populateList(db, mission_num, "shields", 6, ea, steal, shieldList)
-    populateList(db, mission_num, "weapons", 5, ea, steal, handWeaponList, ["grenade", "missile"], 1)
-    populateList(db, mission_num, "weapons", 5, ea, steal, shoulderWeaponList, handWeaponTypes, 1)
-    populateList(db, mission_num, "backpacks", 5, ea, steal, backpackListP,[4, 6, 8], 2)
-    populateList(db, mission_num, "backpacks", 5, ea, steal, backpackListC, [30, 60, 90], 3)
+    populateList(db, mission_num, "machine_acquisition", 0,
+                 1, ea, steal, wanzerList);
+    populateList(db, mission_num, "shields", 5,
+                 6, ea, steal, shieldList)
+    populateList(db, mission_num, "weapons", 3,
+                 5, ea, steal, handWeaponList, ["grenade", "missile"], 1, true)
+    populateList(db, mission_num, "weapons", 3,
+                 5, ea, steal, shoulderWeaponList, handWeaponTypes, 1, true)
+    populateList(db, mission_num, "backpacks", 3,
+                 5, ea, steal, backpackListP,[4, 6, 8], 2)
+    populateList(db, mission_num, "backpacks", 2,
+                 5, ea, steal, backpackListC, [30, 60, 90], 3)
 
     //populating dropdown menus
     updateSelection(wanzerPartsSelectorIdList, wanzerList, currentlySelected);
-    updateSelection(handWeaponsSelectorIdList, handWeaponList, currentlySelected);
-    updateSelection(shoulderWeaponSelectorIdList, shoulderWeaponList, currentlySelected);
+    updateSelection(handWeaponsSelectorIdList, handWeaponList, currentlySelected, true);
+    updateSelection(shoulderWeaponSelectorIdList, shoulderWeaponList, currentlySelected, true);
     updateSelection(shieldSelectorIdList, shieldList, currentlySelected);
 
     if(document.getElementById("power-capacity").value == "p")
@@ -189,7 +261,7 @@ updateHandList = function(hand)
     }
     else
     {
-        replaceOptions(handWeaponList, hand + "-hand-selector")
+        replaceWeaponOptions(handWeaponList, hand + "-hand-selector")
         document.getElementById(hand + '-shield-table').style.display = "none";
         document.getElementById(hand + '-weapon-table').style.display = "block";
         updateShieldField(hand, true);
