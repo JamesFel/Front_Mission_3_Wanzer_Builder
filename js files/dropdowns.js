@@ -1,3 +1,23 @@
+//Functions necessary for updating dropdown lists.
+
+//------------------------------------------------General functions------------------------------------------------
+validateMinMax = function(min, max, selector)
+{
+    let upgrades = document.getElementById(selector);
+
+    if(isNaN(parseInt(upgrades.value)))
+    {
+        upgrades.value = min;
+        return null;
+    }
+
+    let targetValue = Math.max(min, Math.min(max, parseInt(upgrades.value)));
+    upgrades.value = targetValue;
+
+    return targetValue;
+}
+
+//---------------------------------------------Add/remove options from Select elements ----------------------------
 replaceOptions = function (list_of_options, selector_id)
 {
     "use strict"
@@ -19,6 +39,7 @@ removeOptions = function(dropdown)
     }
 }
 
+//--------------------------------------------Update dropdown lists ------------------------------------------------
 populateList = function(db, mission_num, key, offset, ea, steal, listToFill, exclude=null, eOffset=0)
 {
     for (let secondaryKey in db[key])
@@ -92,7 +113,9 @@ updateDropdownLists = function ()  //TODO: Change this so that it uses currentSe
     "use strict"
     let ea = parseInt(document.getElementById("ea-select").value);
     let steal = document.getElementById("steal").checked;
-    let mission_num = document.getElementById("mission").value;
+    let mission_num = validateMinMax(0, 70, "mission");
+    if (mission_num == null){return;}
+
     let shoulderWeaponSelectorIdList = ["left-shoulder-selector","right-shoulder-selector"]
     let handWeaponsSelectorIdList = []
     let shieldSelectorIdList = []
@@ -113,7 +136,7 @@ updateDropdownLists = function ()  //TODO: Change this so that it uses currentSe
     backpackListC.length = 0;
     let handWeaponTypes = ["fist", "baton", "flame thrower", "m.gun", "rifle", "shotgun", "spike", "beam"]
 
-    if (document.getElementById("right-shield") == 'w')
+    if (document.getElementById("right-shield").value == 'w')
     {
         handWeaponsSelectorIdList.push("right-hand-selector")
     }
@@ -122,7 +145,7 @@ updateDropdownLists = function ()  //TODO: Change this so that it uses currentSe
         shieldSelectorIdList.push("right-hand-selector")
     }
 
-    if (document.getElementById("left-shield") == 'w')
+    if (document.getElementById("left-shield").value == 'w')
     {
         handWeaponsSelectorIdList.push("left-hand-selector")
     }
@@ -160,12 +183,17 @@ updateHandList = function(hand)
     if(document.getElementById(hand + "-shield").value == "s")
     {
         replaceOptions(shieldList, hand + "-hand-selector")
+        document.getElementById(hand + '-shield-table').style.display = "block";
+        document.getElementById(hand + '-weapon-table').style.display = "none";
+        updateWeaponField(hand, true);
     }
     else
     {
         replaceOptions(handWeaponList, hand + "-hand-selector")
+        document.getElementById(hand + '-shield-table').style.display = "none";
+        document.getElementById(hand + '-weapon-table').style.display = "block";
+        updateShieldField(hand, true);
     }
-    updateHandField();
 }
 
 updateBackpackList = function()

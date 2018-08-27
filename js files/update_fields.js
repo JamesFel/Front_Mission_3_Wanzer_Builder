@@ -93,14 +93,14 @@ updateWeight = function()
 updateBattleAP = function()
 {
     "use strict"
-    let unused = document.getElementById('total-ap').value;
+    let unused = validateMinMax(12, 30, 'total-ap');
+    if (unused == null){return;}
+
     let cell = document.getElementById('battle-ap')
     let upgradeTypes = [
         "body-def-c-upgrades",
         "wanzer-legs-evade-upgrades"
     ]
-
-    unused = Math.min(30, Math.max(12, unused)) // since setting min/max on the input itself isn't working.
 
     for(let i=0; i < upgradeTypes.length; i++)
     {
@@ -210,9 +210,9 @@ updateDefC = function()
 {
     "use strict"
     let currentPart = currentSelections['body'];
-    if(currentPart == null){return;}
+    let targetValue = validateMinMax(0, 4, 'body-def-c-upgrades');
+    if(currentPart == null || targetValue == null){return;}
 
-    let targetValue = document.getElementById('body-def-c-upgrades').value;
     let currentValue = currentPart.num_def_c_upgrades;
 
     for(let i = currentValue; i < targetValue; i++)
@@ -271,9 +271,9 @@ updateAcc = function(side)
 {
     "use strict"
     let currentArm = currentSelections[side + '-arm'];
-    if(currentArm == null){return;}
+    let targetValue = validateMinMax(0, 4, side + '-arm-acc-upgrades')
+    if(currentArm == null|| targetValue == null){return;}
 
-    let targetValue = document.getElementById(side + '-arm-acc-upgrades').value;
     let currentValue = currentArm.num_acc_upgrades;
 
     for(let i = currentValue; i < targetValue; i++)
@@ -348,9 +348,9 @@ updateEvade = function()
 {
     "use strict"
     let currentLegs = currentSelections['wanzer-legs'];
-    if(currentLegs == null){return;}
+    let targetValue = validateMinMax(0, 4, 'wanzer-legs-evade-upgrades')
 
-    let targetValue = document.getElementById('wanzer-legs-evade-upgrades').value;
+    if(currentLegs == null || targetValue == null){return;}
     let currentValue = currentLegs.num_evade_upgrades;
 
     for(let i = currentValue; i < targetValue; i++)
@@ -375,9 +375,9 @@ updateBoostDash = function()
 {
     "use strict"
     let currentLegs = currentSelections['wanzer-legs'];
-    if(currentLegs == null){return;}
+    let targetValue = validateMinMax(0, 4, 'wanzer-legs-bd-upgrades');
+    if(currentLegs == null || targetValue == null){return;}
 
-    let targetValue = document.getElementById('wanzer-legs-bd-upgrades').value;
     let currentValue = currentLegs.num_bd_upgrades;
 
     for(let i = currentValue; i < targetValue; i++)
@@ -403,9 +403,8 @@ updateHP = function(part)
 {
     "use strict"
     let currentPart = currentSelections[part]
-    if(currentPart == null) {return;}
-
-    let targetValue = document.getElementById(part + '-hp-upgrades').value;
+    let targetValue = validateMinMax(0, 7, part + '-hp-upgrades');
+    if(currentPart == null || targetValue == null) {return;}
 
     for(let i = currentPart.num_hp_upgrades; i < targetValue; i++)
     {
@@ -464,7 +463,96 @@ updateShoulderField = function(side)
 }
 
 // --------------------------------------Hands -----------------------------------------------------
-// TODO: remember to include updateBlockedDamagePercent() in updateArmField(hand) if shield in use.
+updateShieldField = function(side, reset=false)
+{
+    let shield;
+
+    if(reset){shield = null;}
+    else
+    {
+        shield = newShield(db, document.getElementById(side + '-hand-selector').value);
+    }
+
+    currentSelections[side + '-hand'] = shield;
+
+    if(shield != null)
+    {
+        document.getElementById(side + '-shield-cost').innerHTML = shield.cost;
+        document.getElementById(side + '-shield-weight').innerHTML = shield.weight;
+        document.getElementById(side + '-shield-dr').innerHTML = shield.dmgReduction;
+        document.getElementById(side + '-shield-durability').innerHTML = shield.durability;
+    }
+    else
+    {
+        document.getElementById(side + '-shield-cost').innerHTML = 0;
+        document.getElementById(side + '-shield-weight').innerHTML = 0;
+        document.getElementById(side + '-shield-dr').innerHTML = 0;
+        document.getElementById(side + '-shield-durability').innerHTML = 0;
+    }
+}
+
+updateWeaponField = function(side, reset=false)
+{
+    let weapon;
+
+    if(reset){weapon = null;}
+    else
+    {
+        weapon = newHandWeapon(db,
+                     document.getElementById(side + '-hand-selector').value);
+    }
+
+    currentSelections[side + '-hand'] = weapon;
+
+    if(weapon != null)
+    {
+        let damage = ""
+        let range = ""
+
+        if(weapon.numHits == 1){damage = weapon.dmg;}
+        else{damage = weapon.dmg + "*" + weapon.numHits;}
+
+        if(weapon.rangeMax == weapon.rangeMin){range = weapon.rangeMax;}
+        else{range= weapon.rangeMin + "~" + weapon.rangeMax}
+
+        document.getElementById(side + '-weapon-damage').innerHTML = damage;
+        document.getElementById(side + '-weapon-type').innerHTML = weapon.weaponType;
+        document.getElementById(side + '-weapon-damage-type').innerHTML = weapon.dmgType;
+        document.getElementById(side + '-weapon-acc').innerHTML = weapon.acc;
+        document.getElementById(side + '-weapon-acc-loss').innerHTML = weapon.accLoss;
+        document.getElementById(side + '-weapon-range').innerHTML = range;
+        document.getElementById(side + '-weapon-total-damage').innerHTML = weapon.totalDmg;
+        document.getElementById(side + '-weapon-avg-damage').innerHTML = weapon.avgDmg;
+        document.getElementById(side + '-weapon-ap-cost').innerHTML = weapon.apCost;
+        document.getElementById(side + '-weapon-weight').innerHTML = weapon.weight;
+        document.getElementById(side + '-weapon-cost').innerHTML = weapon.cost;
+    }
+    else
+    {
+        document.getElementById(side + '-weapon-damage').innerHTML = 0;
+        document.getElementById(side + '-weapon-type').innerHTML = 0;
+        document.getElementById(side + '-weapon-damage-type').innerHTML = 0;
+        document.getElementById(side + '-weapon-acc').innerHTML = 0;
+        document.getElementById(side + '-weapon-acc-loss').innerHTML = 0;
+        document.getElementById(side + '-weapon-range').innerHTML = "0~0";
+        document.getElementById(side + '-weapon-total-damage').innerHTML = 0;
+        document.getElementById(side + '-weapon-avg-damage').innerHTML = 0;
+        document.getElementById(side + '-weapon-ap-cost').innerHTML = 0;
+        document.getElementById(side + '-weapon-weight').innerHTML = 0;
+        document.getElementById(side + '-weapon-cost').innerHTML = 0;
+    }
+}
+
+updateHandField = function(side)
+{
+    "use strict"
+    if(document.getElementById(side + '-shield').value == 's'){updateShieldField(side);}
+    else{updateWeaponField(side);}
+
+    updateBlockedDamagePercent();
+    updateCost();
+    updateWeight();
+}
 
 // --------------------------------------Backpack --------------------------------------------------
 updateBackpackField = function()

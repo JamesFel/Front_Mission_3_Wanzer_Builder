@@ -73,7 +73,7 @@
 
 <body>
     <h1>Front Mission 3 Wanzer Builder</h1>
-    <p>Currently in alpha.</p>
+    <p>Currently in beta.</p>
     <div class="grid-container">
 
 <!-----------------------------------------------Sources--------------------------------------------------------------->
@@ -88,7 +88,14 @@
 
         <div class="mission-counter">
             <label for="mission">Last Mission Won:
-                <input type="number" id="mission" min="1" max="70" step="1" value="9" onchange="updateDropdownLists()">
+                <input
+                        type="number"
+                        id="mission"
+                        min="1"
+                        max="70"
+                        step="1"
+                        value="9"
+                        oninput="updateDropdownLists()">
             </label>
         </div>
 
@@ -107,7 +114,7 @@
                         max="30"
                         step="1"
                         value="12"
-                        onchange="updateBattleAP()"
+                        oninput="updateBattleAP()"
                 >
             </label>
         </div>
@@ -212,7 +219,7 @@
                             min="0"
                             max="7"
                             value="0"
-                            onchange="updateHP('body')">
+                            oninput="updateHP('body')">
                     </td>
                     <th>Def-C Upgrades</th>
                     <td>
@@ -222,7 +229,7 @@
                             min="0"
                             max="4"
                             value="0"
-                            onchange="updateDefC()">
+                            oninput="updateDefC()">
                     </td>
                 </tr>
                 <tr>
@@ -261,7 +268,7 @@
                             min="0"
                             max="7"
                             value="0"
-                            onchange="updateHP('left-arm')">
+                            oninput="updateHP('left-arm')">
                     </td>
                     <th>Acc Upgrades</th>
                     <td>
@@ -271,7 +278,7 @@
                             min="0"
                             max="4"
                             value="0"
-                            onchange="updateAcc('left')">
+                            oninput="updateAcc('left')">
                     </td>
                 </tr>
                 <tr>
@@ -310,7 +317,7 @@
                             min="0"
                             max="7"
                             value="0"
-                            onchange="updateHP('right-arm')">
+                            oninput="updateHP('right-arm')">
                     </td>
                     <th>Acc Upgrades</th>
                     <td>
@@ -320,7 +327,7 @@
                             min="0"
                             max="4"
                             value="0"
-                            onchange="updateAcc('right')">
+                            oninput="updateAcc('right')">
                     </td>
                 </tr>
                 <tr>
@@ -369,7 +376,7 @@
                             min="0"
                             max="7"
                             value="0"
-                            onchange="updateHP('wanzer-legs')">
+                            oninput="updateHP('wanzer-legs')">
                     </td>
                 </tr>
                 <tr>
@@ -381,7 +388,7 @@
                             min="0"
                             max="4"
                             value="0"
-                            onchange="updateEvade()">
+                            oninput="updateEvade()">
                     </td>
                     <th>Boost/Dash Upgrades</th>
                     <td>
@@ -391,7 +398,7 @@
                             min="0"
                             max="4"
                             value="0"
-                            onchange="updateBoostDash()">
+                            oninput="updateBoostDash()">
                     </td>
                 </tr>
                 <tr>
@@ -411,9 +418,64 @@
 
             <label for="left-hand-selector">Select Left-hand:
                 <select id="left-hand-selector"
-                    onchange="updateHandField('left')">  <!-- TODO: implement function -->
+                    onchange="updateHandField('left')">
                 </select>
             </label>
+            <table id="left-shield-table">
+                <tr>
+                    <th>Dmg Reduction: </th>
+                    <td id="left-shield-dr">0</td>
+                    <th>Durability: </th>
+                    <td id="left-shield-durability">0</td>
+                </tr>
+                <tr>
+                    <th>Weight:</th>
+                    <td id="left-shield-weight">0</td>
+                    <th>Cost:</th>
+                    <td id="left-shield-cost">0</td>
+                </tr>
+            </table>
+            <table id="left-weapon-table" style="display: none;">
+                <tr>
+                    <th>Weapon Type:</th>
+                    <td id="left-weapon-type">Fist</td>
+                    <th>Damage Type:</th>
+                    <td id="left-weapon-damage-type">I</td>
+                </tr>
+                <tr>
+                    <th>Damage:</th>
+                    <td id="left-weapon-damage">0</td>
+                    <th>Acc:</th>
+                    <td id="left-weapon-acc">0</td>
+                </tr>
+                <tr>
+                    <th>Range:</th>
+                    <td id="left-weapon-range">0~0</td>
+                    <th>Acc. Loss:</th>
+                    <td id="left-weapon-acc-loss">0</td>
+                </tr>
+                <tr>
+                    <th>Weight:</th>
+                    <td id="left-weapon-weight">0</td>
+                    <th
+                            title="Average damage if you have no accuracy upgrades, are attacking from medium range and your opponent has 0 evade.">
+                        Avg. Damage:
+                    </th>
+                    <td id="left-weapon-avg-damage">0</td>
+                </tr>
+                <tr>
+                    <th>AP Cost:</th>
+                    <td id="left-weapon-ap-cost">0</td>
+                    <th title="Damage if you don't miss at all.">Total Damage:</th>
+                    <td id="left-weapon-total-damage">0</td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td></td>
+                    <th>Cost:</th>
+                    <td id="left-weapon-cost">0</td>
+                </tr>
+            </table>
         </div>
 
         <div class="right-hand">
@@ -424,9 +486,64 @@
 
             <label for="right-hand-selector">Select Right-hand:
                 <select id="right-hand-selector"
-                    onchange="updateHandField('right')">  <!-- TODO: implement function -->
+                    onchange="updateHandField('right')">
                 </select>
             </label>
+            <table id="right-shield-table">
+                <tr>
+                    <th>Dmg Reduction: </th>
+                    <td id="right-shield-dr">0</td>
+                    <th>Durability: </th>
+                    <td id="right-shield-durability">0</td>
+                </tr>
+                <tr>
+                    <th>Weight:</th>
+                    <td id="right-shield-weight">0</td>
+                    <th>Cost:</th>
+                    <td id="right-shield-cost">0</td>
+                </tr>
+            </table>
+            <table id="right-weapon-table" style="display: none;">
+                <tr>
+                    <th>Weapon Type:</th>
+                    <td id="right-weapon-type">Fist</td>
+                    <th>Damage Type:</th>
+                    <td id="right-weapon-damage-type">I</td>
+                </tr>
+                <tr>
+                    <th>Damage:</th>
+                    <td id="right-weapon-damage">0</td>
+                    <th>Acc:</th>
+                    <td id="right-weapon-acc">0</td>
+                </tr>
+                <tr>
+                    <th>Range:</th>
+                    <td id="right-weapon-range">0~0</td>
+                    <th>Acc. Loss:</th>
+                    <td id="right-weapon-acc-loss">0</td>
+                </tr>
+                <tr>
+                    <th>Weight:</th>
+                    <td id="right-weapon-weight">0</td>
+                    <th
+                            title="Average damage if you have no accuracy upgrades, are attacking from medium range and your opponent has 0 evade.">
+                        Avg. Damage:
+                    </th>
+                    <td id="right-weapon-avg-damage">0</td>
+                </tr>
+                <tr>
+                    <th>AP Cost:</th>
+                    <td id="right-weapon-ap-cost">0</td>
+                    <th title="Damage if you don't miss at all.">Total Damage:</th>
+                    <td id="right-weapon-total-damage">0</td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td></td>
+                    <th>Cost:</th>
+                    <td id="right-weapon-cost">0</td>
+                </tr>
+            </table>
         </div>
 
         <div class="left-shoulder">

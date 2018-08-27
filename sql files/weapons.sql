@@ -4,6 +4,8 @@ create table if not exists weapons(
     wgt int,
     dmg int,
     cst int,
+    battle_e int,
+    battle_a int,
     shop_e int,
     shop_a int,
     foreign key (weapon_type) references weapons_common_statistics(weapon_type)
