@@ -20,7 +20,7 @@ updateCost = function()
 updateAverageHP = function()
 {
     "use strict"
-    let parts = ['body', 'right-arm', 'left-arm', 'wanzer-legs']
+    let parts = ['body', 'right-arm', 'left-arm', 'legs']
     let hp = 0;
 
     for(let i in parts)
@@ -99,7 +99,7 @@ updateBattleAP = function()
     let cell = document.getElementById('battle-ap')
     let upgradeTypes = [
         "body-def-c-upgrades",
-        "wanzer-legs-evade-upgrades"
+        "legs-evade-upgrades"
     ]
 
     for(let i=0; i < upgradeTypes.length; i++)
@@ -122,7 +122,7 @@ updateBlockedDamagePercent = function()
     "use strict"
     let leftHand = document.getElementById('left-shield').value;
     let rightHand = document.getElementById('right-shield').value;
-    let legs = currentSelections['wanzer-legs']
+    let legs = currentSelections['legs']
     let block1 = 0, block2 = 0, evade = 0;
     let bdp = 0;
 
@@ -156,15 +156,45 @@ updateSkillInfo = function(part, skill)
     else{entry = db["battle_skills"][skill];}
 
     //Name|score|condition|slots|machine|part|effect|learn
-    let newHTML ="<p><b>Skill</b>: " + skill + "<br>" +
-             "<b>Score</b>: " + entry[1] + "<br>" +
+    let newHTML ="<b><br>Score</b>: " + entry[1] + "<br>" +
              "<b>Condition</b>: " + entry[2] + "<br>" +
              "<b>Slots</b>: " + entry[3] + "<br><br>" +
              "<b>Effect</b>: " + entry[6] + "<br><br>" +
              "<b>Learn</b>: " + entry[7] + "</p>";
-    document.getElementsByClassName(part + '-skill-info')[0].innerHTML = newHTML;
+    document.getElementById(part + '-skill-details').innerHTML = newHTML;
+
+    let selector = document.getElementById(part + '-skill-selector');
+    if(skill != null && selector.text != skill)
+    {
+        for(let i=0; i < selector.options.length; i++)
+        {
+            if(selector.options[i].text == skill)
+            {
+                selector.selectedIndex = i;
+                return;
+            }
+        }
+    }
 }
 
+skillUpdatesPart = function(part)
+{
+    selectedSkill = document.getElementById(part + '-skill-selector').value;
+    machine = db['battle_skills'][selectedSkill][4];
+    partSelector = document.getElementById(part + '-selector')
+
+    if(partSelector.value == machine){return;}
+
+    for(let i=0; i < partSelector.options.length; i++)
+    {
+        if(partSelector.options[i].text == machine)
+        {
+            partSelector.selectedIndex = i;
+            partSelector.onchange();
+            return;
+        }
+    }
+}
 // -------------------------------------------Body -------------------------------------------------
 updateBodyField = function()
 {
@@ -284,53 +314,53 @@ updateAcc = function(side)
 updateLegsField = function()
 {
     "use strict"
-    let residual_hp_upgrades = document.getElementById('wanzer-legs-hp-upgrades').value;
-    let residual_evade_upgrades = document.getElementById('wanzer-legs-evade-upgrades').value;
-    let residual_bd_upgrades = document.getElementById('wanzer-legs-bd-upgrades').value;
+    let residual_hp_upgrades = document.getElementById('legs-hp-upgrades').value;
+    let residual_evade_upgrades = document.getElementById('legs-evade-upgrades').value;
+    let residual_bd_upgrades = document.getElementById('legs-bd-upgrades').value;
     let currentLegs = newLegs(db,
-                              document.getElementById('wanzer-legs-selector').value,
-                              currentSelections['wanzer-legs']
+                              document.getElementById('legs-selector').value,
+                              currentSelections['legs']
                               );
-    currentSelections['wanzer-legs'] = currentLegs;
+    currentSelections['legs'] = currentLegs;
 
     if(currentLegs != null)
     {
         currentLegs.setHP(residual_hp_upgrades);
         currentLegs.setBD(residual_bd_upgrades);
         currentLegs.setEvade(residual_evade_upgrades);
-        document.getElementById('wanzer-legs-hp').innerHTML = currentLegs.hp();
-        document.getElementById('wanzer-legs-evade').innerHTML = currentLegs.evade();
+        document.getElementById('legs-hp').innerHTML = currentLegs.hp();
+        document.getElementById('legs-evade').innerHTML = currentLegs.evade();
         document.getElementById('stats-evade').innerHTML = currentLegs.evade();
-        document.getElementById('wanzer-legs-boost').innerHTML = currentLegs.boost();
+        document.getElementById('legs-boost').innerHTML = currentLegs.boost();
         document.getElementById('stats-boost').innerHTML = currentLegs.boost();
-        document.getElementById('wanzer-legs-dash').innerHTML = currentLegs.dash();
+        document.getElementById('legs-dash').innerHTML = currentLegs.dash();
         document.getElementById('stats-dash').innerHTML = currentLegs.dash();
-        document.getElementById('wanzer-legs-type').innerHTML = currentLegs.numLegs;
-        document.getElementById('wanzer-legs-move').innerHTML = currentLegs.move;
+        document.getElementById('legs-type').innerHTML = currentLegs.numLegs;
+        document.getElementById('legs-move').innerHTML = currentLegs.move;
         document.getElementById('stats-move').innerHTML = currentLegs.move;
-        document.getElementById('wanzer-legs-wgt').innerHTML = currentLegs.weight;
-        document.getElementById('wanzer-legs-cost').innerHTML = currentLegs.cost;
-        document.getElementById('wanzer-legs-skill').innerHTML = currentLegs.skill;
+        document.getElementById('legs-wgt').innerHTML = currentLegs.weight;
+        document.getElementById('legs-cost').innerHTML = currentLegs.cost;
+        document.getElementById('legs-skill').innerHTML = currentLegs.skill;
         updateSkillInfo('legs', currentLegs.skill);
     }
     else
     {
-        document.getElementById('wanzer-legs-hp').innerHTML = 0;
-        document.getElementById('wanzer-legs-evade').innerHTML = 0
+        document.getElementById('legs-hp').innerHTML = 0;
+        document.getElementById('legs-evade').innerHTML = 0
         document.getElementById('stats-evade').innerHTML = 0;
-        document.getElementById('wanzer-legs-boost').innerHTML = 0
+        document.getElementById('legs-boost').innerHTML = 0
         document.getElementById('stats-boost').innerHTML = 0;
-        document.getElementById('wanzer-legs-dash').innerHTML = 0
+        document.getElementById('legs-dash').innerHTML = 0
         document.getElementById('stats-dash').innerHTML = 0;
-        document.getElementById('wanzer-legs-type').innerHTML = "";
-        document.getElementById('wanzer-legs-move').innerHTML = 0;
+        document.getElementById('legs-type').innerHTML = "";
+        document.getElementById('legs-move').innerHTML = 0;
         document.getElementById('stats-move').innerHTML = 0;
-        document.getElementById('wanzer-legs-wgt').innerHTML = 0;
-        document.getElementById('wanzer-legs-cost').innerHTML = 0;
-        document.getElementById('wanzer-legs-skill').innerHTML = "";
-        document.getElementById('wanzer-legs-evade-upgrades').value = 0;
-        document.getElementById('wanzer-legs-bd-upgrades').value = 0;
-        document.getElementById('wanzer-legs-hp-upgrades').value = 0;
+        document.getElementById('legs-wgt').innerHTML = 0;
+        document.getElementById('legs-cost').innerHTML = 0;
+        document.getElementById('legs-skill').innerHTML = "";
+        document.getElementById('legs-evade-upgrades').value = 0;
+        document.getElementById('legs-bd-upgrades').value = 0;
+        document.getElementById('legs-hp-upgrades').value = 0;
         updateSkillInfo('legs', null);
     }
     updateCost();
@@ -342,15 +372,15 @@ updateLegsField = function()
 updateEvade = function()
 {
     "use strict"
-    let currentLegs = currentSelections['wanzer-legs'];
-    let targetValue = validateMinMax(0, 4, 'wanzer-legs-evade-upgrades')
+    let currentLegs = currentSelections['legs'];
+    let targetValue = validateMinMax(0, 4, 'legs-evade-upgrades')
 
     if(currentLegs == null || targetValue == null){return;}
 
     currentLegs.setEvade(targetValue);
-    document.getElementById('wanzer-legs-evade').innerHTML = currentLegs.evade();
+    document.getElementById('legs-evade').innerHTML = currentLegs.evade();
     document.getElementById('stats-evade').innerHTML = currentLegs.evade();
-    document.getElementById('wanzer-legs-cost').innerHTML = currentLegs.cost;
+    document.getElementById('legs-cost').innerHTML = currentLegs.cost;
 
     updateCost();
     updateBattleAP();
@@ -360,16 +390,16 @@ updateEvade = function()
 updateBoostDash = function()
 {
     "use strict"
-    let currentLegs = currentSelections['wanzer-legs'];
-    let targetValue = validateMinMax(0, 4, 'wanzer-legs-bd-upgrades');
+    let currentLegs = currentSelections['legs'];
+    let targetValue = validateMinMax(0, 4, 'legs-bd-upgrades');
     if(currentLegs == null || targetValue == null){return;}
 
     currentLegs.setBD(targetValue);
-    document.getElementById('wanzer-legs-boost').innerHTML = currentLegs.boost();
+    document.getElementById('legs-boost').innerHTML = currentLegs.boost();
     document.getElementById('stats-boost').innerHTML = currentLegs.boost();
-    document.getElementById('wanzer-legs-dash').innerHTML = currentLegs.dash();
+    document.getElementById('legs-dash').innerHTML = currentLegs.dash();
     document.getElementById('stats-dash').innerHTML = currentLegs.dash();
-    document.getElementById('wanzer-legs-cost').innerHTML = currentLegs.cost;
+    document.getElementById('legs-cost').innerHTML = currentLegs.cost;
 
     updateCost();
 }

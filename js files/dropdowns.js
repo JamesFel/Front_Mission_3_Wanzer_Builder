@@ -121,6 +121,22 @@ populateList = function(db, mission_num, primaryKey, compare, offset, ea,
     }
 }
 
+populateSkillList = function(listToFill, part)
+{
+    "use strict"
+    part = part.toUpperCase();
+
+    for(let skill in db['battle_skills'])
+    {
+        let candidate = db['battle_skills'][skill]
+        if(candidate[5].toUpperCase() == part && wanzerList.includes(candidate[4]))
+        {
+            listToFill.push(candidate[0])
+        }
+    }
+    listToFill.sort()
+}
+
 checkCurrentSelection = function()
 {
     "use strict"
@@ -130,7 +146,7 @@ checkCurrentSelection = function()
         "body-selector",
         "left-arm-selector",
         "right-arm-selector",
-        "wanzer-legs-selector",
+        "legs-selector",
         "backpack-selector",
         "right-hand-selector",
         "left-hand-selector"
@@ -151,7 +167,7 @@ checkCurrentSelection = function()
     return response;
 }
 
-updateSelection = function(selectorIdList, replacementList, previousSelections, weapons=false)
+updateSelection = function(selectorIdList, replacementList, previousSelections, weapons=false, skip=false)
 {
     for(let i=0; i < selectorIdList.length; i++)
     {
@@ -160,6 +176,8 @@ updateSelection = function(selectorIdList, replacementList, previousSelections, 
 
         if(!(weapons)){replaceOptions(replacementList, currentSelectorId);}
         else{replaceWeaponOptions(replacementList, currentSelectorId);}
+
+        if(skip){continue;}
 
         if(currentSelectorId in previousSelections &&
            replacementList.includes(previousSelections[currentSelectorId]))
@@ -182,15 +200,18 @@ updateDropdownLists = function ()  //TODO: Change this so that it uses currentSe
     let mission_num = validateMinMax(0, 70, "mission");
     if (mission_num == null){return;}
 
-    let shoulderWeaponSelectorIdList = ["left-shoulder-selector","right-shoulder-selector"]
-    let handWeaponsSelectorIdList = []
-    let shieldSelectorIdList = []
+    let shoulderWeaponSelectorIdList = ["left-shoulder-selector","right-shoulder-selector"];
+    let handWeaponsSelectorIdList = [];
+    let shieldSelectorIdList = [];
     let wanzerPartsSelectorIdList = [
         "body-selector",
         "left-arm-selector",
         "right-arm-selector",
-        "wanzer-legs-selector"
-    ]
+        "legs-selector"
+    ];
+    let bodySkillSelectorList = ['body-skill-selector'];
+    let armSkillSelectorList = ['left-arm-skill-selector', 'right-arm-skill-selector'];
+    let legsSkillSelectorList = ['legs-skill-selector'];
     let currentlySelected = checkCurrentSelection();
 
     //resetting the arrays
@@ -200,6 +221,10 @@ updateDropdownLists = function ()  //TODO: Change this so that it uses currentSe
     shieldList = [];
     backpackListP= [];
     backpackListC = [];
+    bodySkillList = [];
+    armSkillList = [];
+    legsSkillList = [];
+
     let handWeaponTypes = ["fist", "baton", "flame thrower", "m.gun", "rifle", "shotgun", "spike", "beam"]
 
     if (document.getElementById("right-shield").value == 'w')
@@ -232,12 +257,18 @@ updateDropdownLists = function ()  //TODO: Change this so that it uses currentSe
                  5, ea, steal, backpackListP,[4, 6, 8], 2)
     populateList(db, mission_num, "backpacks", 2,
                  5, ea, steal, backpackListC, [30, 60, 90], 3)
+    populateSkillList(bodySkillList, 'Body');
+    populateSkillList(armSkillList, 'Arm');
+    populateSkillList(legsSkillList, 'Legs');
 
     //populating dropdown menus
     updateSelection(wanzerPartsSelectorIdList, wanzerList, currentlySelected);
     updateSelection(handWeaponsSelectorIdList, handWeaponList, currentlySelected, true);
     updateSelection(shoulderWeaponSelectorIdList, shoulderWeaponList, currentlySelected, true);
     updateSelection(shieldSelectorIdList, shieldList, currentlySelected);
+    updateSelection(bodySkillSelectorList, bodySkillList, currentlySelected, false, true);
+    updateSelection(armSkillSelectorList, armSkillList, currentlySelected, false, true);
+    updateSelection(legsSkillSelectorList, legsSkillList, currentlySelected, false, true);
 
     if(document.getElementById("power-capacity").value == "p")
     {

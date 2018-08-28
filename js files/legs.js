@@ -5,7 +5,7 @@ function Legs(name, cost, weight, hp, skill, evade_level_1, boost_pattern, dash_
 {
     MachinePart.call(this, name, cost, weight, hp, skill);
 
-    this.evade_pattern = [1.0, 2.4, 4.0, 5.9]
+    this.evade_pattern = [0, 1.0, 2.4, 4.0, 5.9]
     this.evade_level_1 = evade_level_1;
     this.num_evade_upgrades = num_evade_upgrades;
 
@@ -51,8 +51,8 @@ Legs.prototype.setHP = function(num_hp_upgrades)
     this.num_hp_upgrades = Math.min(7, Math.max(0, num_hp_upgrades));
 
     this.cost = this.hp_upgrade_costs[this.num_hp_upgrades] +
-        this.ebd_upgrade_costs[this.num_evade_upgrades] +
-        this.ebd_upgrade_costs[this.num_bd_upgrades];
+        this.edb_upgrade_costs[this.num_evade_upgrades] +
+        this.edb_upgrade_costs[this.num_bd_upgrades];
 }
 
 Legs.prototype.setEvade = function(num_evade_upgrades)
@@ -60,8 +60,8 @@ Legs.prototype.setEvade = function(num_evade_upgrades)
         this.num_evade_upgrades = Math.min(4, Math.max(0, num_evade_upgrades));
 
         this.cost = this.hp_upgrade_costs[this.num_hp_upgrades] +
-            this.ebd_upgrade_costs[this.num_evade_upgrades] +
-            this.ebd_upgrade_costs[this.num_bd_upgrades];
+            this.edb_upgrade_costs[this.num_evade_upgrades] +
+            this.edb_upgrade_costs[this.num_bd_upgrades];
 }
 
 Legs.prototype.setBD = function(num_bd_upgrades)
@@ -69,6 +69,6 @@ Legs.prototype.setBD = function(num_bd_upgrades)
         this.num_bd_upgrades = Math.min(4, Math.max(0, num_bd_upgrades));
 
         this.cost = this.hp_upgrade_costs[this.num_hp_upgrades] +
-            this.ebd_upgrade_costs[this.num_evade_upgrades] +
-            this.ebd_upgrade_costs[this.num_bd_upgrades];
+            this.edb_upgrade_costs[this.num_evade_upgrades] +
+            this.edb_upgrade_costs[this.num_bd_upgrades];
 }

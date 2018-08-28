@@ -12,7 +12,7 @@
     .wanzer-body {grid-area: body}
     .left-arm {grid-area: lArm}
     .right-arm {grid-area: rArm}
-    .wanzer-legs {grid-area: legs}
+    .legs {grid-area: legs}
     .left-hand {grid-area: lHand}
     .right-hand {grid-area: rHand}
     .left-shoulder {grid-area: lShoulder}
@@ -339,9 +339,9 @@
             </table>
         </div>
 
-        <div class="wanzer-legs">
-            <label for="wanzer-legs-selector">Select Legs:
-                <select id="wanzer-legs-selector"
+        <div class="legs">
+            <label for="legs-selector">Select Legs:
+                <select id="legs-selector"
                     onchange="updateLegsField()">
                 </select>
             </label>
@@ -349,41 +349,41 @@
             <table>
                 <tr>
                     <th>HP</th>
-                    <td id='wanzer-legs-hp'>0</td>
+                    <td id='legs-hp'>0</td>
                     <th>Move</th>
-                    <td id='wanzer-legs-move'>0</td>
+                    <td id='legs-move'>0</td>
                 </tr>
                 <tr>
                     <th>Weight</th>
-                    <td id='wanzer-legs-wgt'>0</td>
+                    <td id='legs-wgt'>0</td>
                     <th>Evade</th>
-                    <td id="wanzer-legs-evade">0</td>
+                    <td id="legs-evade">0</td>
                 </tr>
                 <tr>
                     <th>Boost</th>
-                    <td id="wanzer-legs-boost">0</td>
+                    <td id="legs-boost">0</td>
                     <th>Dash</th>
-                    <td id="wanzer-legs-dash">0</td>
+                    <td id="legs-dash">0</td>
                 </tr>
                 <tr>
                     <th>Type</th>
-                    <td id="wanzer-legs-type">Hover</td>
+                    <td id="legs-type">Hover</td>
                     <th>Hp Upgrades</th>
                     <td>
                         <input
-                            id="wanzer-legs-hp-upgrades"
+                            id="legs-hp-upgrades"
                             type="number"
                             min="0"
                             max="7"
                             value="0"
-                            oninput="updateHP('wanzer-legs')">
+                            oninput="updateHP('legs')">
                     </td>
                 </tr>
                 <tr>
                     <th>Evade Upgrades</th>
                     <td>
                         <input
-                            id="wanzer-legs-evade-upgrades"
+                            id="legs-evade-upgrades"
                             type="number"
                             min="0"
                             max="4"
@@ -393,7 +393,7 @@
                     <th>Boost/Dash Upgrades</th>
                     <td>
                         <input
-                            id="wanzer-legs-bd-upgrades"
+                            id="legs-bd-upgrades"
                             type="number"
                             min="0"
                             max="4"
@@ -403,9 +403,9 @@
                 </tr>
                 <tr>
                     <th>Skill</th>
-                    <td id="wanzer-legs-skill"></td>
+                    <td id="legs-skill"></td>
                     <th>Cost</th>
-                    <td id="wanzer-legs-cost"></td>
+                    <td id="legs-cost"></td>
                 </tr>
             </table>
         </div>
@@ -652,10 +652,41 @@
         </div>
 
 <!-- ------------------------------------------------Skills------------------------------------------------------------>
-        <div class="body-skill-info">body skill goes here</div>
-        <div class="left-arm-skill-info">left arm skill goes here</div>
-        <div class="right-arm-skill-info">right arm skill goes here</div>
-        <div class="legs-skill-info">legs skill goes here</div>
+        <div class="body-skill-info">
+            <label for='body-skill-selector'>Skill:
+                <select id ='body-skill-selector'
+                        oninput='skillUpdatesPart("body")'>
+                </select>
+            </label>
+            <p id="body-skill-details"></p>
+        </div>
+
+        <div class="left-arm-skill-info">
+            <label for='body-skill-selector'>Skill:
+                <select id ='left-arm-skill-selector'
+                        oninput='skillUpdatesPart("left-arm")'>
+                </select>
+            </label>
+            <p id="left-arm-skill-details"></p>
+        </div>
+
+        <div class="right-arm-skill-info">
+            <label for='body-skill-selector'>Skill:
+                <select id ='right-arm-skill-selector'
+                        oninput='skillUpdatesPart("right-arm")'>
+                </select>
+            </label>
+            <p id="right-arm-skill-details"></p>
+        </div>
+
+        <div class="legs-skill-info">
+            <label for='body-skill-selector'>Skill:
+                <select id ='legs-skill-selector'
+                        oninput='skillUpdatesPart("legs")'>
+                </select>
+            </label>
+            <p id="legs-skill-details"></p>
+        </div>
     </div>
 
 <!-- ------------------------------------------------Script files------------------------------------------------------>
@@ -687,13 +718,16 @@
             shieldList = [],
             backpackListP = [],
             backpackListC = [],
+            bodySkillList = [],
+            armSkillList = [],
+            legsSkillList = [],
             currentSelections = {
                 "left-shoulder": null,
                 "right-shoulder": null,
                 "body": null,
                 "left-arm": null,
                 "right-arm": null,
-                "wanzer-legs": null,
+                "legs": null,
                 "backpack": null,
                 "right-hand": null,
                 "left-hand": null
@@ -711,4 +745,19 @@
     </script>
 
 </body>
+<footer>
+    <h3>Special Thanks to:</h3>
+    <p>Luxion for his
+        <a href="https://gamefaqs.gamespot.com/ps/250588-front-mission-3/faqs/7363">Technical Data Guide</a>
+        which provided me with the Boost and Dash upgrade values and mech purchase and upgrade costs.<br>
+        EWillis and JackSpade for their
+        <a href="https://gamefaqs.gamespot.com/ps/250588-front-mission-3/faqs/15501">Network/Wanzer FAQ</a>
+        which provided me with the mech technical info other than dash and upgrade values.<br>
+        Mark Web for his
+        <a href="https://gamefaqs.gamespot.com/ps/250588-front-mission-3/faqs/7525">walkthrough</a>
+        which provided me with the weapon and item data.<br>
+        Wazat for his
+        <a href="https://gamefaqs.gamespot.com/ps/250588-front-mission-3/faqs/25245">Detailed Skill List</a>
+        which provided me with the battle skill details.</p>
+</footer>
 </html>
