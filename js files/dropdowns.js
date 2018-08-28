@@ -150,6 +150,24 @@ populateSkillList = function(listToFill, part)
     listToFill.sort()
 }
 
+
+populateItemsDropdowns = function()
+{
+    "use strict"
+
+    for(let slot in backpackSlots)
+    {
+        backpackSlots[slot].appendChild(new Option('-------'));
+
+        for(let item in items)
+        {
+            backpackSlots[slot].appendChild(new Option(item));
+        }
+    }
+    items['-------'] = 0;
+}
+
+
 checkCurrentSelection = function()
 {
     "use strict"

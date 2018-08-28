@@ -10,44 +10,15 @@ function Basket(name, cost, weight, bpType, capacity)
 Basket.prototype = Object.create(Backpack.prototype);
 Basket.prototype.constructor = Basket;
 
-Basket.prototype.addItem = function(item)
+Basket.prototype.adjustCost = function(priceList)
 {
-    if (this.contents.length < this.capacity)
+    let cost = 0;
+    for(let i= 0; i < this.capacity; i++)
     {
-        this.contents.push(item);
-    }
-}
-Basket.prototype.removeItem = function(item)
-{
-    if (!Array.prototype.indexOf) // for compatibility with older versions of IE.
-    {
-        Array.prototype.indexOf = function(elt /*, from*/ )
+        if(this.contents[i] != null)
         {
-            var len = this.length >>> 0;
-
-            var from = Number(arguments[1]) || 0;
-            from = (from < 0) ?
-                Math.ceil(from) :
-                Math.floor(from);
-            if (from < 0)
-                from += len;
-
-            for (; from < len; from++)
-            {
-                if (from in this &&
-                    this[from] === elt)
-                    return from;
-            }
-            return -1;
-        };
-    }
-    else
-    {
-        var index = array.indexOf(5);
-
-        if (index > -1)
-        {
-            this.contents.splice(index, 1);
+            cost += priceList[this.contents[i]];
         }
     }
+    this.cost = cost;
 }

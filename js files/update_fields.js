@@ -667,6 +667,11 @@ updateBackpackField = function()
         {
             pc = bp.power;
         }
+        for(let i=0; i < 8; i++)
+        {
+            backpackSlots[i].style='display: none;';
+            backpackSlots[i].selectedIndex = 0;
+        }
     }
     else
     {
@@ -677,6 +682,20 @@ updateBackpackField = function()
         if (bp != null)
         {
             pc = bp.capacity;
+            for(let i=0; i < 8; i++)
+            {
+                if(i<pc)
+                {
+                    bp.contents[i] = backpackSlots[i].value;
+                    backpackSlots[i].style='display: block;';
+                }
+                else
+                {
+                    backpackSlots[i].style='display: none;';
+                    backpackSlots[i].selectedIndex = 0;
+                    bp.contents[i] = '-------';
+                }
+            }
         }
     }
     currentSelections['backpack'] = bp;

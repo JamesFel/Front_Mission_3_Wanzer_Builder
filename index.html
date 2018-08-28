@@ -31,10 +31,8 @@
             'ea mission stolen tAP'
             'stats lShoulder backpack rShoulder'
             'stats lArm body rArm'
-            'stats lHand legs rHand'
-            'bSkill lSkill rSkill fSkill'
-            'contents contents contents contents'
-            'contents contents contents contents';
+            'contents lHand legs rHand'
+            'bSkill lSkill rSkill fSkill';
         grid-gap: 5px;
         padding: 5px;
     }
@@ -170,7 +168,38 @@
         </div>
 <!--=========================================Backpack contents=======================================================-->
         <div class="backpack-contents">
-            <p>Backpack contents go here.</p>
+            <select id="slot-1"
+                    style="display:none;"
+                    oninput="currentSelections['backpack'].contents[0] = backpackSlots[0].value; currentSelections['backpack'].adjustCost(items); updateCost()">
+            </select>
+            <select id="slot-2"
+                    style="display:none;"
+                    oninput="currentSelections['backpack'].contents[1] = backpackSlots[1].value; currentSelections['backpack'].adjustCost(items); updateCost()">
+            </select>
+            <select id="slot-3"
+                    style="display:none;"
+                    oninput="currentSelections['backpack'].contents[2] = backpackSlots[2].value; currentSelections['backpack'].adjustCost(items); updateCost()">
+            </select>
+            <select id="slot-4"
+                    style="display:none;"
+                    oninput="currentSelections['backpack'].contents[3] = backpackSlots[3].value; currentSelections['backpack'].adjustCost(items); updateCost()">
+            </select>
+            <select id="slot-5"
+                    style="display:none;"
+                    oninput="currentSelections['backpack'].contents[4] = backpackSlots[4].value; currentSelections['backpack'].adjustCost(items); updateCost()">
+            </select>
+            <select id="slot-6"
+                    style="display:none;"
+                    oninput="currentSelections['backpack'].contents[5] = backpackSlots[5].value; currentSelections['backpack'].adjustCost(items); updateCost()">
+            </select>
+            <select id="slot-7"
+                    style="display:none;"
+                    oninput="currentSelections['backpack'].contents[6] = backpackSlots[6].value; currentSelections['backpack'].adjustCost(items); updateCost()">
+            </select>
+            <select id="slot-8"
+                    style="display:none;"
+                    oninput="currentSelections['backpack'].contents[7] = backpackSlots[7].value; currentSelections['backpack'].adjustCost(items); updateCost()">
+            </select>
         </div>
 <!--=========================================Equipment selection=====================================================-->
         <div class="wanzer-body">
@@ -632,6 +661,29 @@
                 "backpack": null,
                 "right-hand": null,
                 "left-hand": null
+            },
+            backpackSlots = [
+                document.getElementById('slot-1'),
+                document.getElementById('slot-2'),
+                document.getElementById('slot-3'),
+                document.getElementById('slot-4'),
+                document.getElementById('slot-5'),
+                document.getElementById('slot-6'),
+                document.getElementById('slot-7'),
+                document.getElementById('slot-8'),
+            ],
+            items = {
+                "Grenade": 100,
+                "Missile": 100,
+                "Repair": 100,
+                "Repair Max": 200,
+                "Restore Low": 160,
+                "Restore High": 300,
+                "Restore Max": 400,
+                "Recover": 80,
+                "Recover Max": 140,
+                "Shield Repair": 120,
+                "Shield Max": 200
             };
 
         var request = new XMLHttpRequest();
@@ -641,6 +693,7 @@
         {
             db = request.response;
             updateDropdownLists();
+            populateItemsDropdowns();
         }
         request.send()
     </script>
