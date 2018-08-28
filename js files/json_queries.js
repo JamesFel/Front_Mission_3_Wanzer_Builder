@@ -1,22 +1,26 @@
-newBody = function(db, machine, oldBody=null)
+newBody = function(db, machine, oldBody = null)
 {
-    if(machine[0] == '-'){return null;}
+    if (machine[0] == '-')
+    {
+        return null;
+    }
 
     let name = machine;
     let cost = db["machine_parts_purchase_and_upgrade_costs"]["BodyHP"][2];
     let weight = db["wanzer_body"][machine][9];
-    let hp_pattern= [];
-    let skill= db["wanzer_body"][machine][11];
-    let power= db["wanzer_body"][machine][10];
-    let def_c_per_upgrade= db["wanzer_body"][machine][12];
+    let hp_pattern = [];
+    let skill = db["wanzer_body"][machine][11];
+    let power = db["wanzer_body"][machine][10];
+    let def_c_per_upgrade = db["wanzer_body"][machine][12];
     let num_def_c_upgrades = 0;
 
-    for (let i=1; i<9; i++)
+    for (let i = 1; i < 9; i++)
     {
         hp_pattern.push(db["wanzer_body"][machine][i]);
     }
 
-    let tempBod = new  Body(name, cost, weight, hp_pattern, skill, power, def_c_per_upgrade, num_def_c_upgrades);
+    let tempBod = new Body(name, cost, weight, hp_pattern, skill, power,
+        def_c_per_upgrade, num_def_c_upgrades);
     if (oldBody != null)
     {
         tempBod.setDefC(oldBody.num_def_c_upgrades);
@@ -27,9 +31,12 @@ newBody = function(db, machine, oldBody=null)
 }
 
 
-newArm = function(db, machine, oldArm=null)
+newArm = function(db, machine, oldArm = null)
 {
-    if(machine[0] == '-'){return null;}
+    if (machine[0] == '-')
+    {
+        return null;
+    }
 
     let name = machine;
     let cost = db["machine_parts_purchase_and_upgrade_costs"]["ArmHP"][2];
@@ -39,17 +46,18 @@ newArm = function(db, machine, oldArm=null)
     let acc_pattern = [];
     let num_acc_upgrades = 0;
 
-    for (let i = 1; i<9; i++)
+    for (let i = 1; i < 9; i++)
     {
         hp_upgrade_pattern.push(db["wanzer_arms"][machine][i]);
     }
 
-    for (let i = 10; i<15; i++)
+    for (let i = 10; i < 15; i++)
     {
         acc_pattern.push(db["wanzer_arms"][machine][i]);
     }
 
-    tempArm = new Arm(name, cost, weight, hp_upgrade_pattern, skill, acc_pattern, num_acc_upgrades);
+    tempArm = new Arm(name, cost, weight, hp_upgrade_pattern, skill,
+        acc_pattern, num_acc_upgrades);
 
     if (oldArm !== null)
     {
@@ -61,9 +69,12 @@ newArm = function(db, machine, oldArm=null)
 }
 
 
-newLegs = function(db, machine, oldLeg=null)
+newLegs = function(db, machine, oldLeg = null)
 {
-    if(machine[0] == '-'){return null;}
+    if (machine[0] == '-')
+    {
+        return null;
+    }
 
     let name = machine;
     let cost = db["machine_parts_purchase_and_upgrade_costs"]["LegsHP"][2];
@@ -71,20 +82,26 @@ newLegs = function(db, machine, oldLeg=null)
     let hp_upgrade_pattern = [];
     let skill = db["wanzer_legs"][machine][11];
     let evade_level_1 = db["wanzer_legs"][machine][12];
-    let boost_pattern = db["boost_upgrade_patterns"][db["wanzer_legs"][machine][13]].slice(1);
-    let dash_pattern = db["dash_upgrade_patterns"][db["wanzer_legs"][machine][14]].slice(1);
+    let boost_pattern = db["boost_upgrade_patterns"][db["wanzer_legs"][
+        machine
+    ][13]].slice(1);
+    let dash_pattern = db["dash_upgrade_patterns"][db["wanzer_legs"][
+        machine
+    ][14]].slice(1);
     let move = db["wanzer_legs"][machine][10];
     let numLegs = db["wanzer_legs"][machine][15];
     let num_evade_upgrades = 0;
     let num_bd_upgrades = 0;
 
-    for (i=1; i<9; i++)
+    for (i = 1; i < 9; i++)
     {
         hp_upgrade_pattern.push(db["wanzer_legs"][machine][i]);
     }
 
-    let tempLeg = new Legs(name, cost, weight, hp_upgrade_pattern, skill, evade_level_1,
-              boost_pattern, dash_pattern, move, numLegs, num_evade_upgrades, num_bd_upgrades);
+    let tempLeg = new Legs(name, cost, weight, hp_upgrade_pattern, skill,
+        evade_level_1,
+        boost_pattern, dash_pattern, move, numLegs, num_evade_upgrades,
+        num_bd_upgrades);
 
     if (oldLeg !== null)
     {
@@ -99,7 +116,10 @@ newLegs = function(db, machine, oldLeg=null)
 
 newShield = function(db, shd)
 {
-    if(shd[0] == '-'){return null;}
+    if (shd[0] == '-')
+    {
+        return null;
+    }
 
     let name = shd;
     let cost = db["shields"][shd][5];
@@ -113,7 +133,10 @@ newShield = function(db, shd)
 
 newHandWeapon = function(db, weapon)
 {
-    if(weapon[0] == '-'){return null;}
+    if (weapon[0] == '-')
+    {
+        return null;
+    }
 
     let name = weapon;
     let cost = db["weapons"][weapon][4];
@@ -129,13 +152,17 @@ newHandWeapon = function(db, weapon)
     let dmgType = db["weapons_common_statistics"][weaponType][2];
     let accLoss = db["weapons_common_statistics"][weaponType][4];
 
-    return new HandWeapon(name, cost, weight, dmg, apCost, acc, rangeMin, rangeMax, weaponType, dmgType, numHits, accLoss);
+    return new HandWeapon(name, cost, weight, dmg, apCost, acc, rangeMin,
+        rangeMax, weaponType, dmgType, numHits, accLoss);
 }
 
 
 newShoulderWeapon = function(db, weapon)
 {
-    if(weapon[0] == '-'){return null;}
+    if (weapon[0] == '-')
+    {
+        return null;
+    }
 
     let name = db["weapons"][weapon][0];
     let cost = db["weapons"][weapon][4];
@@ -150,15 +177,19 @@ newShoulderWeapon = function(db, weapon)
     let dmgType = db["weapons_common_statistics"][weaponType][2];
     let ammo = db["weapons_common_statistics"][weaponType][5];
 
-    return new ShoulderWeapon(name, cost, weight, dmg, apCost, acc, rangeMin, rangeMax, weaponType, dmgType, ammo);
+    return new ShoulderWeapon(name, cost, weight, dmg, apCost, acc,
+        rangeMin, rangeMax, weaponType, dmgType, ammo);
 }
 
-newBasket = function(db, bas, oldBasket=null)
+newBasket = function(db, bas, oldBasket = null)
 {
-    if(bas[0] == '-'){return null;}
+    if (bas[0] == '-')
+    {
+        return null;
+    }
 
     let name = bas;
-    let cost  = db["backpacks"][bas][4];;
+    let cost = db["backpacks"][bas][4];;
     let weight = db["backpacks"][bas][1];
     let bpType = "basket";
     let capacity = db["backpacks"][bas][2];;
@@ -167,13 +198,16 @@ newBasket = function(db, bas, oldBasket=null)
 
     if (oldBasket !== null && oldBasket.bpType == bpType)
     {
-        for(var item in oldBasket.contents)
+        for (var item in oldBasket.contents)
         {
             if (capacity > response.length)
             {
                 response.contents.push(item);
             }
-            else{break;}
+            else
+            {
+                break;
+            }
         }
     }
     return response;
@@ -182,7 +216,10 @@ newBasket = function(db, bas, oldBasket=null)
 
 newPowerSupply = function(db, ps)
 {
-    if(ps[0] == '-'){return null;}
+    if (ps[0] == '-')
+    {
+        return null;
+    }
 
     let name = ps;
     let cost = db["backpacks"][ps][4];
@@ -195,15 +232,16 @@ newPowerSupply = function(db, ps)
 
 
 // Emma = 0, Alissa = 1
-wanzerList = function(db, missionNum, EmmaAlissa=0, includeStolen=false)
+wanzerList = function(db, missionNum, EmmaAlissa = 0, includeStolen = false)
 {
     response = []
-    for( var wanzer in db["machine_acquisition"])
+    for (var wanzer in db["machine_acquisition"])
     {
-         if ((includeStolen && wanzer[1 + EmmaAlissa] <= missionNum)|| wanzer[3 + EmmaAlissa] <= missionNum)
-         {
-             response.push(wanzer[0]);
-         }
+        if ((includeStolen && wanzer[1 + EmmaAlissa] <= missionNum) ||
+            wanzer[3 + EmmaAlissa] <= missionNum)
+        {
+            response.push(wanzer[0]);
+        }
     }
     return response;
 }

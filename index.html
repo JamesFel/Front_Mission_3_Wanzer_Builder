@@ -2,7 +2,7 @@
 <html lang="en-US">
 <head>
     <meta charset="UTF-8">
-<style>
+    <style>
     .emma-or-alisa {grid-area: ea;}
     .mission-counter {grid-area: mission}
     .include-stolen {grid-area: stolen}
@@ -26,6 +26,7 @@
     .grid-container
     {
         display: grid;
+        grid-template-columns: 25% 25% 25% 25%;
         grid-template-areas:
             'ea mission stolen tAP'
             'stats lShoulder backpack rShoulder'
@@ -55,7 +56,7 @@
     th
     {
         text-align: left;
-        width: 40%
+        width: 40%;
     }
 
     td
@@ -65,61 +66,54 @@
         white-space: nowrap;
     }
 
-    select, input{font: inherit;}
+    select, input
+    {
+        font: inherit;
+    }
+
+    input
+    {
+        width: 5ch;
+    }
+
     p {text-align:left;}
 
-</style>
+    </style>
+    <title>Front Mission 3 Wanzer Builder</title>
 </head>
-
 <body>
     <h1>Front Mission 3 Wanzer Builder</h1>
     <p>Currently in beta.</p>
     <div class="grid-container">
-
-<!-----------------------------------------------Sources--------------------------------------------------------------->
-        <div class="emma-or-alisa" title="Did you go with Ryogo when you were given the choice? Yes: Emma, No: Alisa">
-            <label for="ea-select">Storyline
-                <select id="ea-select" onchange="updateDropdownLists()">
-                    <option value=0>Emma</option>
-                    <option value=1 selected>Alisa</option>
-                </select>
-            </label>
+<!--=============================================Sources=============================================================-->
+        <div class="emma-or-alisa" title=
+        "Did you go with Ryogo when you were given the choice? Yes: Emma, No: Alisa">
+            <label for="ea-select">Storyline <select id="ea-select" onchange=
+            "updateDropdownLists()">
+                <option value="0">
+                    Emma
+                </option>
+                <option selected value="1">
+                    Alisa
+                </option>
+            </select></label>
         </div>
-
         <div class="mission-counter">
-            <label for="mission">Last Mission Won:
-                <input
-                        type="number"
-                        id="mission"
-                        min="1"
-                        max="70"
-                        step="1"
-                        value="9"
-                        oninput="updateDropdownLists()">
-            </label>
+            <label for="mission">Last Mission Won: <input id="mission" max="70"
+            min="1" oninput="updateDropdownLists()" step="1" type="number"
+            value="9"></label>
         </div>
-
-        <div class="include-stolen" title="Include wanzers that you could, theoretically, have stolen by this point">
-            <label for="steal">Include potentially stolen wanzers?
-                <input type="checkbox" id="steal" onchange="updateDropdownLists()">
-            </label>
+        <div class="include-stolen" title=
+        "Include wanzers that you could, theoretically, have stolen by this point">
+            <label for="steal">Include potentially stolen wanzers? <input id=
+            "steal" onchange="updateDropdownLists()" type="checkbox"></label>
         </div>
-
         <div class="base-ap" title="AP if in an un-upgraded wanzer">
-            <label for="total-ap">Base AP:
-                <input
-                        type="number"
-                        id="total-ap"
-                        min="12"
-                        max="30"
-                        step="1"
-                        value="12"
-                        oninput="updateBattleAP()"
-                >
-            </label>
+            <label for="total-ap">Base AP: <input id="total-ap" max="30" min=
+            "12" oninput="updateBattleAP()" step="1" type="number" value=
+            "12"></label>
         </div>
-
-<!---------------------------------------------Stat Info Box----------------------------------------------------------->
+<!--===========================================Stat Info Box=========================================================-->
         <div class="stat-info-box">
             <table>
                 <tr>
@@ -134,69 +128,55 @@
                     <th>Total Weight:</th>
                     <td id="total-weight">0</td>
                 </tr>
-
                 <tr>
                     <th>Unused Power:</th>
                     <td id="unused-power">0</td>
                 </tr>
-
                 <tr>
                     <th>Def-C:</th>
                     <td id="stats-def-c">0</td>
                 </tr>
-
                 <tr>
                     <th title="Average HP per wanzer part.">Avg HP:</th>
                     <td id="stats-avg-hp">0</td>
                 </tr>
-
                 <tr>
                     <th>Move:</th>
                     <td id="stats-move">0</td>
                 </tr>
-
                 <tr>
                     <th>Evade:</th>
                     <td id="stats-evade">0</td>
                 </tr>
-
                 <tr>
-                    <th
-                        title="percentage of listed damage that you would generally take when blocking">
-                            Blocked Dmg%</th>
+                    <th title=
+                    "percentage of listed damage that you would generally take when blocking">
+                    Blocked Dmg%</th>
                     <td id="stats-bdp">0</td>
                 </tr>
-
                 <tr>
                     <th>Boost:</th>
                     <td id="stats-boost">0</td>
                 </tr>
-
                 <tr>
                     <th>Dash:</th>
                     <td id="stats-dash">0</td>
                 </tr>
-
                 <tr>
                     <th>Total Cost:</th>
                     <td id="total-cost">0</td>
                 </tr>
             </table>
         </div>
-
-<!-------------------------------------------Backpack contents--------------------------------------------------------->
+<!--=========================================Backpack contents=======================================================-->
         <div class="backpack-contents">
-            <p>backpack container goes here if I decide to include it
-                and a backpack of the appropriate type is equipped.</p>
+            <p>Backpack contents go here.</p>
         </div>
-
-<!-------------------------------------------Equipment selection------------------------------------------------------->
+<!--=========================================Equipment selection=====================================================-->
         <div class="wanzer-body">
-            <label for="body-selector">Select Body:
-                <select id="body-selector"
-                    onchange="updateBodyField()">
-                </select>
-            </label>
+            <label for="body-selector">Select Body: <select id="body-selector"
+            onchange="updateBodyField()">
+            </select></label>
             <table>
                 <tr>
                     <th>HP</th>
@@ -212,25 +192,11 @@
                 </tr>
                 <tr>
                     <th>Hp Upgrades</th>
-                    <td>
-                        <input
-                            id="body-hp-upgrades"
-                            type="number"
-                            min="0"
-                            max="7"
-                            value="0"
-                            oninput="updateHP('body')">
-                    </td>
+                    <td><input id="body-hp-upgrades" max="7" min="0" oninput=
+                    "updateHP('body')" type="number" value="0"></td>
                     <th>Def-C Upgrades</th>
-                    <td>
-                        <input
-                            id="body-def-c-upgrades"
-                            type="number"
-                            min="0"
-                            max="4"
-                            value="0"
-                            oninput="updateDefC()">
-                    </td>
+                    <td><input id="body-def-c-upgrades" max="4" min="0"
+                    oninput="updateDefC()" type="number" value="0"></td>
                 </tr>
                 <tr>
                     <th>Skill</th>
@@ -240,14 +206,10 @@
                 </tr>
             </table>
         </div>
-
         <div class="left-arm">
-            <label for="left-arm-selector">Select Left Arm:
-                <select id="left-arm-selector"
-                    onchange="updateArmField('left')">
-                </select>
-            </label>
-
+            <label for="left-arm-selector">Select Left Arm: <select id=
+            "left-arm-selector" onchange="updateArmField('left')">
+            </select></label>
             <table>
                 <tr>
                     <th>HP</th>
@@ -261,25 +223,12 @@
                 </tr>
                 <tr>
                     <th>Hp Upgrades</th>
-                    <td>
-                        <input
-                            id="left-arm-hp-upgrades"
-                            type="number"
-                            min="0"
-                            max="7"
-                            value="0"
-                            oninput="updateHP('left-arm')">
-                    </td>
+                    <td><input id="left-arm-hp-upgrades" max="7" min="0"
+                    oninput="updateHP('left-arm')" type="number" value=
+                    "0"></td>
                     <th>Acc Upgrades</th>
-                    <td>
-                        <input
-                            id="left-arm-acc-upgrades"
-                            type="number"
-                            min="0"
-                            max="4"
-                            value="0"
-                            oninput="updateAcc('left')">
-                    </td>
+                    <td><input id="left-arm-acc-upgrades" max="4" min="0"
+                    oninput="updateAcc('left')" type="number" value="0"></td>
                 </tr>
                 <tr>
                     <th>Skill</th>
@@ -289,14 +238,10 @@
                 </tr>
             </table>
         </div>
-
         <div class="right-arm">
-            <label for="right-arm-selector">Select Right Arm:
-                <select id="right-arm-selector"
-                    onchange="updateArmField('right')">
-                </select>
-            </label>
-
+            <label for="right-arm-selector">Select Right Arm: <select id=
+            "right-arm-selector" onchange="updateArmField('right')">
+            </select></label>
             <table>
                 <tr>
                     <th>HP</th>
@@ -310,25 +255,12 @@
                 </tr>
                 <tr>
                     <th>Hp Upgrades</th>
-                    <td>
-                        <input
-                            id="right-arm-hp-upgrades"
-                            type="number"
-                            min="0"
-                            max="7"
-                            value="0"
-                            oninput="updateHP('right-arm')">
-                    </td>
+                    <td><input id="right-arm-hp-upgrades" max="7" min="0"
+                    oninput="updateHP('right-arm')" type="number" value=
+                    "0"></td>
                     <th>Acc Upgrades</th>
-                    <td>
-                        <input
-                            id="right-arm-acc-upgrades"
-                            type="number"
-                            min="0"
-                            max="4"
-                            value="0"
-                            oninput="updateAcc('right')">
-                    </td>
+                    <td><input id="right-arm-acc-upgrades" max="4" min="0"
+                    oninput="updateAcc('right')" type="number" value="0"></td>
                 </tr>
                 <tr>
                     <th>Skill</th>
@@ -338,14 +270,10 @@
                 </tr>
             </table>
         </div>
-
         <div class="legs">
-            <label for="legs-selector">Select Legs:
-                <select id="legs-selector"
-                    onchange="updateLegsField()">
-                </select>
-            </label>
-
+            <label for="legs-selector">Select Legs: <select id="legs-selector"
+            onchange="updateLegsField()">
+            </select></label>
             <table>
                 <tr>
                     <th>HP</th>
@@ -369,37 +297,16 @@
                     <th>Type</th>
                     <td id="legs-type">Hover</td>
                     <th>Hp Upgrades</th>
-                    <td>
-                        <input
-                            id="legs-hp-upgrades"
-                            type="number"
-                            min="0"
-                            max="7"
-                            value="0"
-                            oninput="updateHP('legs')">
-                    </td>
+                    <td><input id="legs-hp-upgrades" max="7" min="0" oninput=
+                    "updateHP('legs')" type="number" value="0"></td>
                 </tr>
                 <tr>
                     <th>Evade Upgrades</th>
-                    <td>
-                        <input
-                            id="legs-evade-upgrades"
-                            type="number"
-                            min="0"
-                            max="4"
-                            value="0"
-                            oninput="updateEvade()">
-                    </td>
+                    <td><input id="legs-evade-upgrades" max="4" min="0"
+                    oninput="updateEvade()" type="number" value="0"></td>
                     <th>Boost/Dash Upgrades</th>
-                    <td>
-                        <input
-                            id="legs-bd-upgrades"
-                            type="number"
-                            min="0"
-                            max="4"
-                            value="0"
-                            oninput="updateBoostDash()">
-                    </td>
+                    <td><input id="legs-bd-upgrades" max="4" min="0" oninput=
+                    "updateBoostDash()" type="number" value="0"></td>
                 </tr>
                 <tr>
                     <th>Skill</th>
@@ -409,23 +316,22 @@
                 </tr>
             </table>
         </div>
-
         <div class="left-hand">
             <select id="left-shield" onchange="updateHandList('left')">
-                <option value="s">Shield</option>
-                <option value="w">Weapon</option>
-            </select>
-
-            <label for="left-hand-selector">Select Left-hand:
-                <select id="left-hand-selector"
-                    onchange="updateHandField('left')">
-                </select>
-            </label>
+                <option value="s">
+                    Shield
+                </option>
+                <option value="w">
+                    Weapon
+                </option>
+            </select> <label for="left-hand-selector">Select Left-hand:
+            <select id="left-hand-selector" onchange="updateHandField('left')">
+            </select></label>
             <table id="left-shield-table">
                 <tr>
-                    <th>Dmg Reduction: </th>
+                    <th>Dmg Reduction:</th>
                     <td id="left-shield-dr">0</td>
-                    <th>Durability: </th>
+                    <th>Durability:</th>
                     <td id="left-shield-durability">0</td>
                 </tr>
                 <tr>
@@ -457,16 +363,16 @@
                 <tr>
                     <th>Weight:</th>
                     <td id="left-weapon-weight">0</td>
-                    <th
-                            title="Average damage if you have no accuracy upgrades, are attacking from medium range and your opponent has 0 evade.">
-                        Avg. Damage:
-                    </th>
+                    <th title=
+                    "Average damage if you have no accuracy upgrades, are attacking from medium range and your opponent has 0 evade.">
+                    Avg. Damage:</th>
                     <td id="left-weapon-avg-damage">0</td>
                 </tr>
                 <tr>
                     <th>AP Cost:</th>
                     <td id="left-weapon-ap-cost">0</td>
-                    <th title="Damage if you don't miss at all.">Total Damage:</th>
+                    <th title="Damage if you don't miss at all.">Total
+                    Damage:</th>
                     <td id="left-weapon-total-damage">0</td>
                 </tr>
                 <tr>
@@ -477,23 +383,23 @@
                 </tr>
             </table>
         </div>
-
         <div class="right-hand">
             <select id="right-shield" onchange="updateHandList('right')">
-                <option value="s">Shield</option>
-                <option value="w">Weapon</option>
-            </select>
-
-            <label for="right-hand-selector">Select Right-hand:
-                <select id="right-hand-selector"
-                    onchange="updateHandField('right')">
-                </select>
-            </label>
+                <option value="s">
+                    Shield
+                </option>
+                <option value="w">
+                    Weapon
+                </option>
+            </select> <label for="right-hand-selector">Select Right-hand:
+            <select id="right-hand-selector" onchange=
+            "updateHandField('right')">
+            </select></label>
             <table id="right-shield-table">
                 <tr>
-                    <th>Dmg Reduction: </th>
+                    <th>Dmg Reduction:</th>
                     <td id="right-shield-dr">0</td>
-                    <th>Durability: </th>
+                    <th>Durability:</th>
                     <td id="right-shield-durability">0</td>
                 </tr>
                 <tr>
@@ -525,16 +431,16 @@
                 <tr>
                     <th>Weight:</th>
                     <td id="right-weapon-weight">0</td>
-                    <th
-                            title="Average damage if you have no accuracy upgrades, are attacking from medium range and your opponent has 0 evade.">
-                        Avg. Damage:
-                    </th>
+                    <th title=
+                    "Average damage if you have no accuracy upgrades, are attacking from medium range and your opponent has 0 evade.">
+                    Avg. Damage:</th>
                     <td id="right-weapon-avg-damage">0</td>
                 </tr>
                 <tr>
                     <th>AP Cost:</th>
                     <td id="right-weapon-ap-cost">0</td>
-                    <th title="Damage if you don't miss at all.">Total Damage:</th>
+                    <th title="Damage if you don't miss at all.">Total
+                    Damage:</th>
                     <td id="right-weapon-total-damage">0</td>
                 </tr>
                 <tr>
@@ -545,14 +451,11 @@
                 </tr>
             </table>
         </div>
-
         <div class="left-shoulder">
             <label for="left-shoulder-selector">Select Left-shoulder Weapon:
-                <select id="left-shoulder-selector"
-                    onchange="updateShoulderField('left')">
-                </select>
-            </label>
-
+            <select id="left-shoulder-selector" onchange=
+            "updateShoulderField('left')">
+            </select></label>
             <table>
                 <tr>
                     <th>Weapon Type:</th>
@@ -586,13 +489,11 @@
                 </tr>
             </table>
         </div>
-
         <div class="right-shoulder">
             <label for="right-shoulder-selector">Select Right-shoulder Weapon:
-                <select id="right-shoulder-selector"
-                    onchange="updateShoulderField('right')">
-                </select>
-            </label>
+            <select id="right-shoulder-selector" onchange=
+            "updateShoulderField('right')">
+            </select></label>
             <table>
                 <tr>
                     <th>Weapon Type:</th>
@@ -626,21 +527,18 @@
                 </tr>
             </table>
         </div>
-
         <div class="worn-backpack">
-            <label for="power-capacity">Type
-                <select id="power-capacity"
-                onchange="updateBackpackList()">
-                    <option value="p">power</option>
-                    <option value="c">capacity</option>
-                </select>
-            </label>
-
-            <label for="backpack-selector">Select Backpack:
-                <select id="backpack-selector"
-                    onchange="updateBackpackField()">
-                </select>
-            </label>
+            <label for="power-capacity">Type <select id="power-capacity"
+            onchange="updateBackpackList()">
+                <option value="p">
+                    power
+                </option>
+                <option value="c">
+                    capacity
+                </option>
+            </select></label> <label for="backpack-selector">Select Backpack:
+            <select id="backpack-selector" onchange="updateBackpackField()">
+            </select></label>
             <table>
                 <tr>
                     <th id="power-capacity-label">Power:</th>
@@ -650,64 +548,67 @@
                 </tr>
             </table>
         </div>
-
-<!-- ------------------------------------------------Skills------------------------------------------------------------>
+<!-- ================================================Skills==========================================================-->
         <div class="body-skill-info">
-            <label for='body-skill-selector'>Skill:
-                <select id ='body-skill-selector'
-                        oninput='skillUpdatesPart("body")'>
-                </select>
-            </label>
+            <label for='body-skill-selector'>Skill: <select id=
+            'body-skill-selector' oninput='skillUpdatesPart("body")'>
+            </select></label>
             <p id="body-skill-details"></p>
         </div>
-
         <div class="left-arm-skill-info">
-            <label for='body-skill-selector'>Skill:
-                <select id ='left-arm-skill-selector'
-                        oninput='skillUpdatesPart("left-arm")'>
-                </select>
-            </label>
+            <label for='body-skill-selector'>Skill: <select id=
+            'left-arm-skill-selector' oninput='skillUpdatesPart("left-arm")'>
+            </select></label>
             <p id="left-arm-skill-details"></p>
         </div>
-
         <div class="right-arm-skill-info">
-            <label for='body-skill-selector'>Skill:
-                <select id ='right-arm-skill-selector'
-                        oninput='skillUpdatesPart("right-arm")'>
-                </select>
-            </label>
+            <label for='body-skill-selector'>Skill: <select id=
+            'right-arm-skill-selector' oninput='skillUpdatesPart("right-arm")'>
+            </select></label>
             <p id="right-arm-skill-details"></p>
         </div>
-
         <div class="legs-skill-info">
-            <label for='body-skill-selector'>Skill:
-                <select id ='legs-skill-selector'
-                        oninput='skillUpdatesPart("legs")'>
-                </select>
-            </label>
+            <label for='body-skill-selector'>Skill: <select id=
+            'legs-skill-selector' oninput='skillUpdatesPart("legs")'>
+            </select></label>
             <p id="legs-skill-details"></p>
         </div>
     </div>
+<!-- ================================================Script files====================================================-->
+    <script src="js%20files/item.js">
+    </script>
+    <script src="js%20files/equippable_item.js">
+    </script>
+    <script src="js%20files/machine_part.js">
+    </script>
+    <script src="js%20files/arm.js">
+    </script>
+    <script src="js%20files/legs.js">
+    </script>
+    <script src="js%20files/body.js">
+    </script>
+    <script src="js%20files/weapon.js">
+    </script>
+    <script src="js%20files/shoulder_weapon.js">
+    </script>
+    <script src="js%20files/hand_weapon.js">
+    </script>
+    <script src="js%20files/shield.js">
+    </script>
+    <script src="js%20files/backpack.js">
+    </script>
+    <script src="js%20files/power_supply.js">
+    </script>
+    <script src="js%20files/basket.js">
+    </script>
+    <script src="js%20files/json_queries.js">
+    </script>
+    <script src="js%20files/dropdowns.js">
+    </script>
+    <script src="js%20files/update_fields.js">
+    </script>
+<!--=============================================Main()==============================================================-->
 
-<!-- ------------------------------------------------Script files------------------------------------------------------>
-    <script src="js files/item.js"></script>
-    <script src="js files/equippable_item.js"></script>
-    <script src="js files/machine_part.js"></script>
-    <script src="js files/arm.js"></script>
-    <script src="js files/legs.js"></script>
-    <script src="js files/body.js"></script>
-    <script src="js files/weapon.js"></script>
-    <script src="js files/shoulder_weapon.js"></script>
-    <script src="js files/hand_weapon.js"></script>
-    <script src="js files/shield.js"></script>
-    <script src="js files/backpack.js"></script>
-    <script src="js files/power_supply.js"></script>
-    <script src="js files/basket.js"></script>
-    <script src="js files/json_queries.js"></script>
-    <script src="js files/dropdowns.js"></script>
-    <script src="js files/update_fields.js"></script>
-
-<!-----------------------------------------------Main()---------------------------------------------------------------->
     <script>
         "use strict"
 
@@ -743,21 +644,22 @@
         }
         request.send()
     </script>
-
-</body>
-<footer>
-    <h3>Special Thanks to:</h3>
-    <p>Luxion for his
-        <a href="https://gamefaqs.gamespot.com/ps/250588-front-mission-3/faqs/7363">Technical Data Guide</a>
-        which provided me with the Boost and Dash upgrade values and mech purchase and upgrade costs.<br>
-        EWillis and JackSpade for their
-        <a href="https://gamefaqs.gamespot.com/ps/250588-front-mission-3/faqs/15501">Network/Wanzer FAQ</a>
-        which provided me with the mech technical info other than dash and upgrade values.<br>
-        Mark Web for his
-        <a href="https://gamefaqs.gamespot.com/ps/250588-front-mission-3/faqs/7525">walkthrough</a>
+    <footer>
+        <h3>Special Thanks to:</h3>
+        <p>Luxion for his <a href=
+        "https://gamefaqs.gamespot.com/ps/250588-front-mission-3/faqs/7363">Technical
+        Data Guide</a> which provided me with the Boost and Dash upgrade values
+        and mech purchase and upgrade costs.<br>
+        EWillis and JackSpade for their <a href=
+        "https://gamefaqs.gamespot.com/ps/250588-front-mission-3/faqs/15501">Network/Wanzer
+        FAQ</a> which provided me with the mech technical info other than dash
+        and upgrade values.<br>
+        Mark Web for his <a href=
+        "https://gamefaqs.gamespot.com/ps/250588-front-mission-3/faqs/7525">walkthrough</a>
         which provided me with the weapon and item data.<br>
-        Wazat for his
-        <a href="https://gamefaqs.gamespot.com/ps/250588-front-mission-3/faqs/25245">Detailed Skill List</a>
-        which provided me with the battle skill details.</p>
-</footer>
+        Wazat for his <a href=
+        "https://gamefaqs.gamespot.com/ps/250588-front-mission-3/faqs/25245">Detailed
+        Skill List</a> which provided me with the battle skill details.</p>
+    </footer>
+</body>
 </html>

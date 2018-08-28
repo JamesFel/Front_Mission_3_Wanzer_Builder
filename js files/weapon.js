@@ -1,6 +1,7 @@
 // class definition for weapon class.
 
-function Weapon(name, cost, weight, dmg, apCost, acc, rangeMin, rangeMax, weaponType, dmgType)
+function Weapon(name, cost, weight, dmg, apCost, acc, rangeMin, rangeMax,
+    weaponType, dmgType)
 {
     EquippableItem.call(this, name, cost, weight);
     this.dmg = dmg;

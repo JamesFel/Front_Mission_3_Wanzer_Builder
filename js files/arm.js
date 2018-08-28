@@ -1,6 +1,7 @@
 // class definition for the arm class (for wanzer arms).
 
-function Arm(name, cost, weight, hp_pattern, skill, acc_pattern, num_acc_upgrades = 0)
+function Arm(name, cost, weight, hp_pattern, skill, acc_pattern,
+    num_acc_upgrades = 0)
 {
     MachinePart.call(this, name, cost, weight, hp_pattern, skill);
     this.acc_pattern = acc_pattern;
@@ -27,8 +28,8 @@ Arm.prototype.setHP = function(num_hp_upgrades)
 
 Arm.prototype.setAcc = function(num_acc_upgrades)
 {
-        this.num_acc_upgrades = Math.min(4, Math.max(0, num_acc_upgrades));
+    this.num_acc_upgrades = Math.min(4, Math.max(0, num_acc_upgrades));
 
-        this.cost = this.hp_upgrade_costs[this.num_hp_upgrades] +
-            this.acc_upgrade_costs[this.num_acc_upgrades];
+    this.cost = this.hp_upgrade_costs[this.num_hp_upgrades] +
+        this.acc_upgrade_costs[this.num_acc_upgrades];
 }
