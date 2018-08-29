@@ -18,18 +18,18 @@ sortTable = function(tableId, dsc, sortOn)
             let x = rows[i].getElementsByTagName("TD")[sortOn].innerHTML;
             let y = rows[i + 1].getElementsByTagName("TD")[sortOn].innerHTML;
 
-            if(isNaN(parseInt(x)) || isNaN(parseInt(y)))
+            if(isNaN(Number(x)) || isNaN(Number(y)))
             {
                 x = x.toLowerCase();
                 y = y.toLowerCase();
             }
             else
             {
-                x = parseInt(x);
-                y = parseInt(y);
+                x = Number(x);
+                y = Number(y);
             }
 
-            if (dsc == (x < y)) //both true or both false
+            if (dsc == (x > y) && x != y) //both true or both false
             {
                 switching = true;
                 rows[i].parentNode.insertBefore(rows[i+1], rows[i]);
@@ -39,25 +39,38 @@ sortTable = function(tableId, dsc, sortOn)
     }
 }
 
-filterAvailable = function(mission, storyline, tableId, stolen, shopCell)
+filterTable = function(tableId, emmaShopCell)
 {
     "use strict"
     let table,
-        tableRow,
+        tableRows,
         tableDataShop,
         tableDataStolen,
-        stolenCell = shopCell;
+        stolen,
+        mission,
+        storyline,
+        stolenCell;
+
+    stolen = document.getElementById('steal').checked;
+    mission = document.getElementById('mission').value;
+    storyline = document.getElementById('ea-select').value;
+    emmaShopCell += parseInt(storyline);
 
     table = document.getElementById(tableId);
     tableRows = table.getElementsByTagName("tr");
-    if(stolen)
+
+    if(stolen && tableId.slice(0,6) != "weapon")
     {
-        stolenCell -= 2;
+        stolenCell = emmaShopCell - 2;
+    }
+    else
+    {
+        stolenCell = emmaShopCell;
     }
 
-    for (let i = 0; i < tableRows.length; i++)
+    for (let i = 1; i < tableRows.length; i++)
     {
-        tableDataShop = tableRows[i].getElementsByTagName("td")[shopCell];
+        tableDataShop = tableRows[i].getElementsByTagName("td")[emmaShopCell];
         tableDataStolen = tableRows[i].getElementsByTagName("td")[stolenCell];
 
         if ((tableDataShop && parseInt(tableDataShop.innerHTML) <= mission) ||
@@ -72,11 +85,15 @@ filterAvailable = function(mission, storyline, tableId, stolen, shopCell)
     }
 }
 
-createRows = function(key, template, table, restrict=null)
+createRows = function(key, template, table, restrict=null, buyStealKey=null, bsOffset=0)
 {
-    let rowIdx = 1, row, cell, source;
+    let rowIdx = 1, row, cell, source, bsSource;
 
     source = db[key];
+    if(buyStealKey != null)
+    {
+        bsSource = db[buyStealKey];
+    }
 
     for(let ref in source)
     {
@@ -89,6 +106,14 @@ createRows = function(key, template, table, restrict=null)
             {
                 cell = row.insertCell(j);
                 cell.innerHTML = source[ref][template[j]];
+            }
+            if(buyStealKey != null)
+            {
+                for(let k=0; k < 4; k++)
+                {
+                    cell = row.insertCell(template.length + k);
+                    cell.innerHTML = bsSource[ref][bsOffset + k];
+                }
             }
         }
     }
@@ -118,12 +143,12 @@ loadTables = function()
     let bodyTemplate = [0, 9, 1, 8, 10, 12, 11];
     let armTemplate = [0, 9, 1, 8, 10, 11, 12, 13, 14, 15];
     let legsTemplate = [0, 9, 1, 8, 10, 12, 13, 14, 11];
-    let weaponTemplate = [0, 2, 3, 4];
-    let shieldTemplate = [0, 1, 4, 3, 5];
+    let weaponTemplate = [0, 2, 3, 4, 7, 8];
+    let shieldTemplate = [0, 1, 4, 3, 5, 8, 9];
 
-    createRows('wanzer_body', bodyTemplate, bodyTabTable);
-    createRows('wanzer_arms', armTemplate, armTabTable);
-    createRows('wanzer_legs', legsTemplate, legsTabTable);
+    createRows('wanzer_body', bodyTemplate, bodyTabTable, null, "machine_acquisition", 1);
+    createRows('wanzer_arms', armTemplate, armTabTable, null, "machine_acquisition", 1);
+    createRows('wanzer_legs', legsTemplate, legsTabTable, null, "machine_acquisition", 1);
 
     createRows('weapons', weaponTemplate, weaponTabMissileTable, 'missile');
     createRows('weapons', weaponTemplate, weaponTabGrenadeTable, 'grenade');
@@ -135,7 +160,7 @@ loadTables = function()
     createRows('weapons', weaponTemplate, weaponTabBatonTable, 'baton');
     createRows('weapons', weaponTemplate, weaponTabSpikeTable, 'spike');
     createRows('weapons', weaponTemplate, weaponTabRifleTable, 'rifle');
-    createRows('weapons', weaponTemplate, weaponTabBeamTable, 'beam');
+    createRows('weapons', weaponTemplate, weaponTabBeamTable, "beam");
 
     createRows('shields', shieldTemplate, weaponTabShieldTable);
 

@@ -100,7 +100,7 @@
 
     .tables-tab table tr:hover
     {
-        background-color: #f5f5f5;
+        background-color: #e0e0e0;
     }
 
     .tables-tab table  tr:nth-child(even)
@@ -130,9 +130,10 @@
     .tab
     {
         overflow: hidden;
+        width: 100%
     }
 
-    .tab button
+    .tab > button
     {
         background-color: inherit;
         float: left;
@@ -141,12 +142,12 @@
         cursor: pointer;
     }
 
-    .tab button:hover
+    .tab > button:hover
     {
         background-color: #ddd;
     }
 
-    .tab button.active
+    .tab > button.active
     {
         background-color: #ccc;
     }
@@ -154,6 +155,22 @@
     .tabContent {
         display: none;
         border-top: none;
+    }
+
+    .sorter, .filter
+    {
+        position:absolute;
+        visibility:hidden;
+        opacity:0;
+    }
+
+    button.tab-links
+    {
+        font-size: x-large;
+        font-weight: bold;
+        background-color: green;
+        color: white;
+        width: 20%;
     }
 
     </style>
@@ -192,7 +209,7 @@
         <div class="include-stolen" title=
         "Include wanzers that you could, theoretically, have stolen by this point">
             <label for="steal">Include potentially stolen wanzers? <input id=
-            "steal" onchange="updateDropdownLists()" type="checkbox" checked></label>
+            "steal" onclick="updateDropdownLists()" type="checkbox" checked></label>
         </div>
         <div class="base-ap" title="AP if in an un-upgraded wanzer">
             <label for="total-ap">Base AP: <input id="total-ap" max="30" min=
@@ -695,136 +712,883 @@
     <div class="tab-content tables-tab" id="wanzer-body-tab">
         <table id="body-tab-table">
             <tr>
-                <th>Wanzer</th>
-                <th>Weight</th>
-                <th>Base HP</th>
-                <th>Max HP</th>
-                <th>Power</th>
-                <th>Damage Resistance</th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('body-tab-table', this.checked, 0)"
+                               type="checkbox">
+                        Wanzer
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('body-tab-table', this.checked, 1)"
+                               type="checkbox">
+                        Weight
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('body-tab-table', this.checked, 2)"
+                               type="checkbox">
+                        Base HP
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('body-tab-table', this.checked, 3)"
+                               type="checkbox">
+                        Max HP
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('body-tab-table', this.checked, 4)"
+                               type="checkbox">
+                        Power
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('body-tab-table', this.checked, 5)"
+                               type="checkbox">
+                        Damage Resistance
+                    </label>
+                </th>
                 <th>Skill</th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('body-tab-table', 9)"
+                               type="checkbox">
+                        Steal-Emma
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('body-tab-table', 9)"
+                               type="checkbox">
+                        Steal-Alisa
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('body-tab-table', 9)"
+                               type="checkbox">
+                        Buy-Emma
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('body-tab-table', 9)"
+                               type="checkbox">
+                        Buy-Alisa
+                    </label>
+                </th>
             </tr>
         </table>
     </div>
     <div class="tab-content tables-tab" id="wanzer-arm-tab">
         <table id="arm-tab-table">
             <tr>
-                <th>Wanzer</th>
-                <th>Weight</th>
-                <th>Base HP</th>
-                <th>Max HP</th>
-                <th>Base Acc</th>
-                <th>Acc +1</th>
-                <th>Acc +2</th>
-                <th>Acc +3</th>
-                <th>Max Acc</th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('arm-tab-table', this.checked, 0)"
+                               type="checkbox">
+                        Wanzer
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('arm-tab-table', this.checked, 1)"
+                               type="checkbox">
+                        Weight
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('arm-tab-table', this.checked, 2)"
+                               type="checkbox">
+                        Base HP
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('arm-tab-table', this.checked, 3)"
+                               type="checkbox">
+                        Max HP
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('arm-tab-table', this.checked, 4)"
+                               type="checkbox">
+                        Base Acc
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('arm-tab-table', this.checked, 5)"
+                               type="checkbox">
+                        Acc +1
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('arm-tab-table', this.checked, 6)"
+                               type="checkbox">
+                        Acc +2
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('arm-tab-table', this.checked, 7)"
+                               type="checkbox">
+                        Acc +3
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('arm-tab-table', this.checked, 8)"
+                               type="checkbox">
+                        Max Acc
+                    </label>
+                </th>
                 <th>Skill</th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('arm-tab-table', 12)"
+                               type="checkbox">
+                        Steal-Emma
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('arm-tab-table', 12)"
+                               type="checkbox">
+                        Steal-Alisa
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('arm-tab-table', 12)"
+                               type="checkbox">
+                        Buy-Emma
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('arm-tab-table', 12)"
+                               type="checkbox">
+                        Buy-Alisa
+                    </label>
+                </th>
             </tr>
         </table>
     </div>
-        <div class="tab-content tables-tab" id="wanzer-legs-tab">
+    <div class="tab-content tables-tab" id="wanzer-legs-tab">
         <table id="legs-tab-table">
             <tr>
-                <th>Wanzer</th>
-                <th>Weight</th>
-                <th>Base HP</th>
-                <th>Max HP</th>
-                <th>Move</th>
-                <th title="Progression is the same for all legs. If it's better at level 1, it's always better.">Lvl 1 Evade</th>
-                <th title="l=best upgrade pattern, 5=Hover legs">Boost Rank</th>
-                <th title="1=best upgrade pattern, 5=Hover legs">Dash Rank</th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('legs-tab-table', this.checked, 0)"
+                               type="checkbox">
+                        Wanzer
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('legs-tab-table', this.checked, 1)"
+                               type="checkbox">
+                        Weight
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('legs-tab-table', this.checked, 2)"
+                               type="checkbox">
+                        Base HP
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('legs-tab-table', this.checked, 3)"
+                               type="checkbox">
+                        Max HP
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('legs-tab-table', this.checked, 4)"
+                               type="checkbox">
+                        Move
+                    </label>
+                </th>
+                <th title="Progression is the same for all legs. If it's better at level 1, it's always better.">
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('legs-tab-table', this.checked, 5)"
+                               type="checkbox">
+                        Lvl 1 Evade
+                    </label>
+                </th>
+                <th title="l=best upgrade pattern, 5=Hover legs">
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('legs-tab-table', this.checked, 6)"
+                               type="checkbox">
+                        Boost Rank
+                    </label>
+                </th>
+                <th title="1=best upgrade pattern, 5=Hover legs">
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('legs-tab-table', this.checked, 7)"
+                               type="checkbox">
+                        Dash Rank
+                    </label>
+                </th>
                 <th>Skill</th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('legs-tab-table', 11)"
+                               type="checkbox">
+                        Steal-Emma
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('legs-tab-table', 11)"
+                               type="checkbox">
+                        Steal-Alisa
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('legs-tab-table', 11)"
+                               type="checkbox">
+                        Buy-Emma
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('legs-tab-table', 11)"
+                               type="checkbox">
+                        Buy-Alisa
+                    </label>
+                </th>
             </tr>
         </table>
     </div>
     <div class="tab-content tables-tab" id="weapons-tab">
         <table id="weapon-tab-missile-table">
             <tr>
-                <th>Missile Launcher</th>
-                <th>Weight</th>
-                <th>Damage/Hit</th>
-                <th>Cost</th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-missile-table', this.checked, 0)"
+                               type="checkbox">
+                        Missile Launcher
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-missile-table', this.checked, 1)"
+                               type="checkbox">
+                        Weight
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-missile-table', this.checked, 2)"
+                               type="checkbox">
+                        Damage/Hit
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-missile-table', this.checked, 3)"
+                               type="checkbox">
+                        Cost
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('weapon-tab-missile-table', 4)"
+                               type="checkbox">
+                        Buy-Emma
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('weapon-tab-missile-table', 4)"
+                               type="checkbox">
+                        Buy-Alisa
+                    </label>
+                </th>
             </tr>
         </table>
         <table id="weapon-tab-grenade-table">
-            <tr>
-                <th>Grenade Launcher</th>
-                <th>Weight</th>
-                <th>Damage/Hit</th>
-                <th>Cost</th>
+             <tr>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-grenade-table', this.checked, 0)"
+                               type="checkbox">
+                        Grenade Launcher
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-grenade-table', this.checked, 1)"
+                               type="checkbox">
+                        Weight
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-grenade-table', this.checked, 2)"
+                               type="checkbox">
+                        Damage/Hit
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-grenade-table', this.checked, 3)"
+                               type="checkbox">
+                        Cost
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('weapon-tab-grenade-table', 4)"
+                               type="checkbox">
+                        Buy-Emma
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('weapon-tab-grenade-table', 4)"
+                               type="checkbox">
+                        Buy-Alisa
+                    </label>
+                </th>
             </tr>
         </table>
         <table id="weapon-tab-shotgun-table">
-            <tr>
-                <th>Shotgun</th>
-                <th>Weight</th>
-                <th>Damage/Hit</th>
-                <th>Cost</th>
+             <tr>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-shotgun-table', this.checked, 0)"
+                               type="checkbox">
+                        Shotgun
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-shotgun-table', this.checked, 1)"
+                               type="checkbox">
+                        Weight
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-shotgun-table', this.checked, 2)"
+                               type="checkbox">
+                        Damage/Hit
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-shotgun-table', this.checked, 3)"
+                               type="checkbox">
+                        Cost
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('weapon-tab-shotgun-table', 4)"
+                               type="checkbox">
+                        Buy-Emma
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('weapon-tab-shotgun-table', 4)"
+                               type="checkbox">
+                        Buy-Alisa
+                    </label>
+                </th>
             </tr>
         </table>
         <table id="weapon-tab-m-gun-table">
-            <tr>
-                <th>Machine Gun</th>
-                <th>Weight</th>
-                <th>Damage/Hit</th>
-                <th>Cost</th>
+             <tr>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-m-gun-table', this.checked, 0)"
+                               type="checkbox">
+                        Machine Gun
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-m-gun-table', this.checked, 1)"
+                               type="checkbox">
+                        Weight
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-m-gun-table', this.checked, 2)"
+                               type="checkbox">
+                        Damage/Hit
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-m-gun-table', this.checked, 3)"
+                               type="checkbox">
+                        Cost
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('weapon-tab-m-gun-table', 4)"
+                               type="checkbox">
+                        Buy-Emma
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('weapon-tab-m-gun-table', 4)"
+                               type="checkbox">
+                        Buy-Alisa
+                    </label>
+                </th>
             </tr>
         </table>
         <table id="weapon-tab-flame-thrower-table">
-            <tr>
-                <th>Flame Thrower</th>
-                <th>Weight</th>
-                <th>Damage/Hit</th>
-                <th>Cost</th>
+             <tr>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-flame-thrower-table', this.checked, 0)"
+                               type="checkbox">
+                        Flame Thrower
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-flame-thrower-table', this.checked, 1)"
+                               type="checkbox">
+                        Weight
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-flame-thrower-table', this.checked, 2)"
+                               type="checkbox">
+                        Damage/Hit
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-flame-thrower-table', this.checked, 3)"
+                               type="checkbox">
+                        Cost
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('weapon-tab-flame-thrower-table', 4)"
+                               type="checkbox">
+                        Buy-Emma
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('weapon-tab-flame-thrower-table', 4)"
+                               type="checkbox">
+                        Buy-Alisa
+                    </label>
+                </th>
             </tr>
         </table>
         <table id="weapon-tab-rifle-table">
-            <tr>
-                <th>Rifle</th>
-                <th>Weight</th>
-                <th>Damage/Hit</th>
-                <th>Cost</th>
+             <tr>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-rifle-table', this.checked, 0)"
+                               type="checkbox">
+                        Rifle
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-rifle-table', this.checked, 1)"
+                               type="checkbox">
+                        Weight
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-rifle-table', this.checked, 2)"
+                               type="checkbox">
+                        Damage/Hit
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-rifle-table', this.checked, 3)"
+                               type="checkbox">
+                        Cost
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('weapon-tab-rifle-table', 4)"
+                               type="checkbox">
+                        Buy-Emma
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('weapon-tab-rifle-table', 4)"
+                               type="checkbox">
+                        Buy-Alisa
+                    </label>
+                </th>
             </tr>
         </table>
         <table id="weapon-tab-fist-table">
-            <tr>
-                <th>Fist</th>
-                <th>Weight</th>
-                <th>Damage/Hit</th>
-                <th>Cost</th>
+             <tr>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-fist-table', this.checked, 0)"
+                               type="checkbox">
+                        Fist
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-fist-table', this.checked, 1)"
+                               type="checkbox">
+                        Weight
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-fist-table', this.checked, 2)"
+                               type="checkbox">
+                        Damage/Hit
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-fist-table', this.checked, 3)"
+                               type="checkbox">
+                        Cost
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('weapon-tab-fist-table', 4)"
+                               type="checkbox">
+                        Buy-Emma
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('weapon-tab-fist-table', 4)"
+                               type="checkbox">
+                        Buy-Alisa
+                    </label>
+                </th>
             </tr>
         </table>
         <table id="weapon-tab-baton-table">
-            <tr>
-                <th>Baton</th>
-                <th>Weight</th>
-                <th>Damage/Hit</th>
-                <th>Cost</th>
+             <tr>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-baton-table', this.checked, 0)"
+                               type="checkbox">
+                        Baton
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-baton-table', this.checked, 1)"
+                               type="checkbox">
+                        Weight
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-baton-table', this.checked, 2)"
+                               type="checkbox">
+                        Damage/Hit
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-baton-table', this.checked, 3)"
+                               type="checkbox">
+                        Cost
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('weapon-tab-baton-table', 4)"
+                               type="checkbox">
+                        Buy-Emma
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('weapon-tab-baton-table', 4)"
+                               type="checkbox">
+                        Buy-Alisa
+                    </label>
+                </th>
             </tr>
         </table>
         <table id="weapon-tab-spike-table">
-            <tr>
-                <th>Spike</th>
-                <th>Weight</th>
-                <th>Damage/Hit</th>
-                <th>Cost</th>
+             <tr>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-spike-table', this.checked, 0)"
+                               type="checkbox">
+                        Spike
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-spike-table', this.checked, 1)"
+                               type="checkbox">
+                        Weight
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-spike-table', this.checked, 2)"
+                               type="checkbox">
+                        Damage/Hit
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-spike-table', this.checked, 3)"
+                               type="checkbox">
+                        Cost
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('weapon-tab-spike-table', 4)"
+                               type="checkbox">
+                        Buy-Emma
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('weapon-tab-spike-table', 4)"
+                               type="checkbox">
+                        Buy-Alisa
+                    </label>
+                </th>
             </tr>
         </table>
         <table id="weapon-tab-beam-table">
             <tr>
-                <th>Beam</th>
-                <th>Weight</th>
-                <th>Damage/Hit</th>
-                <th>Cost</th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-beam-table', this.checked, 0)"
+                               type="checkbox">
+                        Beam
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-beam-table', this.checked, 1)"
+                               type="checkbox">
+                        Weight
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-beam-table', this.checked, 2)"
+                               type="checkbox">
+                        Damage/Hit
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-beam-table', this.checked, 3)"
+                               type="checkbox">
+                        Cost
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('weapon-tab-beam-table', 4)"
+                               type="checkbox">
+                        Buy-Emma
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('weapon-tab-beam-table', 4)"
+                               type="checkbox">
+                        Buy-Alisa
+                    </label>
+                </th>
             </tr>
         </table>
-
         <table id="weapon-tab-shield-table">
             <tr>
-                <th>Shield</th>
-                <th>Weight</th>
-                <th>Damage Resistance</th>
-                <th>Durability</th>
-                <th>Cost</th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-shield-table', this.checked, 0)"
+                               type="checkbox">
+                        Shield
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-shield-table', this.checked, 1)"
+                               type="checkbox">
+                        Weight
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-shield-table', this.checked, 2)"
+                               type="checkbox">
+                        Damage Resistance
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-shield-table', this.checked, 4)"
+                               type="checkbox">
+                        Durability
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="sorter"
+                               onclick="sortTable('weapon-tab-shield-table', this.checked, 5)"
+                               type="checkbox">
+                        Cost
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('weapon-tab-shield-table', 5)"
+                               type="checkbox">
+                        Buy-Emma
+                    </label>
+                </th>
+                <th>
+                    <label>
+                        <input class="filter"
+                               onclick="filterTable('weapon-tab-shield-table', 5)"
+                               type="checkbox">
+                        Buy-Alisa
+                    </label>
+                </th>
             </tr>
         </table>
     </div>
