@@ -1,5 +1,5 @@
 name,weapon_type,wgt,dmg,cost,battle_e,battle_a,shop_e,shop_a
-Bone Buster,fist,22,76,100,,,,9
+Bone Buster,fist,22,76,100,1,,,9
 Fear Fist,fist,26,91,200,,,,9
 Mk10 Fist,fist,30,109,300,,,,22
 Mk12 Fist,fist,35,130,400,,,,28
@@ -20,12 +20,12 @@ Max Weight,fist,,130,,,,,
 Mk20 Fist,fist,,156,,,,,
 Riot Baton,baton,,50,,,,,
 War Hammer,baton,,56,,,,,
-Odin M98,shotgun,42,12,140,,,,9
+Odin M98,shotgun,42,12,140,1,1,,9
 SPPG 14,shotgun,50,14,260,,,,9
 Chongdu 2,shotgun,59,16,500,,,,22
 Chongta 3,shotgun,69,19,660,,,,28
 Desoto M300,shotgun,80,22,780,,,,45
-Kodo SN990,m.gun,48,11,160,,,,9
+Kodo SN990,m.gun,48,11,160,1,1,,9
 DGS-25,m.gun,56,13,240,,,,9
 Mingda 2,m.gun,65,15,460,,,,22
 Huida 3,m.gun,78,18,620,,,,28
@@ -49,7 +49,7 @@ Huoliu 1,flame thrower,60,20,200,,,,24
 Huosai 2,flame thrower,70,24,460,,,,28
 Huoyao 3,flame thrower,81,28,660,,,,37
 Hot Gazel,flame thrower,93,33,780,,,,45
-Quill,missile,81,73,200,,,,9
+Quill,missile,81,73,200,1,1,,9
 Wagtail 2,missile,96,87,380,,,,9
 Yunsheng34,missile,109,104,460,,,,22
 Zhiniao 50,missile,123,124,660,,,,28

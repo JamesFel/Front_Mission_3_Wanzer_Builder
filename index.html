@@ -42,23 +42,77 @@
         text-align: center;
     }
 
-    table
+    .grid-container table
     {
         width: 100%
         border-collapse: separate;
     }
 
-    th
+    .grid-container table tr th
     {
         text-align: left;
         width: 40%;
     }
 
-    td
+    .grid-container table tr td
     {
         text-align: right;
         min-width: 4ch;
         white-space: nowrap;
+    }
+
+    #weapon-tab-missile-table{grid-area: missile}
+    #weapon-tab-grenade-table{grid-area: grenade}
+    #weapon-tab-shotgun-table{grid-area: shotgun}
+    #weapon-tab-m-gun-table{grid-area: mGun}
+    #weapon-tab-flame-thrower-table{grid-area: flameThrower}
+    #weapon-tab-spike-table{grid-area: spike}
+    #weapon-tab-fist-table{grid-area: fist}
+    #weapon-tab-baton-table{grid-area: baton}
+    #weapon-tab-shield-table{grid-area: shield}
+    #weapon-tab-beam-table{grid-area: beam}
+
+    #weapons-tab
+    {
+        display: grid;
+        grid-template-columns: 50%;
+        grid-template-areas:
+            'mGun shotgun'
+            'mGun flameThrower'
+            'fist spike'
+            'fist baton'
+            'rifle beam'
+            'missile grenade'
+            'shield shield';
+        grid-gap: 2rem;
+        padding: 1ch;
+    }
+
+    .tables-tab
+    {
+        overflow-x: auto;
+    }
+
+    .tables-tab table
+    {
+        border-collapse: collapse;
+    }
+
+    .tables-tab table tr:hover
+    {
+        background-color: #f5f5f5;
+    }
+
+    .tables-tab table  tr:nth-child(even)
+    {
+        background-color: #f2f2f2;
+    }
+
+    .tables-tab table tr th
+    {
+        width: auto;
+        min-width: 10ch;
+        border: 1px solid black;
     }
 
     select, input
@@ -73,13 +127,50 @@
 
     p {text-align:left;}
 
+    .tab
+    {
+        overflow: hidden;
+    }
+
+    .tab button
+    {
+        background-color: inherit;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
+
+    .tab button:hover
+    {
+        background-color: #ddd;
+    }
+
+    .tab button.active
+    {
+        background-color: #ccc;
+    }
+
+    .tabContent {
+        display: none;
+        border-top: none;
+    }
+
     </style>
     <title>Front Mission 3 Wanzer Builder</title>
 </head>
 <body>
     <h1>Front Mission 3 Wanzer Builder</h1>
     <p>Currently in beta.</p>
-    <div class="grid-container">
+    <div class="tab">
+        <button class="tab-links" onclick="openTab(event, 'main-tab')" id="main-tab-link">Main</button>
+        <button class="tab-links" onclick="openTab(event, 'wanzer-body-tab')">Wanzer Bodies</button>
+        <button class="tab-links" onclick="openTab(event, 'wanzer-arm-tab')">Wanzer Arms</button>
+        <button class="tab-links" onclick="openTab(event, 'wanzer-legs-tab')">Wanzer Legs</button>
+        <button class="tab-links" onclick="openTab(event, 'weapons-tab')">Weapons & Shields</button>
+    </div>
+
+    <div class="grid-container tab-content" id="main-tab">
 <!--=============================================Sources=============================================================-->
         <div class="emma-or-alisa" title=
         "Did you go with Ryogo when you were given the choice? Yes: Emma, No: Alisa">
@@ -88,7 +179,7 @@
                 <option value="0">
                     Emma
                 </option>
-                <option selected value="1">
+                <option value="1">
                     Alisa
                 </option>
             </select></label>
@@ -96,12 +187,12 @@
         <div class="mission-counter">
             <label for="mission">Last Mission Won: <input id="mission" max="70"
             min="1" oninput="updateDropdownLists()" step="1" type="number"
-            value="9"></label>
+            value="70"></label>
         </div>
         <div class="include-stolen" title=
         "Include wanzers that you could, theoretically, have stolen by this point">
             <label for="steal">Include potentially stolen wanzers? <input id=
-            "steal" onchange="updateDropdownLists()" type="checkbox"></label>
+            "steal" onchange="updateDropdownLists()" type="checkbox" checked></label>
         </div>
         <div class="base-ap" title="AP if in an un-upgraded wanzer">
             <label for="total-ap">Base AP: <input id="total-ap" max="30" min=
@@ -600,7 +691,145 @@
             <p id="legs-skill-details"></p>
         </div>
     </div>
+
+    <div class="tab-content tables-tab" id="wanzer-body-tab">
+        <table id="body-tab-table">
+            <tr>
+                <th>Wanzer</th>
+                <th>Weight</th>
+                <th>Base HP</th>
+                <th>Max HP</th>
+                <th>Power</th>
+                <th>Damage Resistance</th>
+                <th>Skill</th>
+            </tr>
+        </table>
+    </div>
+    <div class="tab-content tables-tab" id="wanzer-arm-tab">
+        <table id="arm-tab-table">
+            <tr>
+                <th>Wanzer</th>
+                <th>Weight</th>
+                <th>Base HP</th>
+                <th>Max HP</th>
+                <th>Base Acc</th>
+                <th>Acc +1</th>
+                <th>Acc +2</th>
+                <th>Acc +3</th>
+                <th>Max Acc</th>
+                <th>Skill</th>
+            </tr>
+        </table>
+    </div>
+        <div class="tab-content tables-tab" id="wanzer-legs-tab">
+        <table id="legs-tab-table">
+            <tr>
+                <th>Wanzer</th>
+                <th>Weight</th>
+                <th>Base HP</th>
+                <th>Max HP</th>
+                <th>Move</th>
+                <th title="Progression is the same for all legs. If it's better at level 1, it's always better.">Lvl 1 Evade</th>
+                <th title="l=best upgrade pattern, 5=Hover legs">Boost Rank</th>
+                <th title="1=best upgrade pattern, 5=Hover legs">Dash Rank</th>
+                <th>Skill</th>
+            </tr>
+        </table>
+    </div>
+    <div class="tab-content tables-tab" id="weapons-tab">
+        <table id="weapon-tab-missile-table">
+            <tr>
+                <th>Missile Launcher</th>
+                <th>Weight</th>
+                <th>Damage/Hit</th>
+                <th>Cost</th>
+            </tr>
+        </table>
+        <table id="weapon-tab-grenade-table">
+            <tr>
+                <th>Grenade Launcher</th>
+                <th>Weight</th>
+                <th>Damage/Hit</th>
+                <th>Cost</th>
+            </tr>
+        </table>
+        <table id="weapon-tab-shotgun-table">
+            <tr>
+                <th>Shotgun</th>
+                <th>Weight</th>
+                <th>Damage/Hit</th>
+                <th>Cost</th>
+            </tr>
+        </table>
+        <table id="weapon-tab-m-gun-table">
+            <tr>
+                <th>Machine Gun</th>
+                <th>Weight</th>
+                <th>Damage/Hit</th>
+                <th>Cost</th>
+            </tr>
+        </table>
+        <table id="weapon-tab-flame-thrower-table">
+            <tr>
+                <th>Flame Thrower</th>
+                <th>Weight</th>
+                <th>Damage/Hit</th>
+                <th>Cost</th>
+            </tr>
+        </table>
+        <table id="weapon-tab-rifle-table">
+            <tr>
+                <th>Rifle</th>
+                <th>Weight</th>
+                <th>Damage/Hit</th>
+                <th>Cost</th>
+            </tr>
+        </table>
+        <table id="weapon-tab-fist-table">
+            <tr>
+                <th>Fist</th>
+                <th>Weight</th>
+                <th>Damage/Hit</th>
+                <th>Cost</th>
+            </tr>
+        </table>
+        <table id="weapon-tab-baton-table">
+            <tr>
+                <th>Baton</th>
+                <th>Weight</th>
+                <th>Damage/Hit</th>
+                <th>Cost</th>
+            </tr>
+        </table>
+        <table id="weapon-tab-spike-table">
+            <tr>
+                <th>Spike</th>
+                <th>Weight</th>
+                <th>Damage/Hit</th>
+                <th>Cost</th>
+            </tr>
+        </table>
+        <table id="weapon-tab-beam-table">
+            <tr>
+                <th>Beam</th>
+                <th>Weight</th>
+                <th>Damage/Hit</th>
+                <th>Cost</th>
+            </tr>
+        </table>
+
+        <table id="weapon-tab-shield-table">
+            <tr>
+                <th>Shield</th>
+                <th>Weight</th>
+                <th>Damage Resistance</th>
+                <th>Durability</th>
+                <th>Cost</th>
+            </tr>
+        </table>
+    </div>
 <!-- ================================================Script files====================================================-->
+    <div id='external-scripts'>
     <script src="js%20files/item.js">
     </script>
     <script src="js%20files/equippable_item.js">
@@ -633,6 +862,11 @@
     </script>
     <script src="js%20files/update_fields.js">
     </script>
+    <script src="js%20files/tab_tables.js">
+    </script>
+    <script src="js%20files/tab_control.js">
+    </script>
+    </div>
 <!--=============================================Main()==============================================================-->
 
     <script>
@@ -691,7 +925,9 @@
             db = request.response;
             updateDropdownLists();
             populateItemsDropdowns();
+            loadTables();
         }
+        document.getElementById('main-tab-link').click()
         request.send()
     </script>
     <footer>

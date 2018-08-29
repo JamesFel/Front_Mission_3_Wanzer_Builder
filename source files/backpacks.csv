@@ -1,5 +1,5 @@
 name,wgt,capacity,power,cost,battle_e,battle_a,shop_e,shop_a
-BX002,10,4,,140,,,,9
+BX002,10,4,,140,1,1,,9
 Mk3 Pack,10,4,,140,,,,
 Mk6 Pack,30,6,,300,,,,24
 Rucksack-L,30,6,,300,,,,
