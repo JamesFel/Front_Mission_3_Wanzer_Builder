@@ -1,10 +1,10 @@
 name,wgt,AP,durability,DR,cost,battlee,battlea,shop_e,shop_a
-Mk6 Shield,18,2,4,50,100,,,,9
-SN-100G,24,2,6,50,160,,,,9
-Buckler,22,2,4,70,200,,,,22
-Hvy Shield,28,2,6,70,300,,,,28
+Mk6 Shield,18,2,4,50,100,,,8,9
+SN-100G,24,2,6,50,160,,,13,9
+Buckler,22,2,4,70,200,,,23,22
+Hvy Shield,28,2,6,70,300,,,45,28
 Mk10 Shield,28,2,6,70,300,,,,41
-SN-107G,36,2,4,90,400,,,,45
+SN-107G,36,2,4,90,400,,,60,45
 Riot Shield,,2,4,50,,,,,
 Def Shield,,2,4,90,,,,,
 Last Defense,,2,4,90,,,,,
